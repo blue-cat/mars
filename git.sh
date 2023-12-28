@@ -4,7 +4,7 @@ git pull
 git add .
 git ci -m "fixed something"
 
-if test "$(git rev-parse --abbrev-ref HEAD)" != master; then
+if test "$(git rev-parse --abbrev-ref HEAD)" != master-2x; then
   if test "$(git rev-parse --abbrev-ref HEAD)" != dev; then
     git push origin test
     git push gz test
