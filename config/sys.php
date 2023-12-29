@@ -40,7 +40,7 @@ return array(
      * Redis缓存服务器参考配置
      */
     'redis' => array(
-        'host' => '127.0.0.1',
+        'host' => 'redis',
         'port' => 6379,
 	),
 	
@@ -48,7 +48,7 @@ return array(
      * 加密
      */
     'crypt' => array(
-        'mcrypt_iv' => '12345678', //8位
+        'mcrypt_iv' => '8eoihd@d', //8位
     ),
 
     /**

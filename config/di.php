@@ -58,6 +58,11 @@ $di->error = new ApiError();
 // $di->cache = function () {
 //     return new \PhalApi\Cache\MemcacheCache(\PhalApi\DI()->config->get('sys.mc'));
 // };
+// 缓存 - redis
+$di->cache = function () {
+    $instance = new \PhalApi\Cache\RedisCache(\PhalApi\DI()->config->get('sys.redis'));
+    return $instance->getRedis();
+};
 
 // 支持JsonP的返回
 // if (!empty($_GET['callback'])) {
