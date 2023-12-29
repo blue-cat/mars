@@ -2,6 +2,8 @@
 
 namespace App\Common\User;
 
+use PhalApi\Exception;
+
 class Weixin
 {
     protected $appletAppId = '';
@@ -25,11 +27,12 @@ class Weixin
             . '&secret=' . $this->h5AppSecret . '&code=' . $code . '&grant_type=authorization_code';
         $response = file_get_contents($url);
         $data = json_decode($response, true);
-        //if ($data['errcode'])
-        //print_r($data);exit;
-        //这儿要是拿到错误的说明code无效了，重定向到无code的页面
+        if (isset($data['errcode']) && $data['errcode']) {
+            throw new Exception($data['errmsg'], $data['errcode']);
+        }
 
-        $userInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $data['access_token'] . '&openid=' . $data['openid'];
-        return file_get_contents($userInfoUrl);
+        $userInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $data['access_token']
+            . '&openid=' . $data['openid'];
+        return json_decode(file_get_contents($userInfoUrl), true);
     }
 }

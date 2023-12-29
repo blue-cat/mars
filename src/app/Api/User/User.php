@@ -24,6 +24,7 @@ class User extends Api
             'userInit' => array(
                 'code' => array('name' => 'code', 'require' => true, 'min' => 1, 'max' => 40, 'desc' => '微信初始化code'),
                 'scene' => array('name' => 'scene', 'require' => true, 'min' => 1, 'max' => 2, 'desc' => '场景,1微信h5 2微信小程序'),
+                'state' => array('name' => 'state', 'desc' => '成功后state原样返回'),
             ),
         ];
     }
@@ -42,7 +43,12 @@ class User extends Api
 
         try {
             $domain = new UserDomain();
-            return $domain->userInit($this->code, $this->scene);
+            $return = $domain->userInit($this->code, $this->scene);
+            if (isset($return['errcode']) && $return['errcode']) {
+                throw new BadRequestException($return['errmsg'], $return['errcode']);
+            }
+
+            return isset($this->state) && $this->state ? array_merge(['state' => $this->state], $return) : $return;
         } catch (\Exception $e) {
             throw new BadRequestException($e->getMessage(), 1001);
         }
