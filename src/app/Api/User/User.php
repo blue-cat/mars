@@ -40,7 +40,12 @@ class User extends Api
             throw new BadRequestException('不存在的场景', 1000);
         }
 
-        $domain = new UserDomain();
-        return $domain->userInit($this->code, $this->scene);
+        try {
+            $domain = new UserDomain();
+            return $domain->userInit($this->code, $this->scene);
+        } catch (\Exception $e) {
+            throw new BadRequestException($e->getMessage(), 1001);
+        }
+
     }
 }
