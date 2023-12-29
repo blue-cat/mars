@@ -27,9 +27,9 @@ class Site extends Api {
      */
     public function index() {
         // 切换为默认的首页 @dogstar 20221112
-        $projectName = \PhalApi\T('PhalApi API Framework');
-        include API_ROOT . '/src/view/site/index.php';
-        exit(0);
+//        $projectName = \PhalApi\T('PhalApi API Framework');
+//        include API_ROOT . '/src/view/site/index.php';
+//        exit(0);
 
         return array(
             'title' => 'Hello ' . $this->username,
