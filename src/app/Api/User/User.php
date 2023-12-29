@@ -19,7 +19,7 @@ class User extends Api
     public function getRules()
     {
         return [
-            'user_init' => array(
+            'userInit' => array(
                 'code' => array('name' => 'code', 'require' => true, 'min' => 1, 'max' => 40, 'desc' => '微信初始化code'),
                 'scene' => array('name' => 'scene', 'require' => true, 'min' => 1, 'max' => 2, 'desc' => '场景,1微信h5 2微信小程序'),
             ),
@@ -27,11 +27,11 @@ class User extends Api
     }
 
     /**
-     * 注册账号
-     * @desc 注册一个新账号
-     * @return int user_id 新账号的ID
+     * 第三方用户code换信息
+     * @desc 第三方用户code换信息
+     * @return mixed
      */
-    public function register()
+    public function userInit()
     {
         return [
             $this->code,
