@@ -19,14 +19,9 @@ class User extends Api
     public function getRules()
     {
         return [
-            'register' => array(
-                'username' => array('name' => 'username', 'min' => 1, 'max' => 40, 'desc' => '账号'),
-                'password' => array('name' => 'password', 'min' => 6, 'max' => 20, 'desc' => '密码'),
-                'avatar' => array('name' => 'avatar', 'default' => '', 'max' => 500, 'desc' => '头像链接'),
-                'sex' => array('name' => 'sex', 'type' => 'int', 'default' => 0, 'desc' => '性别，1男2女0未知'),
-                'email' => array('name' => 'email', 'default' => '', 'max' => 50, 'desc' => '邮箱'),
-                'mobile' => array('name' => 'mobile', 'default' => '', 'max' => 11, 'desc' => '手机号'),
-                'tel_pre' => array('name' => 'tel_pre', 'require' => false, 'min' => 1, 'max' => 2000, 'desc' => '国家号码前缀'),
+            'user_init' => array(
+                'code' => array('name' => 'code', 'require' => true, 'min' => 1, 'max' => 40, 'desc' => '微信初始化code'),
+                'scene' => array('name' => 'scene', 'require' => true, 'min' => 1, 'max' => 2, 'desc' => '场景,1微信h5 2微信小程序'),
             ),
         ];
     }
@@ -39,7 +34,8 @@ class User extends Api
     public function register()
     {
         return [
-            'data' => 'test'
+            $this->code,
+            $this->scene
         ];
     }
 }
