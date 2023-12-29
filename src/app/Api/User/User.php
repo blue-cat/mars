@@ -4,6 +4,8 @@
 namespace App\Api\User;
 
 use PhalApi\Api;
+use App\Domain\User\User as UserDomain;
+use PhalApi\Exception\BadRequestException;
 
 /**
  * 用户
@@ -33,9 +35,12 @@ class User extends Api
      */
     public function userInit()
     {
-        return [
-            $this->code,
-            $this->scene
-        ];
+        $scenes = array_keys(\PhalApi\DI()->config->get('const.loginScene'));
+        if (!in_array($this->scene, $scenes)) {
+            throw new BadRequestException('不存在的场景', 1000);
+        }
+
+        $domain = new UserDomain();
+        return $domain->userInit($this->code, $this->scene);
     }
 }
