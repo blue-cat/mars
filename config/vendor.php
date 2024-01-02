@@ -10,6 +10,30 @@
 return [
 
     /**
+     * cdn服务商id
+     */
+
+    'cdn_id' => [
+        'qiniu' => 1,
+        'tencent' => 2,
+        'ali' => 3
+    ],
+
+    /**
+     * 七牛云存储
+     */
+    'qiniu_store' => [
+        'accessKey' => 'QDJzcYZeKnYvjUtXnmHGO-rhH3WG_SzZYWhjYeMc',
+        'secretKey' => 'iKrFROSNYmrj3MFfbfe9QrPbgCkW7hPk1HUSMmvf',
+        'bucket' => 'nearby-teenage-ol',
+        'confBucket' => 'nearby-teenage-config',
+    ],
+
+    'cdn_url' => [//图片视频等资源cdn地址
+        '1' => 'http://*.cdnol.nearby.dulcim.com',//七牛
+    ],
+
+    /**
      * 微信登陆
      */
     'weixin' => [
