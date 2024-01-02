@@ -101,7 +101,7 @@ class Qiniu {
         }
 
 
-        return $res;
+        return $res['key'];
     }
 
 }
