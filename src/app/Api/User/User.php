@@ -34,7 +34,7 @@ class User extends Api
                 'scene' => array('name' => 'scene', 'require' => true, 'min' => 1, 'max' => 2, 'desc' => '场景,1微信h5 2微信小程序'),
                 'state' => array('name' => 'state', 'desc' => '成功后state原样返回'),
                 'avatar' => array('name' => 'avatar', 'default' => '', 'desc' => 'base64'),
-                'nickname' => array('name' => 'nickname', 'default' => '', 'min' => 1, 'max' => 40, 'desc' => '昵称'),
+                'nickname' => array('name' => 'nickname', 'default' => '', 'max' => 40, 'desc' => '昵称'),
             ),
             'follow' => array(
                 'user_id' => array('name' => 'user_id', 'type' => 'int', 'desc' => '用户ID'),
