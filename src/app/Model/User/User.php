@@ -30,7 +30,7 @@ class User extends DataModel
 
     public function getInfoByOpenId($openId, $scene, $select)
     {
-        $scenes = array_keys(\PhalApi\DI()->config->get('const.loginSceneGroup'));
+        $scenes = \PhalApi\DI()->config->get('const.loginSceneGroup');
         return $this->getORM()->select($select)
             ->where([$scenes[$scene] => $openId,/* 'scene' => $scene*/])
             ->fetchOne();
