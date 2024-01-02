@@ -85,7 +85,7 @@ class User
     public function register($openId, $scene, $moreInfo = array())
     {
         $newUserInfo = $moreInfo;
-        $scenes = array_keys(\PhalApi\DI()->config->get('const.loginSceneGroup'));
+        $scenes = \PhalApi\DI()->config->get('const.loginSceneGroup');
 
         $newUserInfo[$scenes[$scene]] = $openId;
         $newUserInfo['scene'] = $scene;
