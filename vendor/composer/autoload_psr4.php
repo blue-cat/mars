@@ -13,7 +13,6 @@ return array(
     'PhalApi\\NotORM\\' => array($vendorDir . '/phalapi/notorm/src'),
     'PhalApi\\CLI\\' => array($vendorDir . '/phalapi/cli/src'),
     'PhalApi\\' => array($vendorDir . '/phalapi/kernal/src'),
-    'Overtrue\\Pinyin\\' => array($vendorDir . '/overtrue/pinyin/src'),
     'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
     'GetOpt\\' => array($vendorDir . '/ulrichsg/getopt-php/src'),
     'App\\' => array($baseDir . '/src/app'),

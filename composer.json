@@ -22,8 +22,7 @@
 		"phalapi/cli" : "^3.0",
 		"phalapi/task" : "dev-master",
 		"qiniu/php-sdk": "dev-master",
-		"zoujingli/ip2region": "dev-master",
-		"overtrue/pinyin": "dev-master"
+		"zoujingli/ip2region": "dev-master"
 	},
 	"autoload" : {
 		"files" : [

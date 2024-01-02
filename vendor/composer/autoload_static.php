@@ -28,10 +28,6 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
             'PhalApi\\CLI\\' => 12,
             'PhalApi\\' => 8,
         ),
-        'O' => 
-        array (
-            'Overtrue\\Pinyin\\' => 16,
-        ),
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
@@ -74,10 +70,6 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
         'PhalApi\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/kernal/src',
-        ),
-        'Overtrue\\Pinyin\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/overtrue/pinyin/src',
         ),
         'MyCLabs\\Enum\\' => 
         array (

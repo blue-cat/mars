@@ -3,7 +3,7 @@
         'name' => 'phalapi/phalapi',
         'pretty_version' => 'dev-master-2x',
         'version' => 'dev-master-2x',
-        'reference' => '5e9a51ca528c0bf8f8102b15f44c791c5fb3f519',
+        'reference' => '0e926960f167d643159498798f482ebf1c432d6e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,17 +17,6 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../myclabs/php-enum',
             'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'overtrue/pinyin' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'cd40f248239231ae2d1f94348c323a40c7fc58b1',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../overtrue/pinyin',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
             'dev_requirement' => false,
         ),
         'phalapi/cli' => array(
@@ -60,7 +49,7 @@
         'phalapi/phalapi' => array(
             'pretty_version' => 'dev-master-2x',
             'version' => 'dev-master-2x',
-            'reference' => '5e9a51ca528c0bf8f8102b15f44c791c5fb3f519',
+            'reference' => '0e926960f167d643159498798f482ebf1c432d6e',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -3,7 +3,6 @@
 namespace App\Common\User;
 
 use Ip2Region;
-use Overtrue\Pinyin\Pinyin;
 
 /**
  * 用户插件-工具类
@@ -162,26 +161,6 @@ class UserUtil
     {
         //todo
         return self::AUDIT_OK;
-    }
-
-    /**
-     * 获取首字母拼音
-     * @param $from
-     * @return void
-     */
-    public static function convertPinYinAbbr($from)
-    {
-        if (preg_match("/^[a-zA-Z]/", $from)) {
-            return strtoupper($from[0]);
-        }
-
-        $obj = new Pinyin();
-        $to = $obj->abbr($from);
-        if (!trim($to)) {
-            return '#';
-        }
-
-        return strtoupper($to[0]);
     }
 
 }
