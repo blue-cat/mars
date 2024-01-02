@@ -79,7 +79,7 @@ class User
     public function getUserInfoById($id, $fullMode = false)
     {
         $model = new UserModel();
-        return $model->getInfosByUserIds($id, $fullMode)[$id];
+        return $model->getInfosByUserIds([$id], $fullMode)[$id];
     }
 
     public function register($openId, $scene, $moreInfo = array())
