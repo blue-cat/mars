@@ -29,7 +29,7 @@ class User extends Api
     public function getRules()
     {
         return [
-            'code2Token' => array(
+            'code2UserInfo' => array(
                 'code' => array('name' => 'code', 'require' => true, 'min' => 1, 'max' => 40, 'desc' => '微信初始化code'),
                 'scene' => array('name' => 'scene', 'require' => true, 'min' => 1, 'max' => 2, 'desc' => '场景,1微信h5 2微信小程序'),
                 'state' => array('name' => 'state', 'desc' => '成功后state原样返回'),
