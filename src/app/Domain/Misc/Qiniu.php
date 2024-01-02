@@ -97,7 +97,9 @@ class Qiniu {
                 unlink($localTmpDir);
             }
         } else if(strpos($urlOrBase64, 'base64') !== false) {
-            $res = $this->uploadData($name, $urlOrBase64, (bool)$fileName);
+            $array = explode(',', $urlOrBase64);
+            $imgData = base64_decode(end($array));
+            $res = $this->uploadData($name, $imgData, (bool)$fileName);
         }
 
 

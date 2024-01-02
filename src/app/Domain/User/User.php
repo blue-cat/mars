@@ -45,9 +45,7 @@ class User
             $avatarFinal = '';
             if ($avatar) {
                 if (strpos($avatar, 'base64') !== false) {
-                    $array = explode(',', $avatar);
-                    $imgData = base64_decode(end($array));
-                    $avatarFinal = $this->qn->savePic27niu($imgData);
+                    $avatarFinal = $this->qn->savePic27niu($avatar);
                 }
             } else if(isset($return['headimgurl'])) {
                 $avatarFinal = $this->qn->savePic27niu($return['headimgurl']);
