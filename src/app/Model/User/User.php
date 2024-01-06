@@ -90,7 +90,7 @@ class User extends DataModel
             //头像拼接地址
             if ($row['avatar']) {
                 $cdnDomain = str_replace('*', 'avatar', $cdnDomains[$row['cdn_id']]);
-                $row['avatar'] = $cdnDomain . $row['avatar'];
+                $row['avatar'] = $cdnDomain . '/' . $row['avatar'];
             }
 
             //bg拼接地址
