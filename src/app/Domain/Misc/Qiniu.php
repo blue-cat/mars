@@ -102,8 +102,7 @@ class Qiniu {
             $res = $this->uploadData($name, $imgData, (bool)$fileName);
         }
 
-
-        return $res['key'];
+        return $res ? $res['key'] : '';
     }
 
 }

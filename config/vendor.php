@@ -13,6 +13,8 @@ return [
      * cdn服务商id
      */
 
+    'cur_cdn' => 1,//当前用的cdn
+
     'cdn_id' => [
         'qiniu' => 1,
         'tencent' => 2,

@@ -35,32 +35,46 @@ class User
         }
 
         //查询用户是否存在,不存在就注册新的
+        $isNew = false;
         if (!$userId = $this->loginInOpenId($return['openid'], $scene)) {
 
-            //头像换成第三方云头像
-            if (($avatar || isset($return['headimgurl'])) && !get_class($this->qn)) {
-                $this->qn = new Qiniu();
-            }
+            $avatarFinal = $this->_avatar2path($avatar, $return['headimgurl']??'');
 
-            $avatarFinal = '';
-            if ($avatar) {
-                if (strpos($avatar, 'base64') !== false) {
-                    $avatarFinal = $this->qn->savePic27niu($avatar);
-                }
-            } else if(isset($return['headimgurl'])) {
-                $avatarFinal = $this->qn->savePic27niu($return['headimgurl']);
-            }
             $userInfo = [
-                'nickname' => $return['nickname'] ?? $nickname,
+                'nickname' => $nickname ?: $return['nickname'],
                 'avatar' => $avatarFinal,
+                'cdn_id' => \PhalApi\DI()->config->get('vendor.cur_cdn'),
             ];
             $userId = $this->register($return['openid'], $scene, $userInfo);
+            $isNew = true;
+        }
+
+        //如果存在用户但是有新头像等，则修改
+        if ($userId && !$isNew && ($nickname || $avatar)) {
+            if ($nickname) {
+                $update['nickname'] = $nickname;
+            }
+            if ($avatar) {
+                $update['avatar'] = $this->_avatar2path($avatar, '');
+                $update['cdn_id'] = \PhalApi\DI()->config->get('vendor.cur_cdn');
+            }
+
+            $this->update($update, $userId);
         }
 
         //返回session的token
         return $userId;
     }
 
+    public function _avatar2path($avatar, $headimgurl)
+    {
+        //头像换成第三方云头像
+        if (($avatar || isset($headimgurl)) && !get_class($this->qn)) {
+            $this->qn = new Qiniu();
+        }
+
+        return $this->qn->savePic27niu($avatar ?: $headimgurl);
+    }
 
     public function getUserByOpenId($openId, $scene, $select)
     {
@@ -129,6 +143,8 @@ class User
     {
 
         $userModel = new UserModel();
+
+        $data['update_time'] = $data['update_time'] ?? time();
 
         return $userModel->update($user_id, $data);
     }

@@ -94,10 +94,11 @@ class User extends DataModel
             }
 
             //bg拼接地址
-            if ($row['bg']) {
-                $cdnDomain = str_replace('*', 'bg', $cdnDomains[$row['cdn_id']]);
-                $row['bg'] = $cdnDomain . $row['bg'];
-            }
+            //todo 这儿的cdnid要独立的字段，不能公用否则可能出问题
+//            if ($row['bg']) {
+//                $cdnDomain = str_replace('*', 'bg', $cdnDomains[$row['cdn_id']]);
+//                $row['bg'] = $cdnDomain . $row['bg'];
+//            }
 
             if ($fullMode) {
                 //年龄
