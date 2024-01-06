@@ -12,14 +12,14 @@ class Config
 
         $common = \PhalApi\DI()->config->get('client.common');
         $app = \PhalApi\DI()->config->get('client.' . $app);
-        $vendor = \PhalApi\DI()->config->get('vendor');
+//        $vendor = \PhalApi\DI()->config->get('vendor');
 
         //user类型中需要传递给前端的
-        $vendorEnum = [
-            'cdn_url' => $vendor['cdn_url'],
-        ];
+//        $vendorEnum = [
+//            'cdn_url' => $vendor['cdn_url'],
+//        ];
 
-        $config = array_merge($common, $app, $vendorEnum);
+        $config = array_merge($common, $app/*, $vendorEnum*/);
         return $this->camelize($config);
     }
 
