@@ -13,12 +13,16 @@ return [
      * cdn服务商id
      */
 
-    'cur_cdn' => 1,//当前用的cdn
+    'cur_cdn' => 1,
 
     'cdn_id' => [
         'qiniu' => 1,
         'tencent' => 2,
         'ali' => 3
+    ],
+
+    'cdn_url' => [//图片视频等资源cdn地址
+        '1' => 'http://*.cdnol.nearby.dulcim.com',//七牛
     ],
 
     /**
@@ -29,10 +33,6 @@ return [
         'secretKey' => 'iKrFROSNYmrj3MFfbfe9QrPbgCkW7hPk1HUSMmvf',
         'bucket' => 'nearby-teenage-ol',
         'confBucket' => 'nearby-teenage-config',
-    ],
-
-    'cdn_url' => [//图片视频等资源cdn地址
-        '1' => 'http://*.cdnol.nearby.dulcim.com',//七牛
     ],
 
     /**
@@ -48,5 +48,5 @@ return [
             'appSecret' => '5b71d46d5aa16fff3676774ed636b046',
         ],
     ],
-    
+
 ];
