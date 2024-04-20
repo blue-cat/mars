@@ -1,6 +1,6 @@
 #!/bin/bash
 
-note="fixed something"
+note="fixed"
 if [ "$1" != "" ] && [ "$1" != "m" ];then
   note=$1
 fi
@@ -25,5 +25,6 @@ if test "$(git rev-parse --abbrev-ref HEAD)" != master-2x; then
 else
   git push origin master-2x
   git push sh master-2x
+  git push sh1 master-2x
   #git push gz master
 fi
