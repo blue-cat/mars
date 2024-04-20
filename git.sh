@@ -1,6 +1,6 @@
 #!/bin/bash
 
-note="fixed"
+note="fixedSomething"
 if [ "$1" != "" ] && [ "$1" != "m" ];then
   note=$1
 fi
