@@ -26,5 +26,6 @@ else
   git push origin master-2x
   git push sh master-2x
   git push sh1 master-2x
+
   #git push gz master
 fi
