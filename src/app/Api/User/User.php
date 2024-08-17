@@ -64,6 +64,21 @@ class User extends Api
                 'page' => array('name' => 'page', 'type' => 'int', 'min' => 1, 'max' => 99, 'default' => 1, 'desc' => '页码'),
                 'size' => array('name' => 'size', 'type' => 'int', 'min' => 1, 'max' => 100, 'default' => 20, 'desc' => '每页大小')
             ),
+            'modify' => array(
+                'user_id' => array('name' => 'user_id', 'type' => 'int', 'desc' => '用户ID'),
+                'token' => array('name' => 'token', 'desc' => '会话token'),
+                'nickname' => array('name' => 'nickname', 'min' => 1, 'max' => 40, 'desc' => '账号'),
+                'avatar' => array('name' => 'avatar', 'default' => '', 'max' => 500, 'desc' => '头像链接'),//todo 需要检测格式
+                'bg' => array('name' => 'bg', 'default' => '', 'max' => 500, 'desc' => 'bg链接'),//todo 需要检测格式
+                'sex' => array('name' => 'sex', 'type' => 'int', 'default' => 0, 'desc' => '性别，1男2女0未知'),
+                'email' => array('name' => 'email', 'type' => 'callable', 'default' => '', 'max' => 50, 'desc' => '邮箱', 'callback' => 'App\\Common\\Request\\Rule::formatEmail'),
+                'slogan' => array('name' => 'slogan', 'ipdefault' => '', 'max' => 200, 'desc' => '简介'),
+                'birth' => array('name' => 'birth', 'type' => 'callable', 'default' => 0, 'min' => 0, 'callback' => 'App\\Common\\Request\\Rule::formatBirth', 'desc' => '出生日期'),
+                'height' => array('name' => 'height', 'type' => 'int', 'min' => 0, 'max' => 250, 'desc' => '身高'),
+                'weight' => array('name' => 'weight', 'type' => 'int', 'min' => 0, 'max' => 250, 'desc' => '体重'),
+                'sexuality' => array('name' => 'sexuality', 'type' => 'int', 'min' => 0, 'max' => 10, 'desc' => '取向'),
+                'cdn_id' => array('name' => 'cdn_id', 'type' => 'int', 'min' => 0, 'max' => 100, 'desc' => 'cdnid'),
+            ),
         ];
     }
 
@@ -226,6 +241,93 @@ class User extends Api
         }
 
         return $ret;
+    }
+
+    /**
+     * 修改用户信息
+     * @desc (0.8)修改用户信息
+     */
+    public function modify()
+    {
+        $user = \PhalApi\DI()->user;
+        if (!$user->isLogin()) {
+            throw new BadRequestException('账号未登录或登录token已过期', 1999);
+        }
+
+        $domain = new UserDomain();
+
+        $data = [];
+
+        if ($this->nickname) {
+            $data['nickname'] = $this->nickname;
+        }
+
+        if ($this->avatar) {
+            $data['avatar'] = $this->avatar;
+        }
+
+        if ($this->bg) {
+            $data['bg'] = $this->bg;
+        }
+
+        if ($this->sex) {
+            $data['sex'] = $this->sex;
+        }
+
+        if ($this->email) {
+            $data['email'] = $this->email;
+        }
+
+        if ($this->slogan) {
+            $data['slogan'] = $this->slogan;
+        }
+
+        if ($this->birth) {
+            $data['birth'] = $this->birth <= UserModel::$birthMin || $this->birth > date('Ymd') ? UserModel::$birthMin : $this->birth;
+        }
+
+        if ($this->height) {
+            $data['height'] = $this->height;
+        }
+
+        if ($this->weight) {
+            $data['weight'] = $this->weight;
+        }
+
+        if ($this->sexuality) {
+            $data['sexuality'] = $this->sexuality;
+        }
+
+        if ($this->cdn_id) {
+            $data['cdn_id'] = $this->cdn_id;
+        }
+
+        if (empty($data)) {
+            throw new BadRequestException('没有任何需要修改的字段??', 500);
+        }
+
+        $data['update_time'] = time();
+
+        $updateRows = $domain->update($data, $user->getProfileBy('id', 0));
+
+        if ($updateRows <= 0) {
+            throw new BadRequestException('修改失败', 501);
+        }
+
+        //添加es索引
+        $es = new Es();
+        try {
+            $es->updateNearby($user->getUserId(), 0, 0, $this->sexuality,
+                $this->height, $this->weight,
+                $this->birth ? date('Y-m-d', strtotime($data['birth'])) : 0,
+                0, $this->nickname
+            );
+        } catch (\Exception $e) {
+            throw new BadRequestException($e->getMessage(), 510);
+        }
+
+        $domain = new UserDomain();
+        return ['profile' => $domain->getUserInfo($user->getUserId(), 'id,nickname,status,mobile,tel_pre,avatar,bg,sex,slogan,birth,height,weight,sexuality,fo,fa,lk')];
     }
 
 }

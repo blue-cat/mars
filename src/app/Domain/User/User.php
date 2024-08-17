@@ -139,6 +139,99 @@ class User
         return $user['id'];
     }
 
+    /**
+     * 获取用户信息,目前只用来查看自己的信息
+     * @param unknown $userId
+     * @return array|unknown
+     */
+    public function getUserInfo($userId, $select = '*')
+    {
+        $noneFields = ['fo', 'fa', 'lk'];//不存在的表字段
+        $rs = array();
+
+        $userId = intval($userId);
+        if ($userId <= 0) {
+            return $rs;
+        }
+
+        //如果有查头像,则同时查cdn_id
+        if ((strpos($select, 'avatar') !== false || strpos($select, 'bg') !== false) && strpos($select, 'cdn_id') === false) {
+            $select .= ',cdn_id';
+        }
+
+        $model = new UserModel();
+        $selectAry = explode(',', $select);
+        $rs = $model->get($userId, $select == '*' ? '*' : array_diff($selectAry, $noneFields));
+
+        if (empty($rs)) {
+            return $rs;
+        }
+
+        $rs['id'] = intval($rs['id']);
+
+        //适配其他字段
+        //年龄
+        if (strpos($select, 'birth') !== false) {
+            if (!$rs['birth'] || $rs['birth'] == UserModel::$birthMinSep) {
+                $rs['age'] = 0;
+            } else {
+                list($year, $month, $day) = explode('-', $rs['birth']);
+                $rs['age'] = (date('Y') - $year) + (date('md') - ($month . $day) > 0 ? 0 : -1);
+                $rs['age'] = max($rs['age'], 0);
+            }
+
+            if ($rs['birth'] == UserModel::$birthMinSep) {
+                $rs['birth'] = date('Y-m-d');
+            }
+        }
+        //取向
+        if (strpos($select, 'inclination') !== false) {
+            $rs['inclination'] = (string)$rs['inclination'];
+            $enum = array_flip(\PhalApi\DI()->config->get('list_enum')['inclination']);
+            $rs['inclDesc'] = $enum[$rs['inclination']];
+        }
+        //头像拼接地址
+        if (strpos($select, 'avatar') !== false && $rs['avatar']) {
+            $cdnDomain = \PhalApi\DI()->config->get('client')['base_url']['cdn_url'][$rs['cdn_id']];
+            $rs['avatar'] = str_replace('*', 'avatar', $cdnDomain) . $rs['avatar'];
+        }
+        //bg拼接地址
+        if (strpos($select, 'bg') !== false && $rs['bg']) {
+            $cdnDomain = \PhalApi\DI()->config->get('client')['base_url']['cdn_url'][$rs['cdn_id']];
+            $rs['bg'] = str_replace('*', 'bg', $cdnDomain) . $rs['bg'];
+        }
+        //统计数量
+        if (strpos($select, 'lk') !== false) {
+            $lkInfo = $model->getLkNum([$userId]);
+            $rs['lk'] = isset($lkInfo[$userId]) ? (int)$lkInfo[$userId] : 0;
+        }
+        $followModel = new UserFollowModel();
+        if (strpos($select, 'fo') !== false) {
+            $foInfo = $followModel->getFoNum([$userId]);
+            $rs['fo'] = isset($foInfo[$userId]) ? (int)$foInfo[$userId] : 0;
+        }
+        if (strpos($select, 'fa') !== false) {
+            $faInfo = $followModel->getFaNum([$userId]);
+            $rs['fa'] = isset($faInfo[$userId]) ? (int)$faInfo[$userId] : 0;
+        }
+
+        $rs['ol'] = true;
+        //获取地域信息
+        $rs['loc'] = '';
+        $cache = \Phalapi\DI()->cache;
+        if (isset($cache)) {
+            $rdsKey = UserSessionModel::getSessionRdsKey($userId);
+            $rs['loc'] = $cache->hGet($rdsKey, 'location');
+        }
+        //获取半隐藏手机号
+        if (strpos($select, 'mobile') !== false) {
+            $rs['mobileHide'] = substr_replace($rs['mobile'], '****', 3, 4);
+            unset($rs['mobile']);
+        }
+
+        return $rs;
+    }
+
     public function update($data, $user_id)
     {
 

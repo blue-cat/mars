@@ -24,7 +24,7 @@ if test "$(git rev-parse --abbrev-ref HEAD)" != master-2x; then
   fi
 else
   git push origin master-2x
-  git push sh master-2x
+  #git push sh master-2x
   git push sh1 master-2x
 
   #git push gz master
