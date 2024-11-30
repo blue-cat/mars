@@ -9,6 +9,8 @@ use App\Domain\Misc\Qiniu;
 
 class Homepage extends Api {
 
+    public $domain = 'https://h5store.nearby.dulcim.com';
+
     public function index() {
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
@@ -19,7 +21,7 @@ class Homepage extends Api {
     /**
      * 上传接口，用户提交内容在$_FILES中，然后调用七牛云的接口，将图片内容传到七牛云上，并返回图片的URL地址
      */
-    public function upload($type = "homepage") {
+    public function upload($type = "homepage", $index = 0) {
         $file = $_FILES['file'];
         $key = $file['name'];
 
@@ -29,7 +31,8 @@ class Homepage extends Api {
         $filePath = $type. '/' . $name . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
         $qiniu = new Qiniu();
-        return $qiniu->uploadFile($filePath, $file['tmp_name']);
+        $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
+        return $this->domain. '/'. $ret['key'];
     }
 }
 
