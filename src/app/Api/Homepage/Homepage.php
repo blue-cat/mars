@@ -21,7 +21,7 @@ class Homepage extends Api {
     /**
      * 上传接口，用户提交内容在$_FILES中，然后调用七牛云的接口，将图片内容传到七牛云上，并返回图片的URL地址
      */
-    public function upload($type = "homepage", $index = 0) {
+    public function upload($type = "homepage") {
         $file = $_FILES['file'];
         $key = $file['name'];
 
@@ -32,7 +32,7 @@ class Homepage extends Api {
 
         $qiniu = new Qiniu();
         $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
-        return $this->domain. '/'. $ret['key'];
+        return $domain . "/" . $ret['key'];
     }
 }
 
