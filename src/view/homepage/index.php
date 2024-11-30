@@ -112,48 +112,49 @@ $location = '中国 湖北省 武汉市';
     <div class="location"><?php echo $location; ?></div>
 
     <script>
-        function uploadImage(index) {
-            // 创建文件输入元素
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*'; // 只接受图片格式
+    function uploadImage(index) {
+        // 创建文件输入元素
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*'; // 只接受图片格式
+        
+        // 选择文件
+        input.onchange = async (event) => {
+            const file = event.target.files[0];
+            if (!file) return; // 如果没有选择文件，返回
             
-            // 选择文件
-            input.onchange = async (event) => {
-                const file = event.target.files[0];
-                if (!file) return; // 如果没有选择文件，返回
-                
-                const formData = new FormData();
-                formData.append('file', file);
+            const formData = new FormData();
+            formData.append('file', file);
 
-                try {
-                    // 发起上传请求
-                    const response = await fetch('/?s=App.Homepage_Homepage.upload', {
-                        method: 'POST',
-                        body: formData,
-                    });
+            try {
+                // 发起上传请求
+                const response = await fetch('/?s=App.Homepage_Homepage.upload', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-                    if (!response.ok) {
-                        throw new Error('上传失败！');
-                    }
+                const data = await response.json();
 
-                    // 获取返回的新图片地址
-                    const data = await response.json();
-                    const newImageURL = data.imageUrl; // 假设返回的数据中包含 imageUrl
-
+                if (data.ret === 200) {
                     // 替换当前图片的 src
+                    const newImageURL = data.data;
                     const images = document.querySelectorAll('.images img');
                     images[index].src = newImageURL;
-                } catch (error) {
-                    console.error('上传出错:', error);
-                    alert('上传失败，请重试。');
+                } else {
+                    // 弹窗显示错误消息
+                    alert(data.msg);
                 }
-            };
+            } catch (error) {
+                console.error('上传出错:', error);
+                alert('上传失败，请重试。');
+            }
+        };
 
-            // 唤起文件选择器
-            input.click();
-        }
-    </script>
+        // 唤起文件选择器
+        input.click();
+    }
+</script>
+
 
 </body>
 </html>
