@@ -70,7 +70,7 @@ $di->cache = function () {
 // }
 
 // 切换到页面渲染
-$di->response = new \PhalApi\Response\HtmlResponse();
+// $di->response = new \PhalApi\Response\HtmlResponse();
 
 // 生成二维码扩展，参考示例：?s=App.Examples_QrCode.Png
 // $di->qrcode = function() {
