@@ -32,7 +32,7 @@ class Homepage extends Api {
 
         $qiniu = new Qiniu();
         $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
-        return $domain . "/" . $ret['key'];
+        return $this->domain . "/" . $ret['key'];
     }
 }
 
