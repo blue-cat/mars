@@ -78,26 +78,32 @@ $location = '中国 湖北省 武汉市';
         }
         .upload {
             position: absolute;
-            right: 5px;
-            bottom: 5px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 让上传按钮居中 */
             background-color: rgba(255, 255, 255, 0.7);
             border: 1px solid #ccc;
             border-radius: 5px;
             cursor: pointer;
             padding: 2px 5px;
         }
-        .description {
-            font-size: 18px;
-            margin: 20px 0;
-            font-weight: bold;
+        .content {
+            display: flex; /* 水平排列左右部分 */
+            margin-top: 20px; /* 上部留空 */
+            width: 80%; /* 总宽度80% */
+            margin: 20px auto; /* 中心对齐 */
         }
-        .details {
+        .left {
+            width: 60%; /* 描述和细节部分宽度 */
             text-align: left;
-            margin: 0 auto;
-            max-width: 300px;
+            padding-right: 20px; /* 右侧留空间 */
+        }
+        .right {
+            width: 40%; /* QR码和位置部分宽度 */
+            text-align: left;
         }
         .qrcode {
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .location {
             margin-top: 10px;
@@ -121,19 +127,22 @@ $location = '中国 湖北省 武汉市';
         <?php endforeach; ?>
     </div>
 
-    <div class="description"><?php echo $description; ?></div>
-
-    <div class="details">
-        <?php foreach ($details as $detail): ?>
-            <div><?php echo $detail; ?></div>
-        <?php endforeach; ?>
+    <div class="content">
+        <div class="left">
+            <div class="description"><?php echo $description; ?></div>
+            <div class="details">
+                <?php foreach ($details as $detail): ?>
+                    <div><?php echo $detail; ?></div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="right">
+            <div class="qrcode">
+                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code">
+            </div>
+            <div class="location"><?php echo $location; ?></div>
+        </div>
     </div>
-
-    <div class="qrcode">
-        <img src="<?php echo $qrcodeImage; ?>" alt="QR Code">
-    </div>
-
-    <div class="location"><?php echo $location; ?></div>
 
     <script>
         function uploadImage(index) {
