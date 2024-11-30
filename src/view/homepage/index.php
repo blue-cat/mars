@@ -45,13 +45,16 @@ $location = '中国 湖北省 武汉市';
         .images {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 5px; /* 控制图片间距 */
-            margin: 20px 0;
+            gap: 1px; /* 图片间距为1px */
+            margin: 0 auto; /* 居中对齐 */
+            width: 100%; /* 设置为100%以便充满父容器 */
+            max-width: 420px; /* 最大宽度控制 */
+            height: auto; /* 高度自适应 */
         }
         .image-container {
             position: relative;
-            width: 105px; /* 精确控制宽度 */
-            height: 105px; /* 精确控制高度 */
+            width: 100%; /* 整体宽度 */
+            height: calc(100% * 19 / 6); /* 高度与宽度保持6:19比例 */
             background-color: #f0f0f0; /* 淡灰色背景 */
             overflow: hidden; /* 隐藏溢出部分 */
         }
