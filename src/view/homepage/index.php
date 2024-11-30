@@ -43,19 +43,29 @@ $location = '中国 湖北省 武汉市';
             margin-top: 10px;
         }
         .images {
-            display: flex;
-            flex-wrap: wrap;  /* 允许换行 */
-            justify-content: space-around; /* 居中对齐 */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 三列布局 */
+            gap: 1px; /* 图片间距为1px */
             width: 80%; /* 设置宽度为80%以便占据屏幕的0.8 */
             margin: 0 auto; /* 居中 */
         }
         .image-container {
             position: relative;
-            width: calc(33.33% - 2px); /* 每个图片容器占据1/3的宽度，减去间隔 */
-            height: calc(33.33% * 16 / 9); /* 高度与宽度保持9:16比例 */
+            width: 100%; /* 占满整个格子 */
+            padding-top: 177.78%; /* 9:16的比例，实际高度 = 宽度 * (16/9) */
             background-color: #f0f0f0; /* 淡灰色背景 */
             overflow: hidden; /* 隐藏溢出部分 */
-            border: 1px solid #ccc; /* 边框 */
+        }
+        .image-container img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            min-width: 100%;
+            transform: translate(-50%, -50%); /* 居中对齐 */
+            object-fit: cover; /* 保持宽高比，裁剪多余部分 */
         }
         .placeholder {
             width: 100%;
@@ -65,18 +75,6 @@ $location = '中国 湖北省 武汉市';
             justify-content: center;
             color: #999;
             font-size: 14px; /* 提示文字大小 */
-        }
-        .images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 保持宽高比，填充图片 */
-            display: none; /* 默认不显示图片 */
-        }
-        .message {
-            display: none;
-            position: absolute;
-            color: #999;
-            text-align: center;
         }
         .upload {
             position: absolute;
@@ -118,7 +116,6 @@ $location = '中国 湖北省 武汉市';
             <div class="image-container" id="image-container-<?php echo $index; ?>">
                 <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
                 <div class="placeholder" id="placeholder-<?php echo $index; ?>">请上传图片</div>
-                <div class="message" id="message-<?php echo $index; ?>">请上传图片</div>
                 <div class="upload" onclick="uploadImage(<?php echo $index; ?>)">上传</div>
             </div>
         <?php endforeach; ?>
