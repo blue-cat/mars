@@ -51,6 +51,17 @@ $location = '中国 湖北省 武汉市';
             width: 100px;
             height: 100px;
             object-fit: cover;
+            position: relative;
+        }
+        .upload {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 2px 5px;
         }
         .description {
             font-size: 18px;
@@ -78,8 +89,11 @@ $location = '中国 湖北省 武汉市';
     </div>
 
     <div class="images">
-        <?php foreach ($images as $image): ?>
-            <img src="<?php echo $image; ?>" alt="image">
+        <?php foreach ($images as $index => $image): ?>
+            <div style="position: relative;">
+                <img src="<?php echo $image; ?>" alt="image">
+                <div class="upload" onclick="uploadImage(<?php echo $index; ?>)">上传</div>
+            </div>
         <?php endforeach; ?>
     </div>
 
@@ -96,6 +110,50 @@ $location = '中国 湖北省 武汉市';
     </div>
 
     <div class="location"><?php echo $location; ?></div>
+
+    <script>
+        function uploadImage(index) {
+            // 创建文件输入元素
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*'; // 只接受图片格式
+            
+            // 选择文件
+            input.onchange = async (event) => {
+                const file = event.target.files[0];
+                if (!file) return; // 如果没有选择文件，返回
+                
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    // 发起上传请求
+                    const response = await fetch('/?s=App.Homepage_Homepage.upload', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('上传失败！');
+                    }
+
+                    // 获取返回的新图片地址
+                    const data = await response.json();
+                    const newImageURL = data.imageUrl; // 假设返回的数据中包含 imageUrl
+
+                    // 替换当前图片的 src
+                    const images = document.querySelectorAll('.images img');
+                    images[index].src = newImageURL;
+                } catch (error) {
+                    console.error('上传出错:', error);
+                    alert('上传失败，请重试。');
+                }
+            };
+
+            // 唤起文件选择器
+            input.click();
+        }
+    </script>
 
 </body>
 </html>
