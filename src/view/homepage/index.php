@@ -43,20 +43,28 @@ $location = '中国 湖北省 武汉市';
             margin-top: 10px;
         }
         .images {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-wrap: wrap;  /* 允许换行 */
+            justify-content: center; /* 居中对齐 */
             gap: 1px; /* 图片间距为1px */
-            margin: 0 auto; /* 居中对齐 */
-            width: 100%; /* 设置为100%以便充满父容器 */
-            max-width: 420px; /* 最大宽度控制 */
-            height: auto; /* 高度自适应 */
+            width: 60%; /* 设置宽度为60%，以便占据屏幕的3/5 */
+            margin: 0 auto; /* 居中 */
         }
         .image-container {
             position: relative;
-            width: 100%; /* 整体宽度 */
+            width: calc(33.33% - 1px); /* 每个图片容器占据1/3的宽度，减去间隔 */
             height: calc(100% * 19 / 6); /* 高度与宽度保持6:19比例 */
             background-color: #f0f0f0; /* 淡灰色背景 */
             overflow: hidden; /* 隐藏溢出部分 */
+        }
+        .placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px; /* 提示文字大小 */
         }
         .images img {
             width: 100%;
@@ -109,6 +117,7 @@ $location = '中国 湖北省 武汉市';
         <?php foreach ($images as $index => $image): ?>
             <div class="image-container" id="image-container-<?php echo $index; ?>">
                 <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
+                <div class="placeholder" id="placeholder-<?php echo $index; ?>">请上传图片</div>
                 <div class="message" id="message-<?php echo $index; ?>">请上传图片</div>
                 <div class="upload" onclick="uploadImage(<?php echo $index; ?>)">上传</div>
             </div>
@@ -153,11 +162,11 @@ $location = '中国 湖北省 武汉市';
                     if (data.ret === 200) {
                         const newImageURL = data.data;
                         const imgElement = document.getElementById(`img-${index}`);
-                        const message = document.getElementById(`message-${index}`);
+                        const placeholder = document.getElementById(`placeholder-${index}`);
                         
                         imgElement.src = newImageURL; // 更新图片地址
                         imgElement.style.display = 'block'; // 显示图片
-                        message.style.display = 'none'; // 隐藏提示信息
+                        placeholder.style.display = 'none'; // 隐藏占位符
                     } else {
                         alert(data.msg);
                     }
@@ -171,10 +180,10 @@ $location = '中国 湖北省 武汉市';
         }
 
         function imageError(index) {
-            const message = document.getElementById(`message-${index}`);
             const imgElement = document.getElementById(`img-${index}`);
+            const placeholder = document.getElementById(`placeholder-${index}`);
             imgElement.style.display = 'none'; // 不显示破损的图片
-            message.style.display = 'block'; // 显示提示信息
+            placeholder.style.display = 'flex'; // 显示占位符
         }
     </script>
 
