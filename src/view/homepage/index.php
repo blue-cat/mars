@@ -28,6 +28,7 @@ $location = '中国 湖北省 武汉市';
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            margin: 0;
         }
         .profile {
             margin-bottom: 20px;
@@ -49,25 +50,24 @@ $location = '中国 湖北省 武汉市';
         }
         .image-container {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 100px; /* 容器宽度 */
+            height: 100px; /* 容器高度 */
             background-color: #f0f0f0; /* 淡灰色背景 */
             border: 1px solid #ccc;
             border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* 隐藏溢出部分 */
         }
         .images img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* 保持宽高比例 */
+            width: 100%; /* 最大宽度 */
+            height: 100%; /* 最大高度 */
+            object-fit: cover; /* 保持宽高比，裁剪图片 */
+            display: none; /* 默认不显示图片 */
         }
         .message {
             display: none;
             position: absolute;
             color: #999;
+            text-align: center;
         }
         .upload {
             position: absolute;
@@ -107,7 +107,7 @@ $location = '中国 湖北省 武汉市';
     <div class="images">
         <?php foreach ($images as $index => $image): ?>
             <div class="image-container" id="image-container-<?php echo $index; ?>">
-                <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)">
+                <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
                 <div class="message" id="message-<?php echo $index; ?>">请上传图片</div>
                 <div class="upload" onclick="uploadImage(<?php echo $index; ?>)">上传</div>
             </div>
@@ -151,10 +151,12 @@ $location = '中国 湖北省 武汉市';
 
                     if (data.ret === 200) {
                         const newImageURL = data.data;
-                        const images = document.querySelectorAll('.images img');
+                        const imgElement = document.getElementById(`img-${index}`);
                         const message = document.getElementById(`message-${index}`);
-                        message.style.display = 'none';
-                        images[index].src = newImageURL;
+                        
+                        imgElement.src = newImageURL; // 更新图片地址
+                        imgElement.style.display = 'block'; // 显示图片
+                        message.style.display = 'none'; // 隐藏提示信息
                     } else {
                         alert(data.msg);
                     }
@@ -169,6 +171,8 @@ $location = '中国 湖北省 武汉市';
 
         function imageError(index) {
             const message = document.getElementById(`message-${index}`);
+            const imgElement = document.getElementById(`img-${index}`);
+            imgElement.style.display = 'none'; // 不显示破损的图片
             message.style.display = 'block'; // 显示提示信息
         }
     </script>
