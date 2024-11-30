@@ -47,11 +47,27 @@ $location = '中国 湖北省 武汉市';
             gap: 10px;
             margin: 20px 0;
         }
-        .images img {
+        .image-container {
+            position: relative;
             width: 100px;
             height: 100px;
-            object-fit: cover;
-            position: relative;
+            background-color: #f0f0f0; /* 淡灰色背景 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .images img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* 保持宽高比例 */
+        }
+        .message {
+            display: none;
+            position: absolute;
+            color: #999;
         }
         .upload {
             position: absolute;
@@ -90,8 +106,9 @@ $location = '中国 湖北省 武汉市';
 
     <div class="images">
         <?php foreach ($images as $index => $image): ?>
-            <div style="position: relative;">
-                <img src="<?php echo $image; ?>" alt="image">
+            <div class="image-container" id="image-container-<?php echo $index; ?>">
+                <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)">
+                <div class="message" id="message-<?php echo $index; ?>">请上传图片</div>
                 <div class="upload" onclick="uploadImage(<?php echo $index; ?>)">上传</div>
             </div>
         <?php endforeach; ?>
@@ -112,49 +129,49 @@ $location = '中国 湖北省 武汉市';
     <div class="location"><?php echo $location; ?></div>
 
     <script>
-    function uploadImage(index) {
-        // 创建文件输入元素
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*'; // 只接受图片格式
-        
-        // 选择文件
-        input.onchange = async (event) => {
-            const file = event.target.files[0];
-            if (!file) return; // 如果没有选择文件，返回
-            
-            const formData = new FormData();
-            formData.append('file', file);
+        function uploadImage(index) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
 
-            try {
-                // 发起上传请求
-                const response = await fetch('/?s=App.Homepage_Homepage.upload', {
-                    method: 'POST',
-                    body: formData,
-                });
+            input.onchange = async (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
 
-                const data = await response.json();
+                const formData = new FormData();
+                formData.append('file', file);
 
-                if (data.ret === 200) {
-                    // 替换当前图片的 src
-                    const newImageURL = data.data;
-                    const images = document.querySelectorAll('.images img');
-                    images[index].src = newImageURL;
-                } else {
-                    // 弹窗显示错误消息
-                    alert(data.msg);
+                try {
+                    const response = await fetch('/?s=App.Homepage_Homepage.upload', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const data = await response.json();
+
+                    if (data.ret === 200) {
+                        const newImageURL = data.data;
+                        const images = document.querySelectorAll('.images img');
+                        const message = document.getElementById(`message-${index}`);
+                        message.style.display = 'none';
+                        images[index].src = newImageURL;
+                    } else {
+                        alert(data.msg);
+                    }
+                } catch (error) {
+                    console.error('上传出错:', error);
+                    alert('上传失败，请重试。');
                 }
-            } catch (error) {
-                console.error('上传出错:', error);
-                alert('上传失败，请重试。');
-            }
-        };
+            };
 
-        // 唤起文件选择器
-        input.click();
-    }
-</script>
+            input.click();
+        }
 
+        function imageError(index) {
+            const message = document.getElementById(`message-${index}`);
+            message.style.display = 'block'; // 显示提示信息
+        }
+    </script>
 
 </body>
 </html>
