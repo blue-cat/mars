@@ -35,8 +35,16 @@ $qrcodeImage = '二维码图片路径';
         }
         .profile img {
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
+        }
+        .profile-image-container {
+            width: 150px; /* 固定宽度 */
+            height: 150px; /* 固定高度 */
+            background-color: #f0f0f0; /* 灰色背景 */
+            border-radius: 50%; /* 圆形边角 */
+            overflow: hidden; /* 隐藏溢出部分 */
+            display: inline-block; /* 使元素保持行内块级特性 */
         }
         .username {
             font-weight: bold;
@@ -131,7 +139,7 @@ $qrcodeImage = '二维码图片路径';
 <body>
 
     <div class="profile">
-        <div style="width: 100px; height: 100px; background-color: #f0f0f0; border-radius: 50%; overflow: hidden; display: inline-block;">
+        <div class="profile-image-container">
             <img src="<?php echo $profileImage; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
         </div>
         <div class="username"><?php echo $username; ?></div>
