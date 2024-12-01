@@ -8,7 +8,6 @@ $details = [
     '🎸 超绝 ehp svt 团魂。女团博爱',
     '克拉忞静快来带我玩🤲'
 ];
-$qrcodeImage = '二维码图片路径';
 list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
 ?>
 

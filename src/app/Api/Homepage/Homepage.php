@@ -74,7 +74,7 @@ class Homepage extends Api {
             }
 
             // 拉取用户的二维码
-            $qrcode = $this->domain. '/'. $media->getMediaByObjIdAndOrder(2, $user_id, 0)['dir'];
+            $qrcodeImage = $this->domain. '/'. $media->getMediaByObjIdAndOrder(2, $user_id, 0)['dir'];
         }
 
         include(API_ROOT . '/src/view/homepage/index.php');
@@ -142,7 +142,7 @@ class Homepage extends Api {
             'v_dir' => "",
             'cdn_id' => 1,
         ];
-        $media->save(1, $selfUid, $order, $data);
+        $media->save((int)$_POST['type'], $selfUid, $order, $data);
 
         return $this->domain . "/" . $ret['key'];
     }
