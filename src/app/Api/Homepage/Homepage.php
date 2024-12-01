@@ -69,8 +69,8 @@ class Homepage extends Api {
             for ($i = 0; $i < 6; $i++) {
                 $images[] = "";
             }
-            foreach ($mediaList as $media) {
-                $images[$media['order']] = $this->domain. '/'. $media['dir'];
+            foreach ($mediaList as $md) {
+                $images[$md['order']] = $this->domain. '/'. $md['dir'];
             }
 
             print_r($media->getMediaByObjIdAndOrder(2, $user_id, 0));
