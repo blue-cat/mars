@@ -25,7 +25,7 @@ $qrcodeImage = '二维码图片路径';
     <style>
         @font-face {
             font-family: 'LM Roman Bold';  /* 为新字体定义一个名称 */
-            src: url('https://dulcim.com/font/lmroman-bold.woff') format('woff'); /* 指定字体文件的 URL 和格式 */
+            src: url('/font/lmroman-bold.woff') format('woff'); /* 指定字体文件的 URL 和格式 */
         }
         body {
             font-family: 'LM Roman Bold', Arial, sans-serif; /* 将自定义字体应用于 body 元素 */
