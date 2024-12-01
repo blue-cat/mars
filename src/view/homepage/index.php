@@ -293,8 +293,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         // 替换或添加user_id到URL
                         const currentUrl = new URL(window.location.href);
                         currentUrl.searchParams.set('user_id', user_id);
-                        currentUrl.searchParams.remove('code');
-                        currentUrl.searchParams.remove('state');
+                        currentUrl.searchParams.delete('code');
+                        currentUrl.searchParams.delete('state');
                         window.history.replaceState({}, '', currentUrl);
                         // 这里可以执行其他逻辑，比如刷新页面或显示用户信息
                     } else {
