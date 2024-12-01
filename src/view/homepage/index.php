@@ -241,7 +241,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             </div>
         </div>
         <div class="right">
-            <div class="qrcode" style="<?php echo $qrcodeImage ? 'background-image: radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent);' : ''; ?>">
+            <div class="qrcode" id="qrcode-container">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
 
                 <div class="corner corner-tl">
@@ -457,13 +457,16 @@ function uploadImage(index) {
             const imgElement = document.getElementById('qr-code');
             imgElement.style.display = 'none'; // 隐藏破损的二维码图片
 
+            // 修改qrcode区域的背景
+            const qrCodeContainer = document.getElementById('qrcode-container');
+            qrCodeContainer.style.backgroundImage = 'radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent)';
+
             // 修改上传按钮文本为“上传”
             const uploadButton = document.querySelector('.qrcode .upload');
-            uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
+            if (uploadButton) 
+                uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
+            }
             
-            // 显示二维码区域的背景图案
-            const qrCodeContainer = document.querySelector('.qrcode');
-            qrCodeContainer.style.backgroundImage = 'radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent)';
         }
 
     </script>
