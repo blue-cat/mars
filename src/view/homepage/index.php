@@ -31,7 +31,7 @@ $qrcodeImage = '二维码图片路径';
             text-align: center;
             padding: 20px;
             margin: 0;
-            font-size: 10px !important;
+            font-size: 12px !important;
         }
         .profile {
             margin-bottom: 20px;
