@@ -241,7 +241,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             </div>
         </div>
         <div class="right">
-            <div class="qrcode">
+            <div class="qrcode" style="<?php echo !$qrcodeImage ? 'background-image: radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent);' : ''; ?>">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
 
                 <div class="corner corner-tl">
