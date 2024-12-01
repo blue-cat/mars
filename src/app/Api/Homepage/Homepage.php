@@ -16,6 +16,7 @@ class Homepage extends Api {
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
         $id = $_GET['id'];
+        echo $id;
         $user_id = Util::strToUid($id);
         echo $user_id;
 
