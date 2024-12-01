@@ -90,6 +90,9 @@ $qrcodeImage = '二维码图片路径';
             cursor: pointer;
             padding: 2px 5px;
             z-index: 1; /* 确保在其他元素之上 */
+            white-space: nowrap; /* 防止换行 */
+            overflow: hidden; /* 隐藏溢出内容 */
+            text-overflow: ellipsis; /* 超出部分用省略号表示 */
         }
         .content {
             display: flex; /* 水平排列左右部分 */
