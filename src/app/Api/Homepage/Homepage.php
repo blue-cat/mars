@@ -30,7 +30,7 @@ class Homepage extends Api {
         $userSession = new UserSessionDomain();
         $isSuccess = $userSession->checkSession((int)$user_id, $token);
 
-        return $isSuccess? 1 : 0;
+        return $isSuccess? $user_id : 0;
     }
 
     public function index() {
