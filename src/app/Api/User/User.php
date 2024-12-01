@@ -106,7 +106,7 @@ class User extends Api
         $session = new UserSessionDomain();
         $token = $session->generate($user_id);
 
-        return array('user_str' => Utils::uidToStr($user_id), 'user_id' => $user_id, 'token' => $token, 'profile' => $domain->getUserInfoById($user_id, true));
+        return array('user_str' => Util::uidToStr($user_id), 'user_id' => $user_id, 'token' => $token, 'profile' => $domain->getUserInfoById($user_id, true));
     }
 
     /**
