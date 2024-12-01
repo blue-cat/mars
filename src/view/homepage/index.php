@@ -76,6 +76,7 @@ $qrcodeImage = '二维码图片路径';
             border-radius: 5px;
             cursor: pointer;
             padding: 2px 5px;
+            /* 设置按钮的样式 */
             z-index: 1; /* 确保在其他元素之上 */
         }
         .content {
