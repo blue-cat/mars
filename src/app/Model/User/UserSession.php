@@ -101,7 +101,7 @@ class UserSession extends NotORM {
         $time = time();
         $ip = '';
         $location = '';
-
+echo $rdsKey;
         if (isset($cache)) {
             $sessionRds = $cache->hMget($rdsKey, ['ip', 'token', 'expires_time']);
 
