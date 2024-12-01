@@ -68,9 +68,9 @@ $qrcodeImage = '二维码图片路径';
         }
         .upload {
             position: absolute;
-            top: 50%; /* 垂直居中 */
-            left: 50%; /* 水平居中 */
-            transform: translate(-50%, -50%); /* 让上传按钮居中 */
+            bottom: 10px; /* 离底部的距离 */
+            left: 50%;
+            transform: translate(-50%, 0); /* 水平居中 */
             background-color: rgba(255, 255, 255, 0.7);
             border: 1px solid #ccc;
             border-radius: 5px;
