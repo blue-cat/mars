@@ -72,6 +72,7 @@ class Homepage extends Api {
             }
         }
 
+        print_r($images);
         include(API_ROOT . '/src/view/homepage/index.php');
         exit(0);
     }
