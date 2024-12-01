@@ -7,6 +7,7 @@ use App\Domain\Misc\Qiniu;
 use App\Common\Common\Util;
 use App\Domain\User\User as UserDomain;
 use App\Domain\User\UserSession as UserSessionDomain;
+use App\Domain\Media\Media as MediaDomain;
 
 class Homepage extends Api {
 
@@ -67,8 +68,23 @@ class Homepage extends Api {
      * 上传接口，用户提交内容在$_FILES中，然后调用七牛云的接口，将图片内容传到七牛云上，并返回图片的URL地址
      */
     public function upload($type = "homepage") {
+        // 判断用户是否登录
+        $selfUid = $this->getUserIdByToken();
+        if (!$selfUid) {
+            throw new \Exception('用户未登录', 401);
+        }
+
+        print_r($_FILES);
+        exit(0);
         $file = $_FILES['file'];
         $key = $file['name'];
+
+        $order = 0;
+        //获取file的宽高和类型
+        $imageInfo = getimagesize($file['tmp_name']);
+        $width = $imageInfo[0];
+        $height = $imageInfo[1];
+        $type = $imageInfo[2];
 
         //生成一个全局唯一的文件名，以日期为前缀，后面全部为随机字符串，不少于20位
         $name = date('YmdHis'). substr(md5(microtime()), 0, 10);
@@ -77,6 +93,29 @@ class Homepage extends Api {
 
         $qiniu = new Qiniu();
         $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
+
+        // 往media表写
+        $media = new MediaDomain();
+        $data = [
+            'name' => $key,
+            'user_id' => $selfUid,
+            'obj_id' => $selfUid,
+            // 'obj_type' => 1,
+            'order' => $order,
+            'dir' => $ret['key'],
+            'width' => $width,
+            'height' => $height,
+            'type' => $type,
+            'is_video' => 0,
+            'length' => 0,
+            'v_dir' => "",
+            'cdn_id' => 1,
+            'create_time' => time(),
+            'update_time' => time(),
+            'status' => 1,
+        ];
+        $media->save(1, $selfUid, $order, $data);
+
         return $this->domain . "/" . $ret['key'];
     }
 }

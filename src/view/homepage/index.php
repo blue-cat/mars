@@ -414,6 +414,8 @@ function uploadImage(index) {
         compressImage(file, 200, function (compressedBlob) { // 这里将最大宽度设置为800
             const formData = new FormData();
             formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
+            // 将index也传过去
+            formData.append('index', index);
 
             const uploadButton = document.querySelector(`#image-container-${index} .upload`);
             uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”

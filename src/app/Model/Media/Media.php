@@ -23,10 +23,19 @@ class Media extends DataModel {
     public function getListByObjId($objType, $objId, $select = '*') {
         $where = [
             'obj_id' => $objId,
-//            'obj_type' => $objType
+           'obj_type' => $objType
         ];
         $order = '`order` ASC';
         return $this->getORM()->where($where)->order($order)->select($select)->fetchAll();
+    }
+
+    public function getListByObjIdAndOrder($objType, $objId, $order) {
+        $where = [
+            'obj_id' => $objId,
+            'order' => $order,
+            'obj_type' => $objType,
+        ];
+        return $this->getORM()->where($where)->select('*')->fetch();
     }
 
     public function getListById($ids, $select = '*') {
