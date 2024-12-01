@@ -84,7 +84,7 @@ class Homepage extends Api {
             throw new \Exception('请选择文件', 400);
         }
 
-        if (!in_array($_POST['type'], $typeMap)) {
+        if (!in_array($_POST['type'], array_keys($typeMap))) {
             throw new \Exception('上传类型错误', 400);
         }
         $dir = $typeMap[$_POST['type']];
