@@ -23,7 +23,10 @@ class Homepage extends Api {
         }
 
         $userInfo = UserDomain::getUserInfoById($user_id);
-        print_r($userInfo);
+        if (!$userInfo || $userInfo['status']!= 1) {
+            echo "<div class='error'>用户异常</div>";
+            exit(0);
+        }
 
 
         include(API_ROOT . '/src/view/homepage/index.php');

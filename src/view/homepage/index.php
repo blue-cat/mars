@@ -1,7 +1,7 @@
 <?php
 // 定义变量
-$profileImage = '头像图片路径';
-$username = '@Yang-b602_';
+// $profileImage = '头像图片路径';
+// $username = '@Yang-b602_';
 $images = ['图片1路径', '图片2路径', '图片3路径', '图片4路径', '图片5路径', '图片6路径']; // 确保最多为六张图片
 $details = [
     '👆 capper Mingyu Sunoo',
@@ -218,9 +218,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 
     <div class="profile">
         <div class="profile-image-container">
-            <img src="<?php echo $profileImage; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
         </div>
-        <div class="username"><?php echo $username; ?></div>
+        <div class="username">@<?php echo $userInfo['nickname']; ?></div>
     </div>
 
     <div class="images">
