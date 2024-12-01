@@ -101,14 +101,15 @@ class Util
      * 生成一个静态方法，将数字uid转成一个10位的字符串
      * 能将uid转成字符串，也能将字符串转成uid
      * 通过一种简单的对称加密算法，比如aes，然后设置一个值作为密钥，加密解密
+     * 考虑到这儿生成的str是给url中用的，输出需要进行urlencode，输入的时候需要进行urldecode
      */
     public static function uidToString($uid, $encrypt = true)
     {
         $key = '1234567890123456';
         if ($encrypt) {
-            $uid = openssl_encrypt($uid, 'AES-128-ECB', $key);
+            $uid = base64_encode(openssl_encrypt($uid, 'AES-128-ECB', $key));
         } else {
-            $uid = openssl_decrypt($uid, 'AES-128-ECB', $key);
+            $uid = openssl_decrypt(base64_decode($uid), 'AES-128-ECB', $key);
         }
         return $uid;
     }
