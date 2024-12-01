@@ -28,6 +28,7 @@ $qrcodeImage = '二维码图片路径';
             text-align: center;
             padding: 20px;
             margin: 0;
+            font-size: small;
         }
         .profile {
             margin-bottom: 20px;
@@ -130,7 +131,7 @@ $qrcodeImage = '二维码图片路径';
 <body>
 
     <div class="profile">
-        <img src="<?php echo $profileImage; ?>" alt="Profile Image">
+        <img src="<?php echo $profileImage; ?>" alt="Profile Image" onerror="this.style.display='none';">
         <div class="username"><?php echo $username; ?></div>
     </div>
 
