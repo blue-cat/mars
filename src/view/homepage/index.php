@@ -260,9 +260,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     </div>
                 </div>
 
-                <?php if ($isMe): ?>
-                    <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
-                <?php endif; ?>
+                <div class="upload" onclick="uploadQRCode()"><?php if ($isMe) { echo $qrcodeImage ? '修改' : '上传'; }?></div>
             </div>
         </div>
     </div>
