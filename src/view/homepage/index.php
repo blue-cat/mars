@@ -38,12 +38,12 @@ $qrcodeImage = '二维码图片路径';
         }
         .profile img {
             border-radius: 50%;
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
         }
         .profile-image-container {
-            width: 150px; /* 固定宽度 */
-            height: 150px; /* 固定高度 */
+            width: 130px; /* 固定宽度 */
+            height: 130px; /* 固定高度 */
             background-color: #f0f0f0; /* 灰色背景 */
             border-radius: 50%; /* 圆形边角 */
             overflow: hidden; /* 隐藏溢出部分 */
