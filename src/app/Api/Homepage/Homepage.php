@@ -18,9 +18,8 @@ class Homepage extends Api {
         $id = $_GET['id'];
         $user_id = Util::uidToString($id, false);
         if (!$user_id) {
-            // 给个简单样式，文字在整个屏幕上下左右居中显示，并使用灰色文字，使用16号字体.使用flex布局
-            echo "<style>flex-wrap:wrap;display:flex;justify-content:center;align-items:center;height:100vh;background-color:#f5f5f5;color:#999;font-size:16px;text-align:center;flex-direction:column;</style>";
-            echo "<div class='error'>用户不存在</div>";
+            // 给个简单样式，文字在整个屏幕上下左右居中显示，并使用灰色文字，使用16号字体.使用flex布局.
+            echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:16px;color:#999;font-weight:bold;'>用户不存在</div></div>";
             exit(0);
         }
 
