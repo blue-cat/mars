@@ -57,7 +57,7 @@ class Homepage extends Api {
                 exit(0);
             }
 
-            $isMe = $user_id == Util::getCurrentUid();
+            $isMe = $user_id == $selfUid;
         }
 
 
