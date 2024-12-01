@@ -231,8 +231,12 @@ $qrcodeImage = '二维码图片路径';
 
         function imageError(index) {
             const imgElement = document.getElementById(`img-${index}`);
+            const uploadButton = document.querySelector(`#image-container-${index} .upload`);
+            
             imgElement.style.display = 'none'; // 不显示破损的图片
+            uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
         }
+
     </script>
 
 </body>
