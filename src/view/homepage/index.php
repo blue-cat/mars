@@ -119,25 +119,23 @@ $qrcodeImage = '二维码图片路径';
     top: 12.5%; /* 向下移动12.5% */
 }
 
-.qrcode .corner::before {
-    content: '';
-    position: absolute;
+.inner-square {
     background-color: white; /* 白色 */
     width: 30px; /* 设置宽度小于corner的宽度 */
     height: 30px; /* 设置高度小于corner的高度 */
+    position: absolute;
     top: 5px; /* 距离上边缘5px */
     left: 5px; /* 距离左边缘5px */
     z-index: 1; /* 确保在其他元素之上 */
 }
 
-.qrcode .corner::before::after {
-    content: '';
-    position: absolute;
+.inner-square-gray {
     background-color: #f0f0f0; /* 浅灰色 */
     width: 20px; /* 设置宽度小于伪元素的宽度 */
     height: 20px; /* 设置高度小于伪元素的高度 */
-    top: 5px; /* 距离上边缘5px */
-    left: 5px; /* 距离左边缘5px */
+    position: absolute;
+    top: 5px; /* 距离白色方块的上边缘5px */
+    left: 5px; /* 距离白色方块的左边缘5px */
     z-index: 2; /* 确保在最上方 */
 }
 
@@ -222,7 +220,11 @@ $qrcodeImage = '二维码图片路径';
         <div class="right">
             <div class="qrcode">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
-                <div class="corner corner-tl"></div> <!-- 左上角 -->
+                <div class="corner corner-tl">
+                    <div class="inner-square">
+                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
+                    </div> <!-- 白色方块 -->
+                </div> <!-- 左上角 -->
                 <div class="corner corner-tr"></div> <!-- 右上角 -->
                 <div class="corner corner-bl"></div> <!-- 左下角 -->
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
