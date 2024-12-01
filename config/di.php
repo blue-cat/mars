@@ -43,7 +43,7 @@ $di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->config->get('sys.
 $di->error = new ApiError();
 
 $config = array('domain' => '.dulcim.com');
-$id->cookie = new PhalApi\Cookie($config);
+$di->cookie = new PhalApi\Cookie($config);
 
 /** ---------------- 第三应用 服务注册 ---------------- **/
 
