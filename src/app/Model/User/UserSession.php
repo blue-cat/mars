@@ -101,10 +101,10 @@ class UserSession extends NotORM {
         $time = time();
         $ip = '';
         $location = '';
-echo $rdsKey;
+
         if (isset($cache)) {
             $sessionRds = $cache->hMget($rdsKey, ['ip', 'token', 'expires_time']);
-
+print_r($sessionRds);
             //如果拉倒为空了,则从db中拉取来更新
             if (!isset($sessionRds) || empty($sessionRds) || !$sessionRds['token']) {
                 $row = $this->getORM($userId)
