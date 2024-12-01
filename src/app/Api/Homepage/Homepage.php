@@ -17,21 +17,26 @@ class Homepage extends Api {
      */
     private function getUserIdByToken() {
 
-        echo \PhalApi\DI()->cookie->get('token');
+        $token = \PhalApi\DI()->cookie->get('token');
+        $user_id = \PhalApi\DI()->cookie->get('user_id');
 
-        if (!isset($_COOKIE['token']) || !isset($_COOKIE['user_id'])) {
+        if (!$token ||!$user_id) {
             return 0;
         }
+        // 对token进行防注入处理
+        $token = addcslashes($token);
 
         $userSession = new UserSession();
-        $isSuccess = $userSession->checkSession($_COOKIE['user_id'], $_COOKIE['token']);
+        $isSuccess = $userSession->checkSession((int)$user_id, $token);
 
         return $isSuccess? 1 : 0;
     }
 
     public function index() {
         // 判断用户是否登录
-        $this->getUserIdByToken();
+        $selfUid = $this->getUserIdByToken();
+
+        echo "selfUid: ". $selfUid;
 
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
