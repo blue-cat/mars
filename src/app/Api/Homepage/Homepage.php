@@ -73,6 +73,7 @@ class Homepage extends Api {
                 $images[$media['order']] = $this->domain. '/'. $media['dir'];
             }
 
+            print_r($media->getMediaByObjIdAndOrder(2, $user_id, 0));
             // 拉取用户的二维码
             $qrcode = $this->domain. '/'. $media->getMediaByObjIdAndOrder(2, $user_id, 0)['dir'];
         }
