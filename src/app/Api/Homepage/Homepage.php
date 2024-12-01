@@ -75,9 +75,11 @@ class Homepage extends Api {
         }
 
         print_r($_FILES);
+        print_r($_POST);
         exit(0);
         $file = $_FILES['file'];
         $key = $file['name'];
+        $size = $file['size'];
 
         $order = 0;
         //获取file的宽高和类型
@@ -105,6 +107,7 @@ class Homepage extends Api {
             'dir' => $ret['key'],
             'width' => $width,
             'height' => $height,
+            'size' => $size,
             'type' => $type,
             'is_video' => 0,
             'length' => 0,
