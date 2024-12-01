@@ -264,7 +264,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     </div>
 
     <div class="footer">
-        <a href="javascprit:;" id="create-homepage-btn">创建我的Homepage</a> | 
+        <a href="#" id="create-homepage-btn">创建我的Homepage</a> | 
         <a href="#">火星殖民计划</a>
     </div>
 
