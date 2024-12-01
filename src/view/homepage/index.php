@@ -110,6 +110,10 @@ $qrcodeImage = '二维码图片路径';
     overflow: hidden; /* 隐藏溢出部分 */
     margin: 0; /* 居中对齐 */
     
+    /* 添加边框 */
+    border: 1px solid #000; /* 1px 黑色边框 */
+    box-sizing: border-box; /* 包含边框在内 */
+    
     /* 更改背景样式以模拟二维码 */
     background-image: 
         linear-gradient(90deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
@@ -120,6 +124,7 @@ $qrcodeImage = '二维码图片路径';
     /* 添加方块的大小和位置 */
     background-size: 20px 20px; /* 方块的大小 */
 }
+
 
 .qrcode .corner {
     position: absolute;
