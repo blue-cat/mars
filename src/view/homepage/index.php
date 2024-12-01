@@ -103,12 +103,15 @@ $qrcodeImage = '二维码图片路径';
             text-align: center; /* QR码内容居中 */
             position: relative; /* 使二维码和上传按钮相对定位 */
         }
+        /* 其他样式不变 */
         .qrcode {
             position: relative;
             padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
             background-color: #f0f0f0; /* 灰色背景 */
             overflow: hidden; /* 隐藏溢出部分 */
             margin: 0; /* 居中对齐 */
+            background-image: radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent);
+            background-size: 20px 20px; /* 设置图案的大小 */
         }
         .qrcode img {
             position: absolute;
@@ -274,8 +277,11 @@ $qrcodeImage = '二维码图片路径';
             // 修改上传按钮文本为“上传”
             const uploadButton = document.querySelector('.qrcode .upload');
             uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
+            
+            // 显示二维码区域的背景图案
+            const qrCodeContainer = document.querySelector('.qrcode');
+            qrCodeContainer.style.backgroundImage = 'radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent)';
         }
-
 
     </script>
 
