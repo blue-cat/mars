@@ -279,7 +279,7 @@ $qrcodeImage = '二维码图片路径';
         const file = event.target.files[0];
         if (!file) return;
 
-        compressImage(file, 800, function (compressedBlob) { // 这里将最大宽度设置为800
+        compressImage(file, 200, function (compressedBlob) { // 这里将最大宽度设置为800
             const formData = new FormData();
             formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
 
@@ -330,7 +330,7 @@ function uploadImage(index) {
         const file = event.target.files[0];
         if (!file) return;
 
-        compressImage(file, 800, function (compressedBlob) { // 这里将最大宽度设置为800
+        compressImage(file, 200, function (compressedBlob) { // 这里将最大宽度设置为800
             const formData = new FormData();
             formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
 
