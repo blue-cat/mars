@@ -119,6 +119,10 @@ $qrcodeImage = '二维码图片路径';
     top: 12.5%; /* 向下移动12.5% */
 }
 
+.corner.hidden {
+    display: none; /* 隐藏角落 */
+}
+
 .inner-square {
     background-color: white; /* 白色 */
     width: 30px; /* 设置宽度小于corner的宽度 */
@@ -282,13 +286,6 @@ $qrcodeImage = '二维码图片路径';
 
                 // 更新上传按钮文本为“修改”
                 uploadButton.textContent = '修改';
-
-                imgElement.style.zIndex = '0'; // 设置二维码图片 z-index 为 0
-                imgElement.style.zIndex = '0'; // 设置二维码图片 z-index 为 0
-                const corners = document.querySelectorAll('.qrcode .corner');
-                corners.forEach(corner => {
-                    corner.style.zIndex = '-1'; // 设置角落 z-index 为 -1
-                });
             } else {
                 alert(data.msg);
                 uploadButton.textContent = '上传'; // 恢复按钮文字
