@@ -146,7 +146,7 @@ $qrcodeImage = '二维码图片路径';
 .qrcode .corner-bl {
     width: 40px; /* 左下角块的宽度 */
     height: 40px; /* 左下角块的高度 */
-    bottom: 55%;
+    top: 55%;
     left: 0;
 }
 
