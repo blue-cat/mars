@@ -114,10 +114,17 @@ $qrcodeImage = '二维码图片路径';
         }
         .qrcode .upload {
             position: absolute; /* 绝对定位 */
-            bottom: 5px; /* 离底部有距离 */
-            left: 50%;
-            transform: translateX(-50%); /* 水平居中 */
+            top: 50%; /* 垂直居中 */
+            left: 50%; /* 水平居中 */
+            transform: translate(-50%, -50%); /* 使其居中 */
+            background-color: rgba(255, 255, 255, 0.7); /* 背景色，保持原样 */
+            border: 1px solid #ccc; /* 边框，保持原样 */
+            border-radius: 5px; /* 圆角，保持原样 */
+            cursor: pointer; /* 鼠标指针 */
+            padding: 2px 5px; /* 内边距，保持原样 */
+            z-index: 1; /* 确保在图片之上 */
         }
+
     </style>
 </head>
 <body>
@@ -148,7 +155,7 @@ $qrcodeImage = '二维码图片路径';
         <div class="right">
             <div class="qrcode">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
-                <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改二维码' : '上传二维码'; ?></div>
+                <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
     </div>
