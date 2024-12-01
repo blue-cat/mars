@@ -301,7 +301,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         currentUrl.searchParams.set('id', user_str);
                         currentUrl.searchParams.delete('code');
                         currentUrl.searchParams.delete('state');
-                        window.history.replaceState({}, '', currentUrl);
+                        window.location.href = currentUrl.href; // 跳转到首页
+                        // window.history.replaceState({}, '', currentUrl);
                         // 这里可以执行其他逻辑，比如刷新页面或显示用户信息
                     } else {
                         alert(data.msg);
