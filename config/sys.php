@@ -42,7 +42,7 @@ return array(
     'redis' => array(
         'host' => 'redis',
         'port' => 6379,
-        'db_id' => 3,
+        'db' => 3,
 	),
 	
     /**
