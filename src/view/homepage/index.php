@@ -186,9 +186,13 @@ $qrcodeImage = '二维码图片路径';
                         const imgElement = document.getElementById('qr-code');
                         imgElement.src = newQRCodeURL; // 更新二维码地址
 
-                        // 隐藏可能存在的破损图片
+                        // 显示新上传的二维码图片
                         imgElement.style.display = 'block'; // 确保图片可见
                         imgElement.onerror = null; // 清除之前的错误处理
+
+                        // 更新上传按钮文本为“修改”
+                        const uploadButton = document.querySelector('.qrcode .upload');
+                        uploadButton.textContent = '修改'; // 将按钮文字更改为“修改”
                     } else {
                         alert(data.msg);
                     }
@@ -200,7 +204,6 @@ $qrcodeImage = '二维码图片路径';
 
             input.click();
         }
-
 
         function uploadImage(index) {
             const input = document.createElement('input');
@@ -256,7 +259,12 @@ $qrcodeImage = '二维码图片路径';
         function qrCodeError() {
             const imgElement = document.getElementById('qr-code');
             imgElement.style.display = 'none'; // 隐藏破损的二维码图片
+
+            // 修改上传按钮文本为“上传”
+            const uploadButton = document.querySelector('.qrcode .upload');
+            uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
         }
+
 
     </script>
 
