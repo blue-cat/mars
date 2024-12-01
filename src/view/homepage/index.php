@@ -96,11 +96,10 @@ $qrcodeImage = '二维码图片路径';
         }
         .qrcode {
             position: relative;
-            width: 75%; /* QR码宽度 */
             padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
             background-color: #f0f0f0; /* 灰色背景 */
             overflow: hidden; /* 隐藏溢出部分 */
-            margin: 20px auto; /* 居中对齐 */
+            margin: 0; /* 居中对齐 */
         }
         .qrcode img {
             position: absolute;
