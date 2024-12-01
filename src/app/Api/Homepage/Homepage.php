@@ -4,7 +4,7 @@ namespace App\Api\Homepage;
 
 use Phalapi\Api;
 use App\Domain\Misc\Qiniu;
-
+use App\Common\Common\Util;
 
 
 class Homepage extends Api {
@@ -14,6 +14,11 @@ class Homepage extends Api {
     public function index() {
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
+        // 根据uid获取用户信息
+        $id = $_GET['id'];
+        $user_id = Util::strToUid($id);
+        echo $user_id;
+
         include(API_ROOT . '/src/view/homepage/index.php');
         exit(0);
     }
