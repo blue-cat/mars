@@ -53,11 +53,14 @@ class User
         if ($userId && !$isNew && ($nickname || $avatar)) {
             if ($nickname) {
                 $update['nickname'] = $nickname;
+                echo $nickname;
             }
             if ($avatar) {
                 $update['avatar'] = $this->_avatar2path($avatar, '');
                 $update['cdn_id'] = \PhalApi\DI()->config->get('vendor.cur_cdn');
             }
+
+            $update['update_time'] = time();
 
             $this->update($update, $userId);
         }
