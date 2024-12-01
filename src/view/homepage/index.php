@@ -115,40 +115,33 @@ $qrcodeImage = '二维码图片路径';
 
 .qrcode .corner {
     position: absolute;
-    background-color: transparent; /* 让基础背景透明 */
-    width: 50px; /* 调整外框的宽度（包括边框、留白） */
-    height: 50px; /* 调整外框的高度（包括边框、留白） */
-    border: 5px solid #ccc; /* 设置外边框为灰色且比较粗 */
-    box-sizing: border-box; /* 包括边框在内的宽高计算 */
+    background-color: #ccc; /* 浅灰色 */
+    top: 12.5%; /* 向下移动12.5% */
 }
 
 /* 定义左上角的块 */
 .qrcode .corner-tl {
-    width: 50px; /* 外框宽度 */
-    height: 50px; /* 外框高度 */
-    top: 12.5%; /* 位置 */
+    width: 40px; /* 左上角块的宽度 */
+    height: 40px; /* 左上角块的高度 */
+    top: 12.5%; /* 向下移动12.5% */
     left: 0;
-    background-color: #ccc; /* 内部实心灰色方块 */
 }
 
 /* 定义右上角的块 */
 .qrcode .corner-tr {
-    width: 50px; /* 外框宽度 */
-    height: 50px; /* 外框高度 */
-    top: 12.5%; /* 位置 */
+    width: 40px; /* 右上角块的宽度 */
+    height: 40px; /* 右上角块的高度 */
+    top: 12.5%; /* 向下移动12.5% */
     right: 0;
-    background-color: #ccc; /* 内部实心灰色方块 */
 }
 
 /* 定义左下角的块 */
 .qrcode .corner-bl {
-    width: 50px; /* 外框宽度 */
-    height: 50px; /* 外框高度 */
-    top: 67.5%; /* 位置 */
+    width: 40px; /* 左下角块的宽度 */
+    height: 40px; /* 左下角块的高度 */
+    top: 67.5%; /* 原位置 55% + 12.5% */
     left: 0;
-    background-color: #ccc; /* 内部实心灰色方块 */
 }
-
 
         .qrcode img {
             position: absolute;
