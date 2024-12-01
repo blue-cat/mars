@@ -53,7 +53,6 @@ class User
         if ($userId && !$isNew && ($nickname || $avatar)) {
             if ($nickname) {
                 $update['nickname'] = $nickname;
-                echo $nickname;
             }
             if ($avatar) {
                 $update['avatar'] = $this->_avatar2path($avatar, '');
