@@ -13,6 +13,8 @@ class Homepage extends Api {
 
     public $domain = 'https://h5store.nearby.dulcim.com';
 
+    //obj_type 1 homepage列表 2 二维码 3 头像
+
     /**
      * 从用户cookie中拿到token，然后根据token获取用户信息
      */
@@ -70,6 +72,9 @@ class Homepage extends Api {
             foreach ($mediaList as $media) {
                 $images[$media['order']] = $this->domain. '/'. $media['dir'];
             }
+
+            // 拉取用户的二维码
+            $qrcode = $this->domain. '/'. $media->getMediaByObjIdAndOrder(2, $user_id, 0)['dir'];
         }
 
         include(API_ROOT . '/src/view/homepage/index.php');
