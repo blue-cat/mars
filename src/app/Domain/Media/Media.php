@@ -50,16 +50,17 @@ class Media {
             return $this->update($mediaInfo['id'], $array);
         } else {
             // 不存在, ��入
-            return $this->add($array['user_id'], $obj_type, $array['user_id'], $array['order'], $array['width'], $array['height'], $array['type'], $array['dir'], $array['is_video'], $array['v_dir'], $array['length'], $array['cdn_id'], $array['name']);
+            return $this->add($array['user_id'], $obj_type, $array['user_id'], $array['order'], $array['width'], $array['height'], $array['type'], $array['dir'], $array['is_video'], $array['v_dir'], $array['length'], $array['cdn_id'], $array['name'], $array['size']);
         }
     }
 
-    public function add($userId, $obj_type, $obj_id, $order, $width, $height, $type, $dir, $is_video = 0, $v_dir = '', $length = 0, $cdn_id = 0, $name = '') {
+    public function add($userId, $obj_type, $obj_id, $order, $width, $height, $type, $dir, $is_video = 0, $v_dir = '', $length = 0, $cdn_id = 0, $name = '', $size = 0) {
         $status = self::MEDIA_OK;
         $time = time();
 
         $data = [
             'name' => $name,
+            'size' => $size,
             'user_id' => $userId,
             'obj_type' => (int) $obj_type,
             'obj_id' => (int) $obj_id,
