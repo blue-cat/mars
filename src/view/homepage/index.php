@@ -3,7 +3,6 @@
 $profileImage = '头像图片路径';
 $username = '@Yang-b602_';
 $images = ['图片1路径', '图片2路径', '图片3路径', '图片4路径', '图片5路径', '图片6路径']; // 确保最多为六张图片
-$description = 'id即备注 生活>追星';
 $details = [
     '👆 capper Mingyu Sunoo',
     '🍑 ningning Giselle 李羲承',
@@ -52,6 +51,7 @@ $qrcodeImage = '二维码图片路径';
         }
         .username {
             font-weight: bold;
+            font-size: normal;
             margin-top: 10px;
         }
         .images {
@@ -217,7 +217,6 @@ $qrcodeImage = '二维码图片路径';
 
     <div class="content">
         <div class="left">
-            <div class="description"><?php echo $description; ?></div>
             <div class="details">
                 <?php foreach ($details as $detail): ?>
                     <div><?php echo $detail; ?></div>
