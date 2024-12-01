@@ -273,7 +273,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         const state = urlParams.get('state');
-        const userId = urlParams.get('user_id');
 
         if (code && state) {
             // 进行AJAX调用
@@ -293,7 +292,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 
                         // 替换或添加user_id到URL
                         const currentUrl = new URL(window.location.href);
-                        currentUrl.searchParams.set('user_id', user_id);
+                        currentUrl.searchParams.set('id', user_str);
                         currentUrl.searchParams.delete('code');
                         currentUrl.searchParams.delete('state');
                         window.history.replaceState({}, '', currentUrl);
