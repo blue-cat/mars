@@ -1,7 +1,4 @@
 <?php
-// 定义变量
-// $profileImage = '头像图片路径';
-// $username = '@Yang-b602_';
 $images = ['图片1路径', '图片2路径', '图片3路径', '图片4路径', '图片5路径', '图片6路径']; // 确保最多为六张图片
 $details = [
     '👆 capper Mingyu Sunoo',
@@ -282,8 +279,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     if (data.ret === 200) {
                         const { user_str, user_id, token, profile } = data.data;
 
-                        // 设置cookie
-                        document.cookie = `token=${token}; path=/; max-age=86400`;
+                        // 设置cookie,存入cookie和user_id
+                        document.cookie = `token=${token}; expires=${new Date(Date.now() +  24 * 60 * 60 * 1000).toUTCString()}`;
+                        document.cookie = `user_id=${user_id}; expires=${new Date(Date.now() +  24 * 60 * 60 * 1000).toUTCString()}`;
+                        
                         // 存储到本地存储
                         localStorage.setItem('token', token);
                         localStorage.setItem('user_id', user_id);
@@ -299,6 +298,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         // 这里可以执行其他逻辑，比如刷新页面或显示用户信息
                     } else {
                         alert(data.msg);
+                    
                     }
                 })
                 .catch(error => {

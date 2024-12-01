@@ -6,15 +6,37 @@ use Phalapi\Api;
 use App\Domain\Misc\Qiniu;
 use App\Common\Common\Util;
 use App\Domain\User\User as UserDomain;
+use App\Domain\User\UserSession as UserSessionDomain;
 
 class Homepage extends Api {
 
     public $domain = 'https://h5store.nearby.dulcim.com';
 
+    /**
+     * 从用户cookie中拿到token，然后根据token获取用户信息
+     */
+    private function getUserIdByToken() {
+
+        echo \PhalApi\DI()->cookie->get('token');
+
+        if (!isset($_COOKIE['token']) || !isset($_COOKIE['user_id'])) {
+            return 0;
+        }
+
+        $userSession = new UserSession();
+        $isSuccess = $userSession->checkSession($_COOKIE['user_id'], $_COOKIE['token']);
+
+        return $isSuccess? 1 : 0;
+    }
+
     public function index() {
+        // 判断用户是否登录
+        getUserIdByToken();
+
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
+        $isMe = false;
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $user_id = Util::uidToString($id, false);
@@ -29,6 +51,8 @@ class Homepage extends Api {
                 echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户异常</div></div>";
                 exit(0);
             }
+
+            $isMe = $user_id == Util::getCurrentUid();
         }
 
 

@@ -42,6 +42,9 @@ $di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->config->get('sys.
 // 错误处理，如果不需要纪录错误信息可注释
 $di->error = new ApiError();
 
+$config = array('domain' => '.dulcim.com');
+$id->cookie = new PhalApi\Cookie($config);
+
 /** ---------------- 第三应用 服务注册 ---------------- **/
 
 // 加载plugins目录下的第三方应用初始化文件
