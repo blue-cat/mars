@@ -263,7 +263,7 @@ $qrcodeImage = '二维码图片路径';
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     canvas.toBlob(function (blob) {
                         callback(blob); // 通过回调返回压缩后的文件
-                    }, 'image/jpeg', 0.7); // 设置图像格式和质量
+                    }, 'image/jpeg', 0.9); // 设置图像格式和质量
                 };
             };
 
