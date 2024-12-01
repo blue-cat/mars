@@ -92,7 +92,7 @@ class Homepage extends Api {
         $key = $file['name'];
         $size = $file['size'];        
 
-        $order = (int)$_POST['order'];
+        $order = (int)$_POST['index'];
         //获取file的宽高和类型
         $imageInfo = getimagesize($file['tmp_name']);
         $width = $imageInfo[0];
