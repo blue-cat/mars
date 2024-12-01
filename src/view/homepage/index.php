@@ -130,6 +130,17 @@ $qrcodeImage = '二维码图片路径';
     z-index: 1; /* 确保在其他元素之上 */
 }
 
+.qrcode .corner::before::after {
+    content: '';
+    position: absolute;
+    background-color: #f0f0f0; /* 浅灰色 */
+    width: 20px; /* 设置宽度小于伪元素的宽度 */
+    height: 20px; /* 设置高度小于伪元素的高度 */
+    top: 5px; /* 距离上边缘5px */
+    left: 5px; /* 距离左边缘5px */
+    z-index: 2; /* 确保在最上方 */
+}
+
 
 /* 定义左上角的块 */
 .qrcode .corner-tl {
