@@ -25,7 +25,7 @@ class Homepage extends Api {
 
         $userInfo = UserDomain::getUserInfoById($user_id);
         if (!$userInfo || $userInfo['status']!= 1) {
-            echo "<div class='error'>用户异常</div>";
+            echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户异常</div></div>";
             exit(0);
         }
 
