@@ -217,6 +217,10 @@ $qrcodeImage = '二维码图片路径';
                         
                         imgElement.src = newImageURL; // 更新图片地址
                         imgElement.style.display = 'block'; // 显示图片
+
+                        // 获取上传按钮并将其文字更改为“修改”
+                        const uploadButton = document.querySelector(`#image-container-${index} .upload`);
+                        uploadButton.textContent = '修改'; // 修改按钮文字
                     } else {
                         alert(data.msg);
                     }
@@ -228,6 +232,7 @@ $qrcodeImage = '二维码图片路径';
 
             input.click();
         }
+
 
         function imageError(index) {
             const imgElement = document.getElementById(`img-${index}`);
