@@ -13,6 +13,7 @@ $details = [
     '克拉忞静快来带我玩🤲'
 ];
 $qrcodeImage = '二维码图片路径';
+list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
 ?>
 
 <!DOCTYPE html>
@@ -263,11 +264,57 @@ $qrcodeImage = '二维码图片路径';
     </div>
 
     <div class="footer">
-        <a href="#">创建我的Homepage</a> | 
+        <a href="javascprit:;" id="create-homepage-btn">创建我的Homepage</a> | 
         <a href="#">火星殖民计划</a>
     </div>
 
     <script>
+        // 检查URL中是否有code和state参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const userId = urlParams.get('user_id');
+
+        if (code && state) {
+            // 进行AJAX调用
+            fetch(`/?s=App.User_User.Code2UserInfo&code=${code}&scene=1&state=${state}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ret === 200) {
+                        const { user_id, token, profile } = data.data;
+
+                        // 替换或添加user_id到URL
+                        const currentUrl = new URL(window.location.href);
+                        currentUrl.searchParams.set('user_id', user_id);
+                        window.history.replaceState({}, '', currentUrl);
+
+                        // 存储到本地存储
+                        localStorage.setItem('token', token);
+                        localStorage.setItem('user_id', user_id);
+                        localStorage.setItem('profile', JSON.stringify(profile));
+
+                        // 这里可以执行其他逻辑，比如刷新页面或显示用户信息
+                    } else {
+                        alert(data.msg);
+                    }
+                })
+                .catch(error => {
+                    console.error('请求失败:', error);
+                    alert('请求失败，请重试。');
+                });
+        }
+        document.getElementById('create-homepage-btn').onclick = function() {
+            // 生成随机字符串
+            const state = Math.random().toString(36).substring(7); // 随机字符串
+            const redirectUri = encodeURIComponent(window.location.href); // 当前页面url
+            const scope = 'snsapi_userinfo';
+
+            // 构造微信授权链接
+            const authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=<?php echo $appid; ?>&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+
+            // 跳转到微信授权页面
+            window.location.href = authUrl;
+        };
         function compressImage(file, maxWidth, callback) {
             const reader = new FileReader();
             
