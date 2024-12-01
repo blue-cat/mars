@@ -85,12 +85,12 @@ $qrcodeImage = '二维码图片路径';
             margin: 20px auto; /* 中心对齐 */
         }
         .left {
-            width: 60%; /* 描述和细节部分宽度 */
+            width: 50%; /* 描述和细节部分宽度 */
             text-align: left;
-            padding-right: 20px; /* 右侧留空间 */
+            padding-right: 5px; /* 右侧留空间 */
         }
         .right {
-            width: 40%; /* QR码部分宽度 */
+            width: 50%; /* QR码部分宽度 */
             text-align: center; /* QR码内容居中 */
             position: relative; /* 使二维码和上传按钮相对定位 */
         }
