@@ -97,7 +97,7 @@ class Homepage extends Api {
         $imageInfo = getimagesize($file['tmp_name']);
         $width = $imageInfo[0];
         $height = $imageInfo[1];
-        $type = $imageInfo[2];
+        $type = $imageInfo[3];
 
         //生成一个全局唯一的文件名，以日期为前缀，后面全部为随机字符串，不少于20位
         $name = date('YmdHis'). substr(md5(microtime()), 0, 10);

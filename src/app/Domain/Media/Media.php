@@ -50,15 +50,16 @@ class Media {
             return $this->update($mediaInfo['id'], $array);
         } else {
             // 不存在, ��入
-            return $this->add($array['user_id'], $obj_type, $array['user_id'], $array['order'], $array['width'], $array['height'], $array['type'], $array['dir'], $array['is_video'], $array['v_dir'], $array['length'], $array['cdn_id']);
+            return $this->add($array['user_id'], $obj_type, $array['user_id'], $array['order'], $array['width'], $array['height'], $array['type'], $array['dir'], $array['is_video'], $array['v_dir'], $array['length'], $array['cdn_id'], $array['name']);
         }
     }
 
-    public function add($userId, $obj_type, $obj_id, $order, $width, $height, $type, $dir, $is_video = 0, $v_dir = '', $length = 0, $cdn_id = 0) {
+    public function add($userId, $obj_type, $obj_id, $order, $width, $height, $type, $dir, $is_video = 0, $v_dir = '', $length = 0, $cdn_id = 0, $name = '') {
         $status = self::MEDIA_OK;
         $time = time();
 
         $data = [
+            'name' => $name,
             'user_id' => $userId,
             'obj_type' => (int) $obj_type,
             'obj_id' => (int) $obj_id,
@@ -75,8 +76,6 @@ class Media {
             'update_time' => $time,
             'status' => $status
         ];
-
-        print_r($data);
 
         $model = new MediaModel();
         $ret = $model->insert($data);
