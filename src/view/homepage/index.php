@@ -23,8 +23,12 @@ $qrcodeImage = '二维码图片路径';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>微信展示页面</title>
     <style>
+        @font-face {
+            font-family: 'LM Roman Bold';  /* 为新字体定义一个名称 */
+            src: url('https://dulcim.com/font/lmroman-bold.woff') format('woff'); /* 指定字体文件的 URL 和格式 */
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'LM Roman Bold', Arial, sans-serif; /* 将自定义字体应用于 body 元素 */
             text-align: center;
             padding: 20px;
             margin: 0;
@@ -191,7 +195,6 @@ $qrcodeImage = '二维码图片路径';
             padding: 2px 5px; /* 内边距，保持原样 */
             z-index: 1; /* 确保在图片之上 */
         }
-
     </style>
 </head>
 <body>
