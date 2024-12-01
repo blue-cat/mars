@@ -416,6 +416,7 @@ function uploadImage(index) {
             formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
             // 将index也传过去
             formData.append('index', index);
+            formData.append('type', '1');
 
             const uploadButton = document.querySelector(`#image-container-${index} .upload`);
             uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”

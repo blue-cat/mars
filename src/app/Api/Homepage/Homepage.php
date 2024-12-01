@@ -67,21 +67,32 @@ class Homepage extends Api {
     /**
      * 上传接口，用户提交内容在$_FILES中，然后调用七牛云的接口，将图片内容传到七牛云上，并返回图片的URL地址
      */
-    public function upload($type = "homepage") {
+    public function upload() {
+        $typeMap = [
+            '1' => 'homepage',
+            '2' => 'qrcode',
+            '3' => 'avatar',
+        ];
         // 判断用户是否登录
         $selfUid = $this->getUserIdByToken();
         if (!$selfUid) {
             throw new \Exception('用户未登录', 401);
         }
 
-        print_r($_FILES);
-        print_r($_POST);
-        exit(0);
         $file = $_FILES['file'];
+        if (!$file) {
+            throw new \Exception('请选择文件', 400);
+        }
+
+        if (!in_array($_POST['type'], $typeMap)) {
+            throw new \Exception('上传类型错误', 400);
+        }
+        $dir = $typeMap[$_POST['type']];
+
         $key = $file['name'];
         $size = $file['size'];
 
-        $order = 0;
+        $order = (int)$_POST['order'];
         //获取file的宽高和类型
         $imageInfo = getimagesize($file['tmp_name']);
         $width = $imageInfo[0];
@@ -91,7 +102,7 @@ class Homepage extends Api {
         //生成一个全局唯一的文件名，以日期为前缀，后面全部为随机字符串，不少于20位
         $name = date('YmdHis'). substr(md5(microtime()), 0, 10);
         // 文件名后缀必须为小写
-        $filePath = $type. '/' . $name . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $filePath = $dir. '/' . $name . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
         $qiniu = new Qiniu();
         $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
@@ -99,7 +110,7 @@ class Homepage extends Api {
         // 往media表写
         $media = new MediaDomain();
         $data = [
-            'name' => $key,
+            'name' => addslashes($key),
             'user_id' => $selfUid,
             'obj_id' => $selfUid,
             // 'obj_type' => 1,
