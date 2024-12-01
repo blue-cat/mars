@@ -124,13 +124,14 @@ $qrcodeImage = '二维码图片路径';
 .qrcode .corner {
     position: absolute;
     background-color: #ccc; /* 浅灰色 */
+    top: 12.5%; /* 向下移动12.5% */
 }
 
 /* 定义左上角的块 */
 .qrcode .corner-tl {
     width: 40px; /* 左上角块的宽度 */
     height: 40px; /* 左上角块的高度 */
-    top: 0;
+    top: 12.5%; /* 向下移动12.5% */
     left: 0;
 }
 
@@ -138,7 +139,7 @@ $qrcodeImage = '二维码图片路径';
 .qrcode .corner-tr {
     width: 40px; /* 右上角块的宽度 */
     height: 40px; /* 右上角块的高度 */
-    top: 0;
+    top: 12.5%; /* 向下移动12.5% */
     right: 0;
 }
 
@@ -146,11 +147,9 @@ $qrcodeImage = '二维码图片路径';
 .qrcode .corner-bl {
     width: 40px; /* 左下角块的宽度 */
     height: 40px; /* 左下角块的高度 */
-    top: 55%;
+    top: 67.5%; /* 原位置 55% + 12.5% */
     left: 0;
 }
-
-
 
         .qrcode img {
             position: absolute;
