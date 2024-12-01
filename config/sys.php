@@ -42,6 +42,7 @@ return array(
     'redis' => array(
         'host' => 'redis',
         'port' => 6379,
+        'prefix' => 'mars:', 
 	),
 	
     /**
