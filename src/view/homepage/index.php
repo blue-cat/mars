@@ -130,23 +130,23 @@ $qrcodeImage = '二维码图片路径';
 
 /* 定义左上、右上和左下角的块 */
 .qrcode::before {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* 增大角落块的宽度 */
+    height: 40px; /* 增大角落块的高度 */
     top: 0;
     left: 0;
 }
 
 .qrcode::after {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* 增大角落块的宽度 */
+    height: 40px; /* 增大角落块的高度 */
     top: 0;
     right: 0;
 }
 
 /* 添加左下角的正方形 */
 .qrcode::before {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* 增大角落块的宽度 */
+    height: 40px; /* 增大角落块的高度 */
     bottom: 0;
     left: 0;
 }
