@@ -26,7 +26,7 @@ class Homepage extends Api {
         // 对token进行防注入处理
         $token = addcslashes($token);
 
-        $userSession = new UserSession();
+        $userSession = new UserSessionDomain();
         $isSuccess = $userSession->checkSession((int)$user_id, $token);
 
         return $isSuccess? 1 : 0;
