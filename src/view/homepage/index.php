@@ -463,7 +463,7 @@ function uploadImage(index) {
 
             // 修改上传按钮文本为“上传”
             const uploadButton = document.querySelector('.qrcode .upload');
-            if (uploadButton) 
+            if (uploadButton) {
                 uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
             }
             
