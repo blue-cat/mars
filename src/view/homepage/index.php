@@ -104,52 +104,53 @@ $qrcodeImage = '二维码图片路径';
             position: relative; /* 使二维码和上传按钮相对定位 */
         }
         .qrcode {
-            position: relative;
-            padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
-            background-color: #f0f0f0; /* 灰色背景 */
-            overflow: hidden; /* 隐藏溢出部分 */
-            margin: 0; /* 居中对齐 */
-            
-            /* 更改背景样式以模拟二维码 */
-            background-image: 
-                linear-gradient(90deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
-                linear-gradient(transparent, transparent),
-                linear-gradient(0deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
-                linear-gradient(0, #000, #000);
-                
-            /* 添加方块的大小和位置 */
-            background-size: 20px 20px; /* 方块的大小 */
-            background-position: 0 0, 5px 5px, 5px 5px, 5px 5px; /* 位置偏移，确保样式重叠 */
-        }
+    position: relative;
+    padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
+    background-color: #f0f0f0; /* 灰色背景 */
+    overflow: hidden; /* 隐藏溢出部分 */
+    margin: 0; /* 居中对齐 */
+    
+    /* 更改背景样式以模拟二维码 */
+    background-image: 
+        linear-gradient(90deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+        linear-gradient(transparent, transparent),
+        linear-gradient(0deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+        linear-gradient(0, #000, #000);
+        
+    /* 添加方块的大小和位置 */
+    background-size: 20px 20px; /* 方块的大小 */
+    background-position: 0 0, 5px 5px, 5px 5px, 5px 5px; /* 位置偏移，确保样式重叠 */
+}
 
-        .qrcode::before, .qrcode::after {
-            content: "";
-            position: absolute;
-            background-color: #000; /* 角落的正方形 */
-        }
+.qrcode::before, .qrcode::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5); /* 修改为半透明的黑色 */
+}
 
-        /* 定义左上、右上和左下角的块 */
-        .qrcode::before {
-            width: 30px; /* 确定角落块的大小 */
-            height: 30px;
-            top: 0;
-            left: 0;
-        }
+/* 定义左上、右上和左下角的块 */
+.qrcode::before {
+    width: 30px; /* 确定角落块的大小 */
+    height: 30px;
+    top: 0;
+    left: 0;
+}
 
-        .qrcode::after {
-            width: 30px; /* 确定角落块的大小 */
-            height: 30px;
-            top: 0;
-            right: 0;
-        }
+.qrcode::after {
+    width: 30px; /* 确定角落块的大小 */
+    height: 30px;
+    top: 0;
+    right: 0;
+}
 
-        /* 添加左下角的正方形 */
-        .qrcode::before {
-            width: 30px;
-            height: 30px;
-            bottom: 0;
-            left: 0;
-        }
+/* 添加左下角的正方形 */
+.qrcode::before {
+    width: 30px;
+    height: 30px;
+    bottom: 0;
+    left: 0;
+}
+
 
         .qrcode img {
             position: absolute;
