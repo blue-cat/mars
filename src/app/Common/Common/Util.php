@@ -111,7 +111,7 @@ class Util
         $str = self::encrypt($str, $key);
         return $str;
     }
-
+    
     public static function strToUid($str, $key = 'uid_key') {
         $uid = 0;
         $str = self::decrypt($str, $key);
@@ -120,24 +120,30 @@ class Util
         }
         return $uid;
     }
-
+    
     public static function encrypt($str, $key) {
+        // 对输入字符串进行 base64 编码
         $str = base64_encode($str);
+        
+        // 生成 MD5 密钥
         $key = md5($key);
         $len = strlen($str);
         $key_len = strlen($key);
         $rnd_key = $box = array();
         $result = '';
+        
         for ($i = 0; $i < 256; $i++) {
             $rnd_key[$i] = ord($key[$i % $key_len]);
             $box[$i] = $i;
         }
+        
         for ($j = $i = 0; $i < 256; $i++) {
             $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
             $tmp = $box[$i];
             $box[$i] = $box[$j];
             $box[$j] = $tmp;
         }
+        
         for ($a = $j = $i = 0; $i < $len; $i++) {
             $a = ($a + 1) % 256;
             $j = ($j + $box[$a]) % 256;
@@ -146,26 +152,34 @@ class Util
             $box[$j] = $tmp;
             $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
         }
-        return strtoupper(base_convert(md5($result), 16, 36));
+        
+        // 返回 base64 编码的结果，而不是 MD5 哈希
+        return base64_encode($result);
     }
-
+    
     public static function decrypt($str, $key) {
-        $str = base_convert($str, 36, 16);
+        // 对输入字符串进行 base64 解码
+        $str = base64_decode($str);
+        
+        // 生成 MD5 密钥
         $key = md5($key);
         $len = strlen($str);
         $key_len = strlen($key);
         $rnd_key = $box = array();
         $result = '';
+        
         for ($i = 0; $i < 256; $i++) {
             $rnd_key[$i] = ord($key[$i % $key_len]);
             $box[$i] = $i;
         }
+        
         for ($j = $i = 0; $i < 256; $i++) {
             $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
             $tmp = $box[$i];
             $box[$i] = $box[$j];
             $box[$j] = $tmp;
         }
+        
         for ($a = $j = $i = 0; $i < $len; $i++) {
             $a = ($a + 1) % 256;
             $j = ($j + $box[$a]) % 256;
@@ -174,6 +188,8 @@ class Util
             $box[$j] = $tmp;
             $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
         }
+        
+        // 返回解密后的 base64 字符串
         return base64_decode($result);
     }
     
