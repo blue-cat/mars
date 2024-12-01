@@ -185,6 +185,10 @@ $qrcodeImage = '二维码图片路径';
                         const newQRCodeURL = data.data;
                         const imgElement = document.getElementById('qr-code');
                         imgElement.src = newQRCodeURL; // 更新二维码地址
+
+                        // 隐藏可能存在的破损图片
+                        imgElement.style.display = 'block'; // 确保图片可见
+                        imgElement.onerror = null; // 清除之前的错误处理
                     } else {
                         alert(data.msg);
                     }
@@ -196,6 +200,7 @@ $qrcodeImage = '二维码图片路径';
 
             input.click();
         }
+
 
         function uploadImage(index) {
             const input = document.createElement('input');
