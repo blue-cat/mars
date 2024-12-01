@@ -68,7 +68,7 @@ class Homepage extends Api {
                 $images[] = "";
             }
             foreach ($mediaList as $media) {
-                $images[$media['order']] = $this->domain. '/'. $media['url'];
+                $images[$media['order']] = $this->domain. '/'. $media['dir'];
             }
         }
 
