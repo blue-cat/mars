@@ -105,7 +105,7 @@ $qrcodeImage = '二维码图片路径';
         }
         .qrcode {
     position: relative;
-    padding-top: 100%; /* 调整为正方形比例 */
+    padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
     background-color: #f0f0f0; /* 灰色背景 */
     overflow: hidden; /* 隐藏溢出部分 */
     margin: 0; /* 居中对齐 */
@@ -130,27 +130,27 @@ $qrcodeImage = '二维码图片路径';
 .qrcode .corner-tl {
     width: 40px; /* 左上角块的宽度 */
     height: 40px; /* 左上角块的高度 */
-    top: 10%; /* 向下调整位置 */
-    left: 10%; /* 向右调整位置 */
+    top: 0;
+    left: 0;
 }
 
 /* 定义右上角的块 */
 .qrcode .corner-tr {
     width: 40px; /* 右上角块的宽度 */
     height: 40px; /* 右上角块的高度 */
-    top: 10%; /* 向下调整位置 */
-    right: 10%; /* 向左调整位置 */
+    top: 0;
+    right: 0;
 }
 
 /* 定义左下角的块 */
 .qrcode .corner-bl {
     width: 40px; /* 左下角块的宽度 */
     height: 40px; /* 左下角块的高度 */
-    bottom: 10%; /* 向上调整位置 */
-    left: 10%; /* 向右调整位置 */
+    bottom: 55%;
+    left: 0;
 }
 
-/* 右下角不设置大方块，不需要相关的样式 */
+
 
         .qrcode img {
             position: absolute;
