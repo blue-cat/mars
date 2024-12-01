@@ -119,65 +119,45 @@ $qrcodeImage = '二维码图片路径';
         
     /* 添加方块的大小和位置 */
     background-size: 20px 20px; /* 方块的大小 */
-    background-position: 0 0, 5px 5px, 5px 5px, 5px 5px; /* 位置偏移，确保样式重叠 */
 }
 
-.qrcode::before, .qrcode::after, .qrcode .corner {
-    content: "";
+.qrcode .corner {
     position: absolute;
-    background-color: #ccc; /* 修改为浅灰色 */
+    background-color: #ccc; /* 浅灰色 */
 }
 
 /* 定义左上角的块 */
-.qrcode::before {
-    width: 40px; /* 增大角落块的宽度 */
-    height: 40px; /* 增大角落块的高度 */
+.qrcode .corner-tl {
+    width: 40px; /* 左上角块的宽度 */
+    height: 40px; /* 左上角块的高度 */
     top: 0;
     left: 0;
 }
 
 /* 定义右上角的块 */
-.qrcode::after {
-    width: 40px; /* 增大角落块的宽度 */
-    height: 40px; /* 增大角落块的高度 */
+.qrcode .corner-tr {
+    width: 40px; /* 右上角块的宽度 */
+    height: 40px; /* 右上角块的高度 */
     top: 0;
     right: 0;
 }
 
-/* 添加左下角的正方形 */
-.qrcode .corner {
-    width: 40px; /* 增大左下角块的宽度 */
-    height: 40px; /* 增大左下角块的高度 */
+/* 定义左下角的块 */
+.qrcode .corner-bl {
+    width: 40px; /* 左下角块的宽度 */
+    height: 40px; /* 左下角块的高度 */
     bottom: 0;
     left: 0;
-    background-color: #ccc; /* 角落块颜色 */
 }
 
-/* 重新定义左下角正方形样式 */
-.qrcode::before { /* 现在只用于左上角 */
-    width: 40px;
-    height: 40px;
-    top: 0;
-    left: 0;
-}
-
-.qrcode::after { /* 只用于右上角 */
-    width: 40px;
-    height: 40px;
-    top: 0;
+/* 定义右下角的块 */
+.qrcode .corner-br {
+    width: 40px; /* 右下角块的宽度 */
+    height: 40px; /* 右下角块的高度 */
+    bottom: 0;
     right: 0;
 }
 
-/* 为左下角添加新的伪元素 */
-.qrcode::after {
-    content: "";
-    position: absolute;
-    background-color: #ccc; /* 浅灰色 */
-    bottom: 0;
-    left: 0; /* 左下角 */
-    width: 40px; /* 左下角块的尺寸 */
-    height: 40px; /* 左下角块的尺寸 */
-}
 
         .qrcode img {
             position: absolute;
@@ -235,6 +215,10 @@ $qrcodeImage = '二维码图片路径';
         <div class="right">
             <div class="qrcode">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
+                <div class="corner corner-tl"></div> <!-- 左上角 -->
+                <div class="corner corner-tr"></div> <!-- 右上角 -->
+                <div class="corner corner-bl"></div> <!-- 左下角 -->
+                <div class="corner corner-br"></div> <!-- 右下角 -->
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
