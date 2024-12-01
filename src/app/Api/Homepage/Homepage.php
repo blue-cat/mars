@@ -18,8 +18,8 @@ class Homepage extends Api {
         $id = $_GET['id'];
         $user_id = Util::uidToString($id, false);
         if (!$user_id) {
-            // 给个简单样式，文字页面居中显示，并使用灰色文字
-            echo "<div style='text-align: center; color: #999999;'>用户不存在</div>";
+            // 给个简单样式，文字页面上下左右居中显示，并使用灰色文字，使用16号字体
+            echo "<style>body{margin: 0;padding: 0;text-align: center;font-size: 16px;color: #999999;}</style>";
             exit(0);
         }
 
