@@ -281,13 +281,14 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 .then(response => response.json())
                 .then(data => {
                     if (data.ret === 200) {
-                        const { user_id, token, profile } = data.data;
+                        const { user_str, user_id, token, profile } = data.data;
 
                         // 设置cookie
                         document.cookie = `token=${token}; path=/; max-age=86400`;
                         // 存储到本地存储
                         localStorage.setItem('token', token);
                         localStorage.setItem('user_id', user_id);
+                        localStorage.setItem('user_str', user_str);
                         localStorage.setItem('profile', JSON.stringify(profile));
 
                         // 替换或添加user_id到URL

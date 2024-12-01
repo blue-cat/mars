@@ -96,4 +96,86 @@ class Util
             . substr($chars, 20, $type ? 12 : 8);
         return $uuid;
     }
+
+    /**
+     * 生成一个静态方法，将数字uid转成一个10位的字符串
+     * 能将uid转成字符串，也能将字符串转成uid
+     * 通过一种简单的对称加密算法，然后设置一个值作为密钥，加密解密
+     */
+    public static function uidToStr($uid, $key = 'uid_key') {
+        $str = '';
+        $uid = (int)$uid;
+        if ($uid > 0) {
+            $str = base_convert($uid, 10, 36);
+        }
+        $str = self::encrypt($str, $key);
+        return $str;
+    }
+
+    public static function strToUid($str, $key = 'uid_key') {
+        $uid = 0;
+        $str = self::decrypt($str, $key);
+        if ($str) {
+            $uid = base_convert($str, 36, 10);
+        }
+        return $uid;
+    }
+
+    public static function encrypt($str, $key) {
+        $str = base64_encode($str);
+        $key = md5($key);
+        $len = strlen($str);
+        $key_len = strlen($key);
+        $rnd_key = $box = array();
+        $result = '';
+        for ($i = 0; $i < 256; $i++) {
+            $rnd_key[$i] = ord($key[$i % $key_len]);
+            $box[$i] = $i;
+        }
+        for ($j = $i = 0; $i < 256; $i++) {
+            $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
+            $tmp = $box[$i];
+            $box[$i] = $box[$j];
+            $box[$j] = $tmp;
+        }
+        for ($a = $j = $i = 0; $i < $len; $i++) {
+            $a = ($a + 1) % 256;
+            $j = ($j + $box[$a]) % 256;
+            $tmp = $box[$a];
+            $box[$a] = $box[$j];
+            $box[$j] = $tmp;
+            $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+        }
+        return strtoupper(base_convert(md5($result), 16, 36));
+    }
+
+    public static function decrypt($str, $key) {
+        $str = base_convert($str, 36, 16);
+        $key = md5($key);
+        $len = strlen($str);
+        $key_len = strlen($key);
+        $rnd_key = $box = array();
+        $result = '';
+        for ($i = 0; $i < 256; $i++) {
+            $rnd_key[$i] = ord($key[$i % $key_len]);
+            $box[$i] = $i;
+        }
+        for ($j = $i = 0; $i < 256; $i++) {
+            $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
+            $tmp = $box[$i];
+            $box[$i] = $box[$j];
+            $box[$j] = $tmp;
+        }
+        for ($a = $j = $i = 0; $i < $len; $i++) {
+            $a = ($a + 1) % 256;
+            $j = ($j + $box[$a]) % 256;
+            $tmp = $box[$a];
+            $box[$a] = $box[$j];
+            $box[$j] = $tmp;
+            $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+        }
+        return base64_decode($result);
+    }
+    
+    
 }
