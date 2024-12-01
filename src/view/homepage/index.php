@@ -245,56 +245,77 @@ $qrcodeImage = '二维码图片路径';
     </div>
 
     <script>
+        function compressImage(file, maxWidth, callback) {
+            const reader = new FileReader();
+            
+            reader.onload = function (event) {
+                const img = new Image();
+                img.src = event.target.result;
+                
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    const scaleFactor = maxWidth / img.width; // 计算缩放比例
+                    canvas.width = maxWidth; // 设置canvas宽度
+                    canvas.height = img.height * scaleFactor; // 按比例设置canvas高度
+                    
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.toBlob(function (blob) {
+                        callback(blob); // 通过回调返回压缩后的文件
+                    }, 'image/jpeg', 0.7); // 设置图像格式和质量
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+
         function uploadQRCode() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
 
-    input.onchange = async (event) => {
+    input.onchange = function (event) {
         const file = event.target.files[0];
         if (!file) return;
 
-        const formData = new FormData();
-        formData.append('file', file);
+        compressImage(file, 800, function (compressedBlob) { // 这里将最大宽度设置为800
+            const formData = new FormData();
+            formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
 
-        // 显示“上传中”文字
-        const uploadButton = document.querySelector('.qrcode .upload');
-        uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
+            const uploadButton = document.querySelector('.qrcode .upload');
+            uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
 
-        try {
-            const response = await fetch('/?s=App.Homepage_Homepage.upload', {
+            fetch('/?s=App.Homepage_Homepage.upload', {
                 method: 'POST',
                 body: formData,
-            });
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ret === 200) {
+                    const newQRCodeURL = data.data;
+                    const imgElement = document.getElementById('qr-code');
+                    imgElement.src = newQRCodeURL; // 更新二维码地址
+                    imgElement.style.display = 'block'; // 确保图片可见
+                    imgElement.onerror = null; // 清除之前的错误处理
+                    uploadButton.textContent = '修改'; // 更新按钮文字为“修改”
 
-            const data = await response.json();
-
-            if (data.ret === 200) {
-                const newQRCodeURL = data.data;
-                const imgElement = document.getElementById('qr-code');
-                imgElement.src = newQRCodeURL; // 更新二维码地址
-
-                // 隐藏角落
-                const corners = document.querySelectorAll('.qrcode .corner');
-                corners.forEach(corner => {
-                    corner.classList.add('hidden'); // 为所有角落添加隐藏类
-                });
-
-                // 显示新上传的二维码图片
-                imgElement.style.display = 'block'; // 确保图片可见
-                imgElement.onerror = null; // 清除之前的错误处理
-
-                // 更新上传按钮文本为“修改”
-                uploadButton.textContent = '修改';
-            } else {
-                alert(data.msg);
+                    // 隐藏角落
+                    const corners = document.querySelectorAll('.qrcode .corner');
+                    corners.forEach(corner => {
+                        corner.classList.add('hidden'); // 为所有角落添加隐藏类
+                    });
+                } else {
+                    alert(data.msg);
+                    uploadButton.textContent = '上传'; // 恢复按钮文字
+                }
+            })
+            .catch(error => {
+                console.error('上传出错:', error);
+                alert('上传失败，请重试。');
                 uploadButton.textContent = '上传'; // 恢复按钮文字
-            }
-        } catch (error) {
-            console.error('上传出错:', error);
-            alert('上传失败，请重试。');
-            uploadButton.textContent = '上传'; // 恢复按钮文字
-        }
+            });
+        });
     };
 
     input.click();
@@ -305,43 +326,40 @@ function uploadImage(index) {
     input.type = 'file';
     input.accept = 'image/*';
 
-    input.onchange = async (event) => {
+    input.onchange = function (event) {
         const file = event.target.files[0];
         if (!file) return;
 
-        const formData = new FormData();
-        formData.append('file', file);
+        compressImage(file, 800, function (compressedBlob) { // 这里将最大宽度设置为800
+            const formData = new FormData();
+            formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
 
-        // 显示“上传中”文字
-        const uploadButton = document.querySelector(`#image-container-${index} .upload`);
-        uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
+            const uploadButton = document.querySelector(`#image-container-${index} .upload`);
+            uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
 
-        try {
-            const response = await fetch('/?s=App.Homepage_Homepage.upload', {
+            fetch('/?s=App.Homepage_Homepage.upload', {
                 method: 'POST',
                 body: formData,
-            });
-
-            const data = await response.json();
-
-            if (data.ret === 200) {
-                const newImageURL = data.data;
-                const imgElement = document.getElementById(`img-${index}`);
-                
-                imgElement.src = newImageURL; // 更新图片地址
-                imgElement.style.display = 'block'; // 显示图片
-
-                // 获取上传按钮并将其文字更改为“修改”
-                uploadButton.textContent = '修改'; // 修改按钮文字
-            } else {
-                alert(data.msg);
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ret === 200) {
+                    const newImageURL = data.data;
+                    const imgElement = document.getElementById(`img-${index}`);
+                    imgElement.src = newImageURL; // 更新图片地址
+                    imgElement.style.display = 'block'; // 显示图片
+                    uploadButton.textContent = '修改'; // 修改按钮文字
+                } else {
+                    alert(data.msg);
+                    uploadButton.textContent = '上传'; // 恢复按钮文字
+                }
+            })
+            .catch(error => {
+                console.error('上传出错:', error);
+                alert('上传失败，请重试。');
                 uploadButton.textContent = '上传'; // 恢复按钮文字
-            }
-        } catch (error) {
-            console.error('上传出错:', error);
-            alert('上传失败，请重试。');
-            uploadButton.textContent = '上传'; // 恢复按钮文字
-        }
+            });
+        });
     };
 
     input.click();
