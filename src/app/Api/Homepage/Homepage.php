@@ -5,7 +5,7 @@ namespace App\Api\Homepage;
 use Phalapi\Api;
 use App\Domain\Misc\Qiniu;
 use App\Common\Common\Util;
-
+use App\Domain\User\User as UserDomain;
 
 class Homepage extends Api {
 
@@ -16,9 +16,15 @@ class Homepage extends Api {
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
         $id = $_GET['id'];
-        echo $id;
         $user_id = Util::uidToString($id, false);
-        echo $user_id;
+        if (!$user_id) {
+            echo "<div class='error'>用户不存在</div>";
+            exit(0);
+        }
+
+        $userInfo = UserDomain::getUserInfoById($user_id);
+        print_r($userInfo);
+
 
         include(API_ROOT . '/src/view/homepage/index.php');
         exit(0);
