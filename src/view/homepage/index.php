@@ -106,17 +106,9 @@ $qrcodeImage = '二维码图片路径';
         .qrcode {
     position: relative;
     padding-top: 133.33%; /* 固定高度与宽度之比为3:4 */
-    background-color: #f0f0f0; /* 灰色背景 */
     overflow: hidden; /* 隐藏溢出部分 */
     margin: 0; /* 居中对齐 */
     
-    /* 更改背景样式以模拟二维码 */
-    background-image: 
-        linear-gradient(90deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
-        linear-gradient(transparent, transparent),
-        linear-gradient(0deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
-        linear-gradient(0, #ccc, #ccc);
-        
     /* 添加方块的大小和位置 */
     background-size: 20px 20px; /* 方块的大小 */
 }
