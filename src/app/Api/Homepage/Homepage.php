@@ -37,12 +37,10 @@ class Homepage extends Api {
         // 判断用户是否登录
         $selfUid = $this->getUserIdByToken();
 
-        echo "selfUid: ". $selfUid;
-
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
-        $isMe = false;
+        $isMe = $selfUid > 0;
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $user_id = Util::uidToString($id, false);
@@ -60,7 +58,6 @@ class Homepage extends Api {
 
             $isMe = $user_id == $selfUid;
         }
-
 
         include(API_ROOT . '/src/view/homepage/index.php');
         exit(0);

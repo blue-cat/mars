@@ -224,7 +224,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <?php foreach ($images as $index => $image): ?>
             <div class="image-container" id="image-container-<?php echo $index; ?>">
                 <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
-                <div class="upload" onclick="uploadImage(<?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
+                
+                <?php if ($isMe): ?>
+                    <div class="upload" onclick="uploadImage(<?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -240,22 +243,26 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <div class="right">
             <div class="qrcode">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
+
                 <div class="corner corner-tl">
                     <div class="inner-square">
-                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
-                    </div> <!-- 白色方块 -->
-                </div> <!-- 左上角 -->
+                        <div class="inner-square-gray"></div>
+                    </div>
+                </div>
                 <div class="corner corner-tr">
                     <div class="inner-square">
-                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
-                    </div> <!-- 白色方块 -->
-                </div> <!-- 右上角 -->
+                        <div class="inner-square-gray"></div>
+                    </div>
+                </div>
                 <div class="corner corner-bl">
                     <div class="inner-square">
-                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
-                    </div> <!-- 白色方块 -->
-                </div> <!-- 左下角 -->
-                <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                        <div class="inner-square-gray"></div>
+                    </div>
+                </div>
+
+                <?php if ($isMe): ?>
+                    <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
