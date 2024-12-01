@@ -32,7 +32,7 @@ class Media extends DataModel {
     public function getListByObjIdAndOrder($objType, $objId, $order) {
         $where = [
             'obj_id' => $objId,
-            'order' => $order,
+            '`order`' => $order,
             'obj_type' => $objType,
         ];
         return $this->getORM()->where($where)->select('*')->fetch();
