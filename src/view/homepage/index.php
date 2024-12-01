@@ -130,7 +130,7 @@ $qrcodeImage = '二维码图片路径';
 }
 
 .inner-square-gray {
-    background-color: #f0f0f0; /* 浅灰色 */
+    background-color: #ccc; /* 浅灰色 */
     width: 20px; /* 设置宽度小于伪元素的宽度 */
     height: 20px; /* 设置高度小于伪元素的高度 */
     position: absolute;
@@ -225,8 +225,16 @@ $qrcodeImage = '二维码图片路径';
                         <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
                     </div> <!-- 白色方块 -->
                 </div> <!-- 左上角 -->
-                <div class="corner corner-tr"></div> <!-- 右上角 -->
-                <div class="corner corner-bl"></div> <!-- 左下角 -->
+                <div class="corner corner-tr">
+                    <div class="inner-square">
+                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
+                    </div> <!-- 白色方块 -->
+                </div> <!-- 右上角 -->
+                <div class="corner corner-bl">
+                    <div class="inner-square">
+                        <div class="inner-square-gray"></div> <!-- 浅灰色方块 -->
+                    </div> <!-- 白色方块 -->
+                </div> <!-- 左下角 -->
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
