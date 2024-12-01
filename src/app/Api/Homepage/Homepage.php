@@ -26,7 +26,7 @@ class Homepage extends Api {
         echo $token, $user_id;
 
         // 对token进行防注入处理
-        $token = addcslashes($token);
+        $token = addslashes($token);
 
         echo $token, $user_id;
         $userSession = new UserSessionDomain();
