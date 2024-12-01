@@ -47,6 +47,7 @@ class UserSession {
     public function checkSession($user_id, $token, $lon = 0, $lat = 0) {
         $model = new UserSessionModel();
         $et = $model->checkSession($user_id, $token, $lon, $lat);
+        echo $et, time();
         return $et > time() ? true : false;
     }
 
