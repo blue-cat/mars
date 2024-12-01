@@ -31,7 +31,7 @@ class Homepage extends Api {
 
     public function index() {
         // 判断用户是否登录
-        getUserIdByToken();
+        $this->getUserIdByToken();
 
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
