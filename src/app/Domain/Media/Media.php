@@ -76,6 +76,8 @@ class Media {
             'status' => $status
         ];
 
+        print_r($data);
+
         $model = new MediaModel();
         $ret = $model->insert($data);
 

@@ -124,9 +124,6 @@ class Homepage extends Api {
             'length' => 0,
             'v_dir' => "",
             'cdn_id' => 1,
-            'create_time' => time(),
-            'update_time' => time(),
-            'status' => 1,
         ];
         $media->save(1, $selfUid, $order, $data);
 
