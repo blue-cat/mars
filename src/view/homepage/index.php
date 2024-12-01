@@ -112,10 +112,10 @@ $qrcodeImage = '二维码图片路径';
     
     /* 更改背景样式以模拟二维码 */
     background-image: 
-        linear-gradient(90deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+        linear-gradient(90deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
         linear-gradient(transparent, transparent),
-        linear-gradient(0deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
-        linear-gradient(0, #000, #000);
+        linear-gradient(0deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+        linear-gradient(0, #ccc, #ccc);
         
     /* 添加方块的大小和位置 */
     background-size: 20px 20px; /* 方块的大小 */
@@ -125,19 +125,19 @@ $qrcodeImage = '二维码图片路径';
 .qrcode::before, .qrcode::after {
     content: "";
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.5); /* 修改为半透明的黑色 */
+    background-color: #ccc; /* 修改为浅灰色 */
 }
 
 /* 定义左上、右上和左下角的块 */
 .qrcode::before {
-    width: 30px; /* 确定角落块的大小 */
+    width: 30px;
     height: 30px;
     top: 0;
     left: 0;
 }
 
 .qrcode::after {
-    width: 30px; /* 确定角落块的大小 */
+    width: 30px;
     height: 30px;
     top: 0;
     right: 0;
@@ -150,7 +150,6 @@ $qrcodeImage = '二维码图片路径';
     bottom: 0;
     left: 0;
 }
-
 
         .qrcode img {
             position: absolute;
