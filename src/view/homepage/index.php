@@ -110,10 +110,6 @@ $qrcodeImage = '二维码图片路径';
     overflow: hidden; /* 隐藏溢出部分 */
     margin: 0; /* 居中对齐 */
     
-    /* 添加边框 */
-    border: 1px solid #000; /* 1px 黑色边框 */
-    box-sizing: border-box; /* 包含边框在内 */
-    
     /* 更改背景样式以模拟二维码 */
     background-image: 
         linear-gradient(90deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
@@ -126,10 +122,42 @@ $qrcodeImage = '二维码图片路径';
 }
 
 
-.qrcode .corner {
+.qrcode .corner-border {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex; /* 使用flexbox布局 */
+    justify-content: space-between; /* 水平排列 */
+    align-items: flex-start; /* 垂直排列到顶部 */
+}
+
+.qrcode .corner-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex; /* 使用flexbox布局 */
+    justify-content: space-between; /* 水平排列 */
+    align-items: flex-start; /* 垂直排列到顶部 */
+}
+
+.qrcode .corner {
+    position: relative;
     background-color: #ccc; /* 浅灰色 */
 }
+
+/* 定义边框 */
+.corner-border {
+    border: 1px solid #000; /* 添加1px黑色边框 */
+    width: calc(100% + 1px); /* 因为border在外侧，所以这里加上border宽度 */
+    height: calc(100% + 1px); /* 因为border在外侧，所以这里加上border高度 */
+    margin-left: -1px; /* 向左调整 */
+    margin-top: -1px; /* 向上调整 */
+}
+
 
 /* 定义左上角的块 */
 .qrcode .corner-tl {
@@ -212,10 +240,12 @@ $qrcodeImage = '二维码图片路径';
         </div>
         <div class="right">
             <div class="qrcode">
+                <div class="corner-border">
+                    <div class="corner corner-tl"></div> <!-- 左上角 -->
+                    <div class="corner corner-tr"></div> <!-- 右上角 -->
+                    <div class="corner corner-bl"></div> <!-- 左下角 -->
+                </div>
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
-                <div class="corner corner-tl"></div> <!-- 左上角 -->
-                <div class="corner corner-tr"></div> <!-- 右上角 -->
-                <div class="corner corner-bl"></div> <!-- 左下角 -->
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
