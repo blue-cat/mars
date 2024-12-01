@@ -100,98 +100,18 @@ class Util
     /**
      * 生成一个静态方法，将数字uid转成一个10位的字符串
      * 能将uid转成字符串，也能将字符串转成uid
-     * 通过一种简单的对称加密算法，然后设置一个值作为密钥，加密解密
+     * 通过一种简单的对称加密算法，比如aes，然后设置一个值作为密钥，加密解密
      */
-    public static function uidToStr($uid, $key = 'uid_key') {
-        $str = '';
-        $uid = (int)$uid;
-        if ($uid > 0) {
-            $str = base_convert($uid, 10, 36);
-        }
-        $str = self::encrypt($str, $key);
-        return $str;
-    }
-    
-    public static function strToUid($str, $key = 'uid_key') {
-        $uid = 0;
-        $str = self::decrypt($str, $key);
-        if ($str) {
-            $uid = base_convert($str, 36, 10);
+    public static function uidToString($uid, $encrypt = true)
+    {
+        $key = '1234567890123456';
+        if ($encrypt) {
+            $uid = openssl_encrypt($uid, 'AES-128-ECB', $key);
+        } else {
+            $uid = openssl_decrypt($uid, 'AES-128-ECB', $key);
         }
         return $uid;
     }
-    
-    public static function encrypt($str, $key) {
-        // 对输入字符串进行 base64 编码
-        $str = base64_encode($str);
-        
-        // 生成 MD5 密钥
-        $key = md5($key);
-        $len = strlen($str);
-        $key_len = strlen($key);
-        $rnd_key = $box = array();
-        $result = '';
-        
-        for ($i = 0; $i < 256; $i++) {
-            $rnd_key[$i] = ord($key[$i % $key_len]);
-            $box[$i] = $i;
-        }
-        
-        for ($j = $i = 0; $i < 256; $i++) {
-            $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
-            $tmp = $box[$i];
-            $box[$i] = $box[$j];
-            $box[$j] = $tmp;
-        }
-        
-        for ($a = $j = $i = 0; $i < $len; $i++) {
-            $a = ($a + 1) % 256;
-            $j = ($j + $box[$a]) % 256;
-            $tmp = $box[$a];
-            $box[$a] = $box[$j];
-            $box[$j] = $tmp;
-            $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
-        }
-        
-        // 返回 base64 编码的结果，而不是 MD5 哈希
-        return base64_encode($result);
-    }
-    
-    public static function decrypt($str, $key) {
-        // 对输入字符串进行 base64 解码
-        $str = base64_decode($str);
-        
-        // 生成 MD5 密钥
-        $key = md5($key);
-        $len = strlen($str);
-        $key_len = strlen($key);
-        $rnd_key = $box = array();
-        $result = '';
-        
-        for ($i = 0; $i < 256; $i++) {
-            $rnd_key[$i] = ord($key[$i % $key_len]);
-            $box[$i] = $i;
-        }
-        
-        for ($j = $i = 0; $i < 256; $i++) {
-            $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
-            $tmp = $box[$i];
-            $box[$i] = $box[$j];
-            $box[$j] = $tmp;
-        }
-        
-        for ($a = $j = $i = 0; $i < $len; $i++) {
-            $a = ($a + 1) % 256;
-            $j = ($j + $box[$a]) % 256;
-            $tmp = $box[$a];
-            $box[$a] = $box[$j];
-            $box[$j] = $tmp;
-            $result .= chr(ord($str[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
-        }
-        
-        // 返回解密后的 base64 字符串
-        return base64_decode($result);
-    }
-    
+
     
 }

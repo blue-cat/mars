@@ -17,7 +17,7 @@ class Homepage extends Api {
         // 根据uid获取用户信息
         $id = $_GET['id'];
         echo $id;
-        $user_id = Util::strToUid($id);
+        $user_id = Util::uidToString($id, false);
         echo $user_id;
 
         include(API_ROOT . '/src/view/homepage/index.php');
