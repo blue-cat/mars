@@ -198,6 +198,19 @@ $qrcodeImage = '二维码图片路径';
             padding: 2px 5px; /* 内边距，保持原样 */
             z-index: 1; /* 确保在图片之上 */
         }
+        .footer {
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 14px; 
+}
+.footer a {
+    text-decoration: none; /* 去掉链接下划线 */
+    color: #000; /* 设置链接颜色 */
+}
+.footer a:hover {
+    text-decoration: underline; /* 悬停时显示下划线 */
+}
+
     </style>
 </head>
 <body>
@@ -247,6 +260,11 @@ $qrcodeImage = '二维码图片路径';
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
+    </div>
+
+    <div class="footer">
+        <a href="#">创建我的Homepage</a> | 
+        <a href="#">火星殖民计划</a>
     </div>
 
     <script>
