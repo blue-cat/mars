@@ -38,6 +38,22 @@ class Media {
     }
 
     /**
+     * 根据obj_type, obj_id, order获取资源列表
+     */
+    public function getMediaByObjIdAndOrder($obj_type, $obj_id, $order) {
+        $model = new MediaModel();
+        return $model->getListByObjIdAndOrder($obj_type, $obj_id, $order);
+    }
+
+    /**
+     * 根据obj_type, obj_id获取资源列表
+     */
+    public function getMediaByObjId($obj_type, $obj_id) {
+        $model = new MediaModel();
+        return $model->getListByObjId($obj_type, $obj_id);
+    } 
+
+    /**
      * 插入或更新
      */
     public function save($obj_type, $obj_id, $order, $array) {

@@ -58,6 +58,18 @@ class Homepage extends Api {
             }
 
             $isMe = $user_id == $selfUid;
+
+            // 拉取用户的图片
+            $media = new MediaDomain();
+            $mediaList = $media->getMediaByObjId(1, $user_id);
+            $images = [];
+            // 一定会返回6张图片
+            for ($i = 0; $i < 6; $i++) {
+                $images[] = "";
+            }
+            foreach ($mediaList as $media) {
+                $images[$media['order']] = $this->domain. '/'. $media['url'];
+            }
         }
 
         include(API_ROOT . '/src/view/homepage/index.php');
