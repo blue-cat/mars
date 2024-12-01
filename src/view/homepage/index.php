@@ -31,7 +31,7 @@ $qrcodeImage = '二维码图片路径';
             text-align: center;
             padding: 20px;
             margin: 0;
-            font-size: Small;
+            font-size: 14px !important;
         }
         .profile {
             margin-bottom: 20px;
@@ -51,7 +51,7 @@ $qrcodeImage = '二维码图片路径';
         }
         .username {
             font-weight: bold;
-            font-size: Normal;
+            font-size: 24px;
             margin-top: 10px;
         }
         .images {
