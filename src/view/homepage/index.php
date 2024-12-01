@@ -150,13 +150,6 @@ $qrcodeImage = '二维码图片路径';
     left: 0;
 }
 
-/* 定义右下角的块 */
-.qrcode .corner-br {
-    width: 40px; /* 右下角块的宽度 */
-    height: 40px; /* 右下角块的高度 */
-    bottom: 0;
-    right: 0;
-}
 
 
         .qrcode img {
@@ -218,7 +211,6 @@ $qrcodeImage = '二维码图片路径';
                 <div class="corner corner-tl"></div> <!-- 左上角 -->
                 <div class="corner corner-tr"></div> <!-- 右上角 -->
                 <div class="corner corner-bl"></div> <!-- 左下角 -->
-                <div class="corner corner-br"></div> <!-- 右下角 -->
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
             </div>
         </div>
