@@ -147,7 +147,7 @@ $qrcodeImage = '二维码图片路径';
         </div>
         <div class="right">
             <div class="qrcode">
-                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code">
+                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
                 <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改二维码' : '上传二维码'; ?></div>
             </div>
         </div>
@@ -239,6 +239,11 @@ $qrcodeImage = '二维码图片路径';
             
             imgElement.style.display = 'none'; // 不显示破损的图片
             uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
+        }
+
+        function qrCodeError() {
+            const imgElement = document.getElementById('qr-code');
+            imgElement.style.display = 'none'; // 隐藏破损的二维码图片
         }
 
     </script>
