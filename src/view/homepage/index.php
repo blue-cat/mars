@@ -131,7 +131,9 @@ $qrcodeImage = '二维码图片路径';
 <body>
 
     <div class="profile">
-        <img src="<?php echo $profileImage; ?>" alt="Profile Image" onerror="this.style.display='none';">
+        <div style="width: 100px; height: 100px; background-color: #f0f0f0; border-radius: 50%; overflow: hidden; display: inline-block;">
+            <img src="<?php echo $profileImage; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+        </div>
         <div class="username"><?php echo $username; ?></div>
     </div>
 
