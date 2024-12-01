@@ -23,7 +23,6 @@ class Homepage extends Api {
         if (!$token ||!$user_id) {
             return 0;
         }
-        echo $token, $user_id;
 
         // 对token进行防注入处理
         $token = addslashes($token);
