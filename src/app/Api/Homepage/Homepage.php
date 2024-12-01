@@ -15,18 +15,20 @@ class Homepage extends Api {
         // 改为页面展示
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
-        $id = $_GET['id'];
-        $user_id = Util::uidToString($id, false);
-        if (!$user_id) {
-            // 给个简单样式，文字在整个屏幕上下左右居中显示，并使用灰色文字，使用16号字体.使用flex布局.
-            echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户不存在</div></div>";
-            exit(0);
-        }
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $user_id = Util::uidToString($id, false);
+            if (!$user_id) {
+                // 给个简单样式，文字在整个屏幕上下左右居中显示，并使用灰色文字，使用16号字体.使用flex布局.
+                echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户不存在</div></div>";
+                exit(0);
+            }
 
-        $userInfo = UserDomain::getUserInfoById($user_id);
-        if (!$userInfo || $userInfo['status']!= 1) {
-            echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户异常</div></div>";
-            exit(0);
+            $userInfo = UserDomain::getUserInfoById($user_id);
+            if (!$userInfo || $userInfo['status']!= 1) {
+                echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户异常</div></div>";
+                exit(0);
+            }
         }
 
 
