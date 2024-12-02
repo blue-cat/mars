@@ -16,7 +16,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微信展示页面</title>
+    <title><?php echo $userInfo['nickname'];?>的Homepage</title>
     <style>
         @font-face {
             font-family: 'LM Roman Bold';  /* 为新字体定义一个名称 */
