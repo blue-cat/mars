@@ -139,7 +139,6 @@ button {
             margin: 20px auto; /* 中心对齐 */
         }
         .details-edit {
-            margin-right: 5px; /* 右侧留空 */
     margin-bottom: 10px; /* 底部留空 */
 }
 
@@ -147,6 +146,7 @@ button {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px; /* 内边距 */
+    margin-right: 5px; /* 底部留空 */
     font-size: 16px; /* 字体大小 */
     width: calc(100% - 5px); /* 自适应宽度 */
 }
