@@ -84,27 +84,34 @@ class Homepage extends Api {
     /**
      * 修改用户资料接口
      */
-    // public function updateUserinfo() {
-    //     $typeMap = [
-    //         '1' => 'username',
-    //         '2' => 'detail',
-    //     ];
-    //     // 判断用户是否登录
-    //     $selfUid = $this->getUserIdByToken();
-    //     if (!$selfUid) {
-    //         throw new \Exception('用户未登录', 401);
-    //     }
+    public function updateUserinfo() {
+        $typeMap = [
+            '1' => 'nickname',
+            '2' => 'detail',
+        ];
+        // 判断用户是否登录
+        $selfUid = $this->getUserIdByToken();
+        if (!$selfUid) {
+            throw new \Exception('用户未登录', 401);
+        }
 
-    //     $data = $this->request->get('data');
-    //     if (!$data) {
-    //         throw new \Exception('参数错误', 400);
-    //     }
+        if (!in_array($_POST['type'], array_keys($typeMap))) {
+            throw new \Exception('类型错误', 400);
+        } 
 
-    //     $user = new UserDomain();
-    //     $user->update($data, $selfUid);
+        $data = $_POST['content'];
+        if (!$data) {
+            throw new \Exception('参数错误', 400);
+        }
 
-    //     return "";
-    // }
+        $user = new UserDomain();
+        $ret = $user->update([$typeMap[$_POST['type']] => addslashes($data)], $selfUid);
+        if (!$ret || $ret <= 0) {
+            throw new \Exception('修改失败', 500);
+        }
+
+        return "";
+    }
 
     /**
      * 上传接口，用户提交内容在$_FILES中，然后调用七牛云的接口，将图片内容传到七牛云上，并返回图片的URL地址

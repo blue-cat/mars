@@ -51,6 +51,29 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             font-size: 16px;
             margin-top: 10px;
         }
+        .username-container {
+            display: flex; /* 水平布局 */
+            align-items: center; /* 垂直居中 */
+            margin-top: 10px; /* 顶部留空 */
+        }
+
+        #username-input {
+            border: 1px solid #ccc; /* 边框 */
+            border-radius: 5px; /* 圆角 */
+            padding: 5px; /* 内边距 */
+            width: 200px; /* 固定宽度 */
+        }
+
+        button {
+            margin-left: 10px; /* 按钮与输入框之间的间距 */
+            background-color: #4CAF50; /* 按钮背景色 */
+            color: white; /* 按钮文字颜色 */
+            border: none; /* 去掉按钮边框 */
+            border-radius: 5px; /* 圆角 */
+            padding: 5px 10px; /* 内边距 */
+            cursor: pointer; /* 鼠标指针 */
+        }
+
         .images {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 三列布局 */
@@ -219,7 +242,14 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <div class="upload" onclick="uploadImageAvatar()">修改头像</div>
             <?php endif; ?>
         </div>
-        <div class="username">@<?php echo $userInfo['nickname']; ?></div>
+        <div class="username-container">
+            <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
+                <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" />
+                <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
+            <?php else: ?>
+                <span>@<?php echo $userInfo['nickname']; ?></span>
+            <?php endif; ?>
+        </div>
     </div>
 
     <div class="images">
@@ -529,6 +559,31 @@ function uploadImage(index) {
             };
 
             input.click();
+        }
+        
+        function updateUserInfo(type, content) {
+            // 创建表单数据
+            const formData = new FormData();
+            formData.append('type', type);
+            formData.append('content', content); // 将输入内容添加到formData中
+
+            // 发送请求
+            fetch('/?s=App.Homepage_Homepage.updateUserinfo', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ret === 200) {
+                    alert('修改成功！'); // 显示修改成功的提示
+                } else {
+                    alert(data.msg); // 显示错误信息
+                }
+            })
+            .catch(error => {
+                console.error('请求失败:', error);
+                alert('请求失败，请重试。');
+            });
         }
 
 
