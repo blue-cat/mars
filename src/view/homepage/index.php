@@ -212,11 +212,14 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 </head>
 <body>
 
-    <div class="profile-image-container">
-        <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
-        <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
-            <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
-        <?php endif; ?>
+    <div class="profile">
+        <div class="profile-image-container">
+            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
+                <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
+            <?php endif; ?>
+        </div>
+        <div class="username">@<?php echo $userInfo['nickname']; ?></div>
     </div>
 
     <div class="images">
