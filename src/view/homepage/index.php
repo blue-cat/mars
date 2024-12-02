@@ -216,7 +216,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <div class="profile-image-container">
             <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
             <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
-                <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
+                <div class="upload" onclick="uploadImageAvatar()">修改头像</div>
             <?php endif; ?>
         </div>
         <div class="username">@<?php echo $userInfo['nickname']; ?></div>
@@ -484,7 +484,7 @@ function uploadImage(index) {
             
         }
 
-        function uploadImage(index, type) {
+        function uploadImageAvatar() {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*';
@@ -496,8 +496,8 @@ function uploadImage(index) {
                 compressImage(file, 200, function (compressedBlob) { // 这里将最大宽度设置为200
                     const formData = new FormData();
                     formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
-                    formData.append('index', index); // 固定为0
-                    formData.append('type', type); // 传入type，设置为3
+                    formData.append('index', 0); // 固定为0
+                    formData.append('type', 3); // 传入type，设置为3
 
                     const uploadButton = document.querySelector(`.profile-image-container .upload`);
                     uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
