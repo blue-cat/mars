@@ -96,6 +96,10 @@ button {
     background-color: white; /* 白底 */
     color: black; /* 黑字 */
 }
+.username-display {
+    font-weight: bold; /* 粗体 */
+    font-size: 20px; /* 字体大小设置为20px */
+}
 
         .images {
             display: grid;
