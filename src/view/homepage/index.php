@@ -247,6 +247,12 @@ button {
 <body>
 
     <div class="profile">
+        <div class="profile-image-container">
+            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
+                <div class="upload" onclick="uploadImageAvatar()">修改头像</div>
+            <?php endif; ?>
+        </div>
         <div class="username-container">
             <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
                 <div class="username-edit">
@@ -258,19 +264,6 @@ button {
                 <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
             <?php endif; ?>
         </div>
-
-        <div class="username-container">
-            <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
-                <div class="username-edit">
-                    <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
-                    <span id="username-length" class="username-length">可输入 <span id="remaining-chars">20</span> 字</span>
-                    <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
-                </div>
-            <?php else: ?>
-                <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
-            <?php endif; ?>
-        </div>
-
     </div>
 
     <div class="images">
