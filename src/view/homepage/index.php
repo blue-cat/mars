@@ -139,8 +139,6 @@ button {
             margin: 20px auto; /* 中心对齐 */
         }
         .details-edit {
-    border: 1px solid #ccc; /* 边框 */
-    border-radius: 5px; /* 圆角 */
     padding: 10px; /* 内边距 */
     margin-bottom: 10px; /* 底部留空 */
 }
@@ -155,7 +153,7 @@ button {
 
 .details-length {
     float: right; /* 右对齐 */
-    margin-top: 5px; /* 顶部留空 */
+    margin-top: 0px; /* 顶部留空 */
     font-size: 16px; /* 字体大小 */
     color: #999; /* 颜色 */
 }
