@@ -38,9 +38,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             height: 130px;
         }
         .profile-image-container {
+            position: relative; /* 设置为相对定位以使内部绝对定位的元素参照此容器 */
             width: 130px; /* 固定宽度 */
             height: 130px; /* 固定高度 */
-            background-color: #f0f0f0; /* 灰色背景 */
+            background-color: #f0f0f0; /* 背景颜色 */
             border-radius: 50%; /* 圆形边角 */
             overflow: hidden; /* 隐藏溢出部分 */
             display: inline-block; /* 使元素保持行内块级特性 */
@@ -211,14 +212,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 </head>
 <body>
 
-    <div class="profile">
-        <div class="profile-image-container">
-            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
-            <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
-                <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
-            <?php endif; ?>
-        </div>
-        <div class="username">@<?php echo $userInfo['nickname']; ?></div>
+    <div class="profile-image-container">
+        <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+        <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
+            <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
+        <?php endif; ?>
     </div>
 
     <div class="images">
