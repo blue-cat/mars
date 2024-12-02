@@ -58,6 +58,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             padding-right: 40px; 
             font-size: 16px; 
             margin-right: 10px; 
+            font-family: 'LM Roman Bold', Arial, sans-serif; 
         }
         .username-length {
             position: absolute; 
@@ -141,6 +142,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             margin-right: 5px;
             font-size: 16px; 
             width: calc(100% - 13px); 
+            font-family: 'LM Roman Bold', Arial, sans-serif; 
         }
         .details-length {
             float: right; 
