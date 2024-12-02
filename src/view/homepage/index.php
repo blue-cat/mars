@@ -74,12 +74,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     padding: 5px; /* 内边距 */
     padding-right: 40px; /* 右侧留出空间 */
     font-size: 16px; /* 字体大小和上传按钮一致 */
+    font-family: 'LM Roman Bold', Arial, sans-serif; /* 设置与body一致的字体 */
     margin-right: 10px; /* 和保存按钮之间的间距 */
 }
 
 .username-length {
     position: absolute; /* 绝对定位 */
-    right: 10px; /* 右边距 */
+    right: 15px; /* 右边距 */
     top: 50%; /* 垂直居中 */
     transform: translateY(-50%); /* 确保文字正常显示在中间 */
     font-size: 16px; /* 字体大小 */
