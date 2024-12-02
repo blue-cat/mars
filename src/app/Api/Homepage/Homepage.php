@@ -127,7 +127,7 @@ class Homepage extends Api {
         if ($dir == 'mavatar') {
             // 调用userDomain中的modify方法
             $user = new UserDomain();
-            $user->modify(['avatar' => $ret['key']], $selfUid);
+            $user->update(['avatar' => $ret['key']], $selfUid);
             return $this->domain . "/" . $ret['key'];
         }
 
