@@ -240,7 +240,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         </div>
         <div class="right">
             <div class="qrcode" id="qrcode-container">
-                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
+                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()" onSuccess="qrCodeSuccess()">
 
                 <div class="corner corner-tl">
                     <div class="inner-square">
@@ -472,6 +472,14 @@ function uploadImage(index) {
                 uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
             }
             
+        }
+
+        function qrCodeSuccess() {
+            // 角落出现
+            const corners = document.querySelectorAll('.qrcode .corner');
+            corners.forEach(corner => {
+                corner.classList.add('hidden');
+            });
         }
 
     </script>
