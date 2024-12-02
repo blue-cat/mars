@@ -63,11 +63,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     align-items: center; /* 垂直居中 */
 }
 
-.username-display {
-    font-weight: bold; /* 粗体 */
-    font-size: 20px; /* 字体大小20px */
-}
-
 #username-input {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
@@ -88,6 +83,7 @@ button {
     cursor: pointer; /* 鼠标指针 */
     font-size: 16px; /* 字体大小 */
 }
+
 
         .images {
             display: grid;
@@ -251,12 +247,18 @@ button {
 <body>
 
     <div class="profile">
-        <div class="profile-image-container">
-            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
-            <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
-                <div class="upload" onclick="uploadImageAvatar()">修改头像</div>
+        <div class="username-container">
+            <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
+                <div class="username-edit">
+                    <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
+                    <span id="username-length" class="username-length">0/20</span> <!-- 修改为动态更新字符长度 -->
+                    <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
+                </div>
+            <?php else: ?>
+                <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
             <?php endif; ?>
         </div>
+
         <div class="username-container">
             <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
                 <div class="username-edit">
@@ -607,21 +609,19 @@ function uploadImage(index) {
         function checkUsernameLength() {
             const input = document.getElementById('username-input');
             const maxLength = 20;
-            const remainingChars = maxLength - input.value.length;
+            const currentLength = input.value.length; // 计算当前输入的字数
 
-            // 更新显示剩余字符数
-            document.getElementById('remaining-chars').innerText = remainingChars;
+            // 更新显示已输入字数
+            document.getElementById('username-length').innerText = `${currentLength}/20`;
 
             // 限制保存按钮的点击事件
             const saveButton = document.querySelector('.username-edit button');
-            if (remainingChars < 0) {
+            if (currentLength > maxLength) {
                 saveButton.disabled = true; // 禁用保存按钮
             } else {
                 saveButton.disabled = false; // 启用保存按钮
             }
         }
-
-
     </script>
 
 </body>
