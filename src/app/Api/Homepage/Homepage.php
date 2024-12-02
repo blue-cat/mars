@@ -61,6 +61,8 @@ class Homepage extends Api {
 
             $isMe = $user_id == $selfUid;
 
+            $details = $userInfo['slogan'];
+
             // 拉取用户的图片
             $media = new MediaDomain();
             $mediaList = $media->getMediaByObjId(1, $user_id);

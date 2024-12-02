@@ -1,13 +1,4 @@
 <?php
-$details = [
-    '👆 capper Mingyu Sunoo',
-    '🍑 ningning Giselle 李羲承',
-    '尹亘汉 南柱赫 许光汉',
-    '时代峰峻234代',
-    '次9同担同梦 某人每追',
-    '🎸 超绝 ehp svt 团魂。女团博爱',
-    '克拉忞静快来带我玩🤲'
-];
 list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
 ?>
 
@@ -322,14 +313,12 @@ button {
             <div class="details">
                 <?php if ($isMe): ?> <!-- 仅在用户自己时显示可编辑状态 -->
                     <div class="details-edit">
-                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="width: 100%; height: 100px;"><?php echo implode("\n", $details); ?></textarea>
+                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="width: 100%; height: 100px;"><?php echo htmlspecialchars($details); ?></textarea>
                         <span id="details-length" class="details-length">0/300</span> <!-- 初始化为空 -->
                         <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
                     </div>
                 <?php else: ?>
-                    <?php foreach ($details as $detail): ?>
-                        <div><?php echo $detail; ?></div>
-                    <?php endforeach; ?>
+                    <div><?php echo nl2br(htmlspecialchars($details)); ?></div> <!-- 输出可阅读字符串并替换换行符 -->
                 <?php endif; ?>
             </div>
         </div>
