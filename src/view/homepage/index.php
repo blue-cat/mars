@@ -147,6 +147,27 @@ button {
             width: 80%; /* 总宽度80% */
             margin: 20px auto; /* 中心对齐 */
         }
+        .details-edit {
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 5px; /* 圆角 */
+    padding: 10px; /* 内边距 */
+    margin-bottom: 10px; /* 底部留空 */
+}
+
+#details-input {
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 5px; /* 圆角 */
+    padding: 5px; /* 内边距 */
+    font-size: 16px; /* 字体大小 */
+    width: calc(100% - 10px); /* 自适应宽度 */
+}
+
+.details-length {
+    float: right; /* 右对齐 */
+    margin-top: 5px; /* 顶部留空 */
+    font-size: 16px; /* 字体大小 */
+    color: #999; /* 颜色 */
+}
         .left {
             width: 50%; /* 描述和细节部分宽度 */
             text-align: left;
@@ -299,9 +320,17 @@ button {
     <div class="content">
         <div class="left">
             <div class="details">
-                <?php foreach ($details as $detail): ?>
-                    <div><?php echo $detail; ?></div>
-                <?php endforeach; ?>
+                <?php if ($isMe): ?> <!-- 仅在用户自己时显示可编辑状态 -->
+                    <div class="details-edit">
+                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="width: 100%; height: 100px;"><?php echo implode("\n", $details); ?></textarea>
+                        <span id="details-length" class="details-length">0/300</span> <!-- 初始化为空 -->
+                        <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($details as $detail): ?>
+                        <div><?php echo $detail; ?></div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="right">
@@ -640,6 +669,27 @@ function uploadImage(index) {
         document.addEventListener("DOMContentLoaded", function() {
             checkUsernameLength(); //初始化显示字符长度
         });
+        function checkDetailsLength() {
+    const input = document.getElementById('details-input');
+    const maxLength = 300;
+    const currentLength = input.value.length; // 计算当前输入的字数
+
+    // 更新显示已输入字数
+    document.getElementById('details-length').innerText = `${currentLength}/300`;
+
+    // 限制保存按钮的点击事件
+    const saveButton = document.querySelector('.details-edit button');
+    if (currentLength > maxLength) {
+        saveButton.disabled = true; // 禁用保存按钮
+    } else {
+        saveButton.disabled = false; // 启用保存按钮
+    }
+}
+
+// 页面加载时调用，使得details内容长度正确显示
+document.addEventListener("DOMContentLoaded", function() {
+    checkDetailsLength(); //初始化显示字符长度
+});
 
     </script>
 
