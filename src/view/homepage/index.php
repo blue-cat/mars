@@ -198,7 +198,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <div class="profile-image-container">
             <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
             <?php if ($isMe): ?>
-                <div class="upload" onclick="uploadImageAvatar()">修改头像</div>
+                <div class="upload" onclick="uploadImage('avatar')">修改头像</div>
             <?php endif; ?>
         </div>
         <div class="username-container">
@@ -221,7 +221,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             <div class="image-container" id="image-container-<?php echo $index; ?>">
                 <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
                 <?php if ($isMe): ?>
-                    <div class="upload" onclick="uploadImage(<?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
+                    <div class="upload" onclick="uploadImage('image', <?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
@@ -244,13 +244,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <div class="right">
             <div class="qrcode" id="qrcode-container">
                 <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
-
-                <div class="corner corner-tl <?php echo $qrcodeImage ? 'hidden' : ''; ?>"></div>
-                <div class="corner corner-tr <?php echo $qrcodeImage ? 'hidden' : ''; ?>"></div>
-                <div class="corner corner-bl <?php echo $qrcodeImage ? 'hidden' : ''; ?>"></div>
-
                 <?php if ($isMe): ?>
-                    <div class="upload" onclick="uploadQRCode()"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                    <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
                 <?php endif; ?>
             </div>
         </div>
@@ -260,7 +255,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <a href="#" id="create-homepage-btn">创建我的Homepage</a> | 
         <a href="#">火星殖民计划</a>
     </div>
-
     <script>
         // 检查URL中是否有code和state参数
         const urlParams = new URLSearchParams(window.location.search);
@@ -328,59 +322,12 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             reader.readAsDataURL(file);
         }
 
-        function uploadQRCode() {
+        // 向上传函数传递不同的类型
+        function uploadImage(type, index = 0) {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*';
-            input.onchange = function (event) {
-                const file = event.target.files[0];
-                if (!file) return;
 
-                compressImage(file, 200, function (compressedBlob) {
-                    const formData = new FormData();
-                    formData.append('file', compressedBlob, file.name);
-                    formData.append('index', 0);
-                    formData.append('type', '2');
-
-                    const uploadButton = document.querySelector('.qrcode .upload');
-                    uploadButton.textContent = '上传中';
-
-                    fetch('/?s=App.Homepage_Homepage.upload', {
-                        method: 'POST',
-                        body: formData,
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.ret === 200) {
-                            const newQRCodeURL = data.data;
-                            const imgElement = document.getElementById('qr-code');
-                            imgElement.src = newQRCodeURL;
-                            imgElement.style.display = 'block'; 
-                            imgElement.onerror = null; 
-                            uploadButton.textContent = '修改'; 
-
-                            const corners = document.querySelectorAll('.qrcode .corner');
-                            corners.forEach(corner => corner.classList.add('hidden')); 
-
-                        } else {
-                            alert(data.msg);
-                            uploadButton.textContent = '上传'; 
-                        }
-                    })
-                    .catch(error => {
-                        console.error('上传出错:', error);
-                        alert('上传失败，请重试。');
-                        uploadButton.textContent = '上传'; 
-                    });
-                });
-            };
-            input.click();
-        }
-
-        function uploadImage(index) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
             input.onchange = function (event) {
                 const file = event.target.files[0];
                 if (!file) return;
@@ -389,9 +336,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     const formData = new FormData();
                     formData.append('file', compressedBlob, file.name);
                     formData.append('index', index);
-                    formData.append('type', '1');
+                    formData.append('type', type === 'avatar' ? 3 : (type === 'qrcode' ? 2 : 1)); // 根据类型设定type值
 
-                    const uploadButton = document.querySelector(`#image-container-${index} .upload`);
+                    const uploadButtonSelector = type === 'avatar' ? '.profile-image-container .upload' : (type === 'qrcode' ? '.qrcode .upload' : `#image-container-${index} .upload`);
+                    const uploadButton = document.querySelector(uploadButtonSelector);
                     uploadButton.textContent = '上传中';
 
                     fetch('/?s=App.Homepage_Homepage.upload', {
@@ -401,24 +349,31 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     .then(response => response.json())
                     .then(data => {
                         if (data.ret === 200) {
-                            const newImageURL = data.data;
-                            const imgElement = document.getElementById(`img-${index}`);
-                            imgElement.src = newImageURL; 
-                            imgElement.style.display = 'block'; 
-                            uploadButton.textContent = '修改'; 
-
+                            const newURL = data.data;
+                            if (type === 'avatar') {
+                                const imgElement = document.querySelector('.profile-image-container img');
+                                imgElement.src = newURL;
+                            } else if (type === 'qrcode') {
+                                const imgElement = document.getElementById('qr-code');
+                                imgElement.src = newURL;
+                            } else {
+                                const imgElement = document.getElementById(`img-${index}`);
+                                imgElement.src = newURL;
+                            }
+                            uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '修改' : '修改');
                         } else {
                             alert(data.msg);
-                            uploadButton.textContent = '上传'; 
+                            uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '上传' : '上传');
                         }
                     })
                     .catch(error => {
                         console.error('上传出错:', error);
                         alert('上传失败，请重试。');
-                        uploadButton.textContent = '上传'; 
+                        uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '上传' : '上传');
                     });
                 });
             };
+
             input.click();
         }
 
@@ -446,52 +401,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             if (uploadButton) {
                 uploadButton.textContent = '上传'; 
             }
-        }
-
-        function uploadImageAvatar() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function (event) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                compressImage(file, 200, function (compressedBlob) {
-                    const formData = new FormData();
-                    formData.append('file', compressedBlob, file.name);
-                    formData.append('index', 0); 
-                    formData.append('type', 3); 
-
-                    const uploadButton = document.querySelector(`.profile-image-container .upload`);
-                    uploadButton.textContent = '上传中'; 
-
-                    fetch('/?s=App.Homepage_Homepage.upload', {
-                        method: 'POST',
-                        body: formData,
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.ret === 200) {
-                            const newAvatarURL = data.data;
-                            const imgElement = document.querySelector('.profile-image-container img');
-                            imgElement.src = newAvatarURL; 
-                            imgElement.style.display = 'block'; 
-                            imgElement.onerror = null; 
-                            uploadButton.textContent = '修改头像'; 
-
-                        } else {
-                            alert(data.msg);
-                            uploadButton.textContent = '修改头像'; 
-                        }
-                    })
-                    .catch(error => {
-                        console.error('上传出错:', error);
-                        alert('上传失败，请重试。');
-                        uploadButton.textContent = '修改头像'; 
-                    });
-                });
-            };
-            input.click();
         }
 
         function updateUserInfo(type, content) {
