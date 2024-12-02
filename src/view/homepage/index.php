@@ -52,27 +52,42 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             margin-top: 10px;
         }
         .username-container {
-            display: flex; /* 水平布局 */
-            align-items: center; /* 垂直居中 */
-            margin-top: 10px; /* 顶部留空 */
-        }
+    display: flex; /* 使用flex布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    margin-top: 10px; /* 顶部留空 */
+}
 
-        #username-input {
-            border: 1px solid #ccc; /* 边框 */
-            border-radius: 5px; /* 圆角 */
-            padding: 5px; /* 内边距 */
-            width: 200px; /* 固定宽度 */
-        }
+.username-edit {
+    display: flex; /* 使输入框、显示字符数和按钮在同一行 */
+    align-items: center; /* 垂直居中 */
+}
 
-        button {
-            margin-left: 10px; /* 按钮与输入框之间的间距 */
-            background-color: #4CAF50; /* 按钮背景色 */
-            color: white; /* 按钮文字颜色 */
-            border: none; /* 去掉按钮边框 */
-            border-radius: 5px; /* 圆角 */
-            padding: 5px 10px; /* 内边距 */
-            cursor: pointer; /* 鼠标指针 */
-        }
+.username-display {
+    font-weight: bold; /* 粗体 */
+    font-size: 20px; /* 字体大小20px */
+}
+
+#username-input {
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 5px; /* 圆角 */
+    padding: 5px; /* 内边距 */
+    font-size: 20px; /* 字体大小20px */
+    margin-right: 10px; /* 和字符指示之间的间距 */
+}
+
+.username-length {
+    margin-right: 10px; /* 和按钮之间的间距 */
+    font-size: 16px; /* 字体大小 */
+}
+
+button {
+    border: 1px solid #ccc; /* 与页面其他按钮保持一致 */
+    border-radius: 5px; /* 圆角 */
+    padding: 5px 10px; /* 内边距 */
+    cursor: pointer; /* 鼠标指针 */
+    font-size: 16px; /* 字体大小 */
+}
 
         .images {
             display: grid;
@@ -244,12 +259,16 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         </div>
         <div class="username-container">
             <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
-                <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" />
-                <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
+                <div class="username-edit">
+                    <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
+                    <span id="username-length" class="username-length">可输入 <span id="remaining-chars">20</span> 字</span>
+                    <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
+                </div>
             <?php else: ?>
-                <span>@<?php echo $userInfo['nickname']; ?></span>
+                <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
             <?php endif; ?>
         </div>
+
     </div>
 
     <div class="images">
@@ -560,7 +579,7 @@ function uploadImage(index) {
 
             input.click();
         }
-        
+
         function updateUserInfo(type, content) {
             // 创建表单数据
             const formData = new FormData();
@@ -584,6 +603,22 @@ function uploadImage(index) {
                 console.error('请求失败:', error);
                 alert('请求失败，请重试。');
             });
+        }
+        function checkUsernameLength() {
+            const input = document.getElementById('username-input');
+            const maxLength = 20;
+            const remainingChars = maxLength - input.value.length;
+
+            // 更新显示剩余字符数
+            document.getElementById('remaining-chars').innerText = remainingChars;
+
+            // 限制保存按钮的点击事件
+            const saveButton = document.querySelector('.username-edit button');
+            if (remainingChars < 0) {
+                saveButton.disabled = true; // 禁用保存按钮
+            } else {
+                saveButton.disabled = false; // 启用保存按钮
+            }
         }
 
 
