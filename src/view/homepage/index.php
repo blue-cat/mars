@@ -139,6 +139,7 @@ button {
             margin: 20px auto; /* 中心对齐 */
         }
         .details-edit {
+            margin-right: 5px; /* 右侧留空 */
     margin-bottom: 10px; /* 底部留空 */
 }
 
