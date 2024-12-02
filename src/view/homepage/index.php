@@ -240,7 +240,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         </div>
         <div class="right">
             <div class="qrcode" id="qrcode-container">
-                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()" onLoad="qrCodeSuccess()">
+                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()" onload="qrCodeSuccess()">
 
                 <div class="corner corner-tl">
                     <div class="inner-square">
