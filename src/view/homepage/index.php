@@ -59,7 +59,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 .username-edit {
-    display: flex; /* 使输入框、显示字符数和按钮在同一行 */
+    display: flex; /* 使输入框和按钮在同一行 */
     align-items: center; /* 垂直居中 */
 }
 
@@ -68,12 +68,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 #username-input {
+    width: 130px; /* 设置和头像宽度相近 */
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px; /* 内边距 */
     padding-right: 40px; /* 右侧留出空间 */
-    font-size: 20px; /* 字体大小20px */
-    margin-right: 10px; /* 和按钮之间的间距 */
+    font-size: 16px; /* 字体大小和上传按钮一致 */
+    margin-right: 10px; /* 和保存按钮之间的间距 */
 }
 
 .username-length {
@@ -86,14 +87,14 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 button {
-    border: 1px solid #ccc; /* 与页面其他按钮保持一致 */
+    border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px 10px; /* 内边距 */
     cursor: pointer; /* 鼠标指针 */
-    font-size: 16px; /* 字体大小 */
+    font-size: 16px; /* 字体大小，与上传按钮一致 */
+    background-color: white; /* 白底 */
+    color: black; /* 黑字 */
 }
-
-
         .images {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 三列布局 */
