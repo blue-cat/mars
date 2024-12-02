@@ -240,19 +240,19 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         </div>
         <div class="right">
             <div class="qrcode" id="qrcode-container">
-                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()" onload="qrCodeSuccess()">
+                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
 
-                <div class="corner corner-tl">
+                <div class="corner corner-tl <?php echo $qrcodeImage ? 'hidden' : ''; ?>">
                     <div class="inner-square">
                         <div class="inner-square-gray"></div>
                     </div>
                 </div>
-                <div class="corner corner-tr">
+                <div class="corner corner-tr <?php echo $qrcodeImage ? 'hidden' : ''; ?>">
                     <div class="inner-square">
                         <div class="inner-square-gray"></div>
                     </div>
                 </div>
-                <div class="corner corner-bl">
+                <div class="corner corner-bl <?php echo $qrcodeImage ? 'hidden' : ''; ?>">
                     <div class="inner-square">
                         <div class="inner-square-gray"></div>
                     </div>
@@ -462,6 +462,12 @@ function uploadImage(index) {
             const imgElement = document.getElementById('qr-code');
             imgElement.style.display = 'none'; // 隐藏破损的二维码图片
 
+            // 显示角落块
+            const corners = document.querySelectorAll('.qrcode .corner');
+            corners.forEach(corner => {
+                corner.classList.remove('hidden'); // 移除隐藏类
+            });
+
             // 修改qrcode区域的背景
             const qrCodeContainer = document.getElementById('qrcode-container');
             qrCodeContainer.style.backgroundImage = 'radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent)';
@@ -472,14 +478,6 @@ function uploadImage(index) {
                 uploadButton.textContent = '上传'; // 将按钮文字更改为“上传”
             }
             
-        }
-
-        function qrCodeSuccess() {
-            // 角落出现
-            const corners = document.querySelectorAll('.qrcode .corner');
-            corners.forEach(corner => {
-                corner.classList.add('hidden');
-            });
         }
 
     </script>
