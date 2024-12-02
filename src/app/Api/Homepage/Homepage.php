@@ -88,7 +88,7 @@ class Homepage extends Api {
         $typeMap = [
             '1' => 'homepage',
             '2' => 'qrcode',
-            '3' => 'avatar',
+            '3' => 'mavatar',
         ];
         // 判断用户是否登录
         $selfUid = $this->getUserIdByToken();
@@ -123,6 +123,13 @@ class Homepage extends Api {
 
         $qiniu = new Qiniu();
         $ret = $qiniu->uploadFile($filePath, $file['tmp_name']);
+
+        if ($dir == 'mavatar') {
+            // 调用userDomain中的modify方法
+            $user = new UserDomain();
+            $user->modify(['avatar' => $ret['key']], $selfUid);
+            return $this->domain . "/" . $ret['key'];
+        }
 
         // 往media表写
         $media = new MediaDomain();

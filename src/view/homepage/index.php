@@ -214,6 +214,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     <div class="profile">
         <div class="profile-image-container">
             <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <?php if ($isMe): ?> <!-- 仅在用户是自己的情况下显示上传按钮 -->
+                <div class="upload" onclick="uploadImage(0, 3)">修改头像</div>
+            <?php endif; ?>
         </div>
         <div class="username">@<?php echo $userInfo['nickname']; ?></div>
     </div>
@@ -479,6 +482,54 @@ function uploadImage(index) {
             }
             
         }
+
+        function uploadImage(index, type) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+
+            input.onchange = function (event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                compressImage(file, 200, function (compressedBlob) { // 这里将最大宽度设置为200
+                    const formData = new FormData();
+                    formData.append('file', compressedBlob, file.name); // 使用压缩后的文件
+                    formData.append('index', index); // 固定为0
+                    formData.append('type', type); // 传入type，设置为3
+
+                    const uploadButton = document.querySelector(`.profile-image-container .upload`);
+                    uploadButton.textContent = '上传中'; // 修改按钮文字为“上传中”
+
+                    fetch('/?s=App.Homepage_Homepage.upload', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.ret === 200) {
+                            const newAvatarURL = data.data;
+                            const imgElement = document.querySelector('.profile-image-container img');
+                            imgElement.src = newAvatarURL; // 更新头像地址
+                            imgElement.style.display = 'block'; // 确保图片可见
+                            imgElement.onerror = null; // 清除之前的错误处理
+                            uploadButton.textContent = '修改头像'; // 更新按钮文字为“修改头像”
+                        } else {
+                            alert(data.msg);
+                            uploadButton.textContent = '修改头像'; // 恢复按钮文字
+                        }
+                    })
+                    .catch(error => {
+                        console.error('上传出错:', error);
+                        alert('上传失败，请重试。');
+                        uploadButton.textContent = '修改头像'; // 恢复按钮文字
+                    });
+                });
+            };
+
+            input.click();
+        }
+
 
     </script>
 

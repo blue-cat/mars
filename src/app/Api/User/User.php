@@ -327,7 +327,7 @@ class User extends Api
             throw new BadRequestException($e->getMessage(), 510);
         }
 
-        $domain = new UserDomain();
+        // $domain = new UserDomain();
         return ['profile' => $domain->getUserInfo($user->getUserId(), 'id,nickname,status,mobile,tel_pre,avatar,bg,sex,slogan,birth,height,weight,sexuality,fo,fa,lk')];
     }
 
