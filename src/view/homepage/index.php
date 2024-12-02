@@ -140,7 +140,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             border-radius: 5px; 
             padding: 5px; 
             margin-right: 5px;
-            font-size: 16px; 
+            font-size: 12px; 
             width: calc(100% - 13px); 
             font-family: 'LM Roman Bold', Arial, sans-serif; 
         }
