@@ -608,6 +608,8 @@ function uploadImage(index) {
             .then(data => {
                 if (data.ret === 200) {
                     alert('修改成功！'); // 显示修改成功的提示
+                    //修改成功后刷新本页面
+                    location.reload();
                 } else {
                     alert(data.msg); // 显示错误信息
                 }
