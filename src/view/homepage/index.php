@@ -146,9 +146,9 @@ button {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px; /* 内边距 */
-    margin-right: 20px;
+    margin-right: 5px;
     font-size: 16px; /* 字体大小 */
-    width: calc(100% - 25px); /* 自适应宽度 */
+    width: calc(100% - 13px); /* 自适应宽度 */
 }
 
 .details-length {
@@ -311,7 +311,7 @@ button {
             <div class="details">
                 <?php if ($isMe): ?> <!-- 仅在用户自己时显示可编辑状态 -->
                     <div class="details-edit">
-                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="width: 100%; height: 100px;"><?php echo htmlspecialchars($details); ?></textarea>
+                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="height: 165px;"><?php echo htmlspecialchars($details); ?></textarea>
                         <span id="details-length" class="details-length">0/300</span> <!-- 初始化为空 -->
                         <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
                     </div>
