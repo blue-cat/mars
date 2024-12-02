@@ -234,7 +234,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             <div class="details">
                 <?php if ($isMe): ?>
                     <div class="details-edit">
-                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="height: 165px;"><?php echo htmlspecialchars($details); ?></textarea>
+                        <textarea id="details-input" maxlength="300" oninput="checkDetailsLength()" style="height: 160px;"><?php echo htmlspecialchars($details); ?></textarea>
                         <span id="details-length" class="details-length">0/300</span>
                         <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
                     </div>
