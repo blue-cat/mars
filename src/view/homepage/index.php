@@ -257,7 +257,7 @@ button {
         }
         .footer {
     text-align: center; 
-    margin-top: 20px; 
+    margin-top: 50px; 
     font-size: 14px; 
 }
 .footer a {
