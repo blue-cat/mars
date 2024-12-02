@@ -37,6 +37,7 @@ class Homepage extends Api {
     }
 
     public function index() {
+        exit('ok');
         // 判断用户是否登录
         $selfUid = $this->getUserIdByToken();
 
