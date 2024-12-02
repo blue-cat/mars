@@ -63,17 +63,26 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     align-items: center; /* 垂直居中 */
 }
 
+.input-container {
+    position: relative; /* 使输入框和字符数相对定位 */
+}
+
 #username-input {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px; /* 内边距 */
+    padding-right: 40px; /* 右侧留出空间 */
     font-size: 20px; /* 字体大小20px */
-    margin-right: 10px; /* 和字符指示之间的间距 */
+    margin-right: 10px; /* 和按钮之间的间距 */
 }
 
 .username-length {
-    margin-right: 10px; /* 和按钮之间的间距 */
+    position: absolute; /* 绝对定位 */
+    right: 10px; /* 右边距 */
+    top: 50%; /* 垂直居中 */
+    transform: translateY(-50%); /* 确保文字正常显示在中间 */
     font-size: 16px; /* 字体大小 */
+    color: #999; /* 颜色 */
 }
 
 button {
@@ -256,14 +265,17 @@ button {
         <div class="username-container">
             <?php if ($isMe): ?> <!-- 如果是用户本人，显示可编辑状态 -->
                 <div class="username-edit">
-                    <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
-                    <span id="username-length" class="username-length">0/20</span> <!-- 修改为动态更新字符长度 -->
+                    <div class="input-container">
+                        <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
+                        <span id="username-length" class="username-length"></span> <!-- 初始化为空 -->
+                    </div>
                     <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
                 </div>
             <?php else: ?>
                 <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
             <?php endif; ?>
         </div>
+
     </div>
 
     <div class="images">
@@ -615,6 +627,12 @@ function uploadImage(index) {
                 saveButton.disabled = false; // 启用保存按钮
             }
         }
+
+        // 页面加载时调用，使得用户名长度正确显示
+        document.addEventListener("DOMContentLoaded", function() {
+            checkUsernameLength(); //初始化显示字符长度
+        });
+
     </script>
 
 </body>
