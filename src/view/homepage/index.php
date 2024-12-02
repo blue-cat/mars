@@ -89,12 +89,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 button {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
-    padding: 5px 10px; /* 内边距 */
+    padding: 2px 6px; /* 调整内边距，使按钮更小 */
     cursor: pointer; /* 鼠标指针 */
-    font-size: 16px; /* 字体大小，与上传按钮一致 */
+    font-size: 14px; /* 字体大小，调整为14px，使其更小 */
     background-color: white; /* 白底 */
     color: black; /* 黑字 */
 }
+
         .images {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 三列布局 */
@@ -276,7 +277,6 @@ button {
                 <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
             <?php endif; ?>
         </div>
-
     </div>
 
     <div class="images">
