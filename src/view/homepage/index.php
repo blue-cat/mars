@@ -146,9 +146,9 @@ button {
     border: 1px solid #ccc; /* 边框 */
     border-radius: 5px; /* 圆角 */
     padding: 5px; /* 内边距 */
-    margin-right: 5px;
+    margin-right: 10px;
     font-size: 16px; /* 字体大小 */
-    width: calc(100% - 10px); /* 自适应宽度 */
+    width: calc(100% - 15px); /* 自适应宽度 */
 }
 
 .details-length {
