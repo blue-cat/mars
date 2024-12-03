@@ -330,6 +330,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             input.type = 'file';
             input.accept = 'image/*';
 
+            alert(input.type);
             input.onchange = function (event) {
                 const file = event.target.files[0];
                 if (!file) {
