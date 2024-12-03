@@ -15,7 +15,7 @@ class Filter
 
         $url = self::$url. urlencode($text);
         $result = file_get_contents($url);
-        return $result;
+        return $url;
         if ($result == 'true') {
             return true;
         } else {
