@@ -330,8 +330,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             input.type = 'file';
             input.accept = 'image/*';
 
-            input.onchange = function (event) {
-                alert(event.target.value);
+            input.addEventListener('change', function (event) {
                 const file = event.target.files[0];
                 if (!file) {
                     alert('请选择图片');
@@ -378,7 +377,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '上传' : '上传');
                     });
                 });
-            };
+            });
 
             input.click();
         }
