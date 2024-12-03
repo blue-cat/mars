@@ -12,8 +12,10 @@ class Filter
 
     public static function check($text)
     {
+
         $url = self::$url. urlencode($text);
         $result = file_get_contents($url);
+        echo $result;
         if ($result == 'true') {
             return true;
         } else {
