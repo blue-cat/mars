@@ -327,12 +327,15 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         // 向上传函数传递不同的类型
         function uploadImage(type, index = 0) {
             const input = document.createElement('input');
+            input.style.display = 'none'
             input.type = 'file';
             input.accept = 'image/*';
+            document.body.appendChild(input);
+            input.click();
 
-            input.addEventListener('blur', function () {
+            input.addEventListener('change', function (event) {
                 alert("Uploading image");
-                const file = input.files[0];
+                const file = event.target.files[0];
                 if (!file) {
                     alert('请选择图片');
                     return;
@@ -378,6 +381,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '上传' : '上传');
                     });
                 });
+
+                document.body.removeChild(input)
             });
 
             input.click();
