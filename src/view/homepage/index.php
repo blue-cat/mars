@@ -330,9 +330,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             input.type = 'file';
             input.accept = 'image/*';
 
-            input.addEventListener('change', function (event) {
+            input.addEventListener('blur', function () {
                 alert("Uploading image");
-                const file = event.target.files[0];
+                const file = input.files[0];
                 if (!file) {
                     alert('请选择图片');
                     return;
