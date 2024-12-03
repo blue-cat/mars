@@ -254,7 +254,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     </div>
 
     <div class="footer">
-        <a href="#" id="create-homepage-btn">创建我的Homepage</a> | 
+        <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="#">火星殖民计划</a>
     </div>
     <script>
@@ -332,7 +332,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 
             input.onchange = function (event) {
                 const file = event.target.files[0];
-                if (!file) return;
+                if (!file) {
+                    alert('请选择图片');
+                    return;
+                }
 
                 compressImage(file, 200, function (compressedBlob) {
                     const formData = new FormData();
