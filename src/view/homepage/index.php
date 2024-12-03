@@ -329,14 +329,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*';
+            input.style.display = 'none';
 
             document.body.appendChild(input);
 
             input.addEventListener('change', function (event) {
-                alert("Uploading image");
                 const file = event.target.files[0];
                 if (!file) {
-                    alert('请选择图片');
                     document.body.removeChild(input); // 移除输入框
                     return;
                 }
