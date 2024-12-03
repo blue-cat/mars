@@ -15,6 +15,6 @@ class Filter
 
         $url = self::$url. $text;
         $result = file_get_contents($url);
-        return $result;
+        return $result == "Safe" ? true : false;
     }
 }
