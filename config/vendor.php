@@ -40,8 +40,8 @@ return [
      */
     'weixin' => [
         'h5' => [
-            'appId' => 'wx152b40f9261a2e2b',
-            'appSecret' => '57710077eb3a26827c7fd97fe9b33a36',
+            'appId' => 'wx0ceebdb1622784ce',
+            'appSecret' => '51a7bc44f46067d6c588e08ddf32fdaa',
         ],
         'applet' => [
             'appId' => 'wxb19ec993073f35e9',
