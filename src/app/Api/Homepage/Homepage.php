@@ -219,7 +219,7 @@ class Homepage extends Api {
 
         $media = new MediaDomain();
         $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
-        if ($qrCodeInfo && $qrCodeInfo['status'] == $media::MEDIA_OK) {
+        if ($qrCodeInfo) {
             $data = [
                 'status' => $media::MEDIA_DEL,
                 'update_time' => time(),
