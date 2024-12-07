@@ -334,13 +334,7 @@
                 wx.updateTimelineShareData({
                     title: title,
                     link: window.location.href, // 当前页面链接
-                    imgUrl: imageUrl, // 分享时的图标
-                    success: function() {
-                        alert('分享成功！');
-                    },
-                    cancel: function() {
-                        alert('分享取消！');
-                    }
+                    imgUrl: imageUrl // 分享时的图标
                 });
             });
             wx.ready(function () {
@@ -349,14 +343,7 @@
                     title: title,
                     desc: description,
                     link: window.location.href, // 当前页面链接
-                    imgUrl: imageUrl, // 分享时的图标
-                    success: function() {
-                        alert('分享成功！');
-                    },
-                    cancel: function() {
-                        alert('分享取消！');
-                    }
-                    
+                    imgUrl: imageUrl
                 });
             });
         });
