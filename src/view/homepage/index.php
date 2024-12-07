@@ -162,7 +162,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-size: 20px 20px; 
         }
 
-        /* 角块 */
+  /* 角块 */
 .qrcode::before,
 .qrcode::after,
 .qrcode::marker {
@@ -189,27 +189,17 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 /* 内角白块 */
-.qrcode::marker::before,
-.qrcode::marker::after,
 .qrcode::before::before,
 .qrcode::before::after,
 .qrcode::after::before,
-.qrcode::after::after {
+.qrcode::after::after,
+.qrcode::marker::before,
+.qrcode::marker::after {
     content: '';
     position: absolute;
     width: 20px;
     height: 20px;
     background-color: #fff;
-}
-
-.qrcode::marker::before {
-    top: 20px;
-    left: 20px;
-}
-
-.qrcode::marker::after {
-    bottom: 20px;
-    right: 20px;
 }
 
 .qrcode::before::before {
@@ -228,6 +218,16 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 .qrcode::after::after {
+    bottom: 20px;
+    right: 20px;
+}
+
+.qrcode::marker::before {
+    top: 20px;
+    left: 20px;
+}
+
+.qrcode::marker::after {
     bottom: 20px;
     right: 20px;
 }
