@@ -323,9 +323,9 @@
             signature: '<?php echo $signature; ?>', // 签名
             jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的 JS 接口
         });
-        
+
         document.getElementById('share-friends-button').onclick = function() {
-            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
+            const title = '<?php echo $userInfo["nickname"]; ?>的Homepage';
             const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
             const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
 
@@ -347,7 +347,7 @@
         };
 
         document.getElementById('share-circle-button').onclick = function() {
-            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
+            const title = '<?php echo $userInfo["nickname"]; ?>的Homepage';
             const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
 
             wx.ready(function () {
