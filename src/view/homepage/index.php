@@ -396,12 +396,17 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                     const newImgElement = document.createElement('img');
                                     newImgElement.id = 'qr-code';
                                     newImgElement.src = newURL; // 设置新图源
-                                    newImgElement.setAttribute('onerror', 'qrCodeError()'); // 设置 onerror 属性
-
                                     // 处理图片加载成功的情况
                                     newImgElement.onload = function() {
                                         newImgElement.style.display = 'block'; // 确保图片显示
                                     };
+
+                                    // 添加 onerror 事件
+                                    newImgElement.onerror = function() {
+                                        qrCodeError(); // 调用错误处理
+                                        newImgElement.style.display = 'none'; // 如果加载失败，隐藏图片
+                                    };
+
                                     placeholder.parentNode.replaceChild(newImgElement, placeholder); // 替换占位符
                                 }
                             } else {
