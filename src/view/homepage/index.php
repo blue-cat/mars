@@ -293,13 +293,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     <div class="button-container">
                         <button class="delete-button" onclick="deleteQrcode()">删除</button> <!-- 添加删除按钮 -->
                         <?php if ($isMe): ?>
-                            <div class="edit-button" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                            <div class="edit-button qr-upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
                         <?php endif; ?>
                     </div>
                 <?php else: ?>
                     <div id="div-qrcode" class="image-placeholder"></div>
                     <?php if ($isMe): ?>
-                        <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                        <div class="upload qr-upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
                     <?php endif; ?>
                 <?php endif; ?>
                 
@@ -411,7 +411,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     formData.append('index', index);
                     formData.append('type', type === 'avatar' ? 3 : (type === 'qrcode' ? 2 : 1)); // 根据类型设定type值
 
-                    const uploadButtonSelector = type === 'avatar' ? '.profile-image-container .upload' : (type === 'qrcode' ? '.qrcode .upload' : `#image-container-${index} .upload`);
+                    const uploadButtonSelector = type === 'avatar' ? '.profile-image-container .upload' : (type === 'qrcode' ? '.qrcode .qr-upload' : `#image-container-${index} .upload`);
                     const uploadButton = document.querySelector(uploadButtonSelector);
                     uploadButton.textContent = '上传中';
 
@@ -499,7 +499,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             const qrCodeContainer = document.getElementById('qrcode-container');
             qrCodeContainer.style.backgroundImage = 'radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent)';
 
-            const uploadButton = document.querySelector('.qrcode .upload');
+            const uploadButton = document.querySelector('.qrcode .qr-upload');
             if (uploadButton) {
                 uploadButton.textContent = '上传'; 
             }
