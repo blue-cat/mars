@@ -318,7 +318,7 @@
 
         const url = '<?php echo $url; ?>';
         wx.config({
-            debug: true, // 开启调试
+            debug: false, // 开启调试
             appId: '<?php echo $appid; ?>', // 企业号的唯一标识
             timestamp: <?php echo $timestamp; ?>, // 生成签名的时间戳
             nonceStr: '<?php echo $nonceStr; ?>', // 生成签名的随机串
