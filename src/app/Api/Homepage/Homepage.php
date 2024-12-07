@@ -85,7 +85,7 @@ class Homepage extends Api {
             // 拉取用户的二维码
             $qrcodeImage = "";
             $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
-            if ($qrCodeInfo) {
+            if ($qrCodeInfo && $qrCodeInfo['status'] == $media::MEDIA_OK) {
                 $qrcodeImage = $this->domain . "/" . $qrCodeInfo['dir'];
             }
         }
@@ -114,7 +114,7 @@ class Homepage extends Api {
 
         $data = $_POST['content'];
         if (!$data) {
-            throw new \Exception('参数错误', 400);
+            throw new \Exception('内容不能为空！', 400);
         }
 
         //检测敏感词
@@ -198,10 +198,34 @@ class Homepage extends Api {
             'length' => 0,
             'v_dir' => "",
             'cdn_id' => 1,
+            'status' => 0,
         ];
         $media->save((int)$_POST['type'], $selfUid, $order, $data);
 
         return $this->domain . "/" . $ret['key'];
     }
+
+    /**
+     * 删除qr图片，实际是将status设置为2
+     */
+    public function deleteQrcode() {
+        // 判断用户是否登录
+        $selfUid = $this->getUserIdByToken();
+        if (!$selfUid) {
+            throw new \Exception('用户未登录', 401);
+        }
+
+        $media = new MediaDomain();
+        $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
+        if ($qrCodeInfo && $qrCodeInfo['status'] == $media::MEDIA_OK) {
+            $data = [
+                'status' => $media::MEDIA_DEL,
+                'update_time' => time(),
+            ];
+            $media->update($qrCodeInfo['id'], $data);
+        }
+        return "";
+    }
+
 }
 

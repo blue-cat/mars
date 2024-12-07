@@ -260,6 +260,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             <div class="qrcode" id="qrcode-container">
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
+                    <button class="upload" onclick="deleteQrcode()">删除</button> <!-- 添加删除按钮 -->
                 <?php else: ?>
                     <div id="div-qrcode" class="image-placeholder"></div>
                 <?php endif; ?>
@@ -521,6 +522,27 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         document.addEventListener("DOMContentLoaded", function() {
             checkDetailsLength(); 
         });
+
+        function deleteQrcode() {
+            // 发送删除请求
+            fetch('/?s=App.Homepage_Homepage.deleteQrcode', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ret === 200) {
+                    alert('删除成功！');
+                    location.reload(); // 刷新页面
+                } else {
+                    alert(data.msg); // 提示错误信息
+                }
+            })
+            .catch(error => {
+                console.error('删除请求失败:', error);
+                alert('删除请求失败，请重试。');
+            });
+        }
+
     </script>
 
 </body>
