@@ -161,7 +161,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             margin: 0; 
             background-size: 20px 20px; 
         }
-/* 随机小方块的效果 */
+/* 整个背景的随机小方块效果 */
 .qrcode::before {
     content: '';
     position: absolute;
@@ -172,12 +172,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     background-image: 
         linear-gradient(black 15%, transparent 15%), 
         linear-gradient(90deg, black 15%, transparent 15%);
-    background-size: 20px 20px;
+    background-size: 20px 20px; /* 方块的大小 */
     opacity: 0.5; /* 设置透明度 */
 }
 
 /* 左上角大方块 */
-.qrcode .large-square-tl {
+.qrcode::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -189,29 +190,30 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     align-items: center;
 }
 
-/* 左上角的白色和黑色方块 */
-.qrcode .large-square-tl::before {
+/* 左上角的内部白色和黑色方块 */
+.qrcode::after::before {
     content: '';
     width: 60%; /* 控制白色方块的大小 */
     height: 60%; /* 控制白色方块的大小 */
     background: white;
     position: absolute;
-    top: 20%;
-    left: 20%;
+    top: 20%; /* 位置根据需要调整 */
+    left: 20%; /* 位置根据需要调整 */
 }
 
-.qrcode .large-square-tl::after {
+.qrcode::after::after {
     content: '';
     width: 50%; /* 控制黑色方块的大小 */
     height: 50%; /* 控制黑色方块的大小 */
     background: black;
     position: absolute;
-    top: 25%;
-    left: 25%;
+    top: 25%; /* 位置根据需要调整 */
+    left: 25%; /* 位置根据需要调整 */
 }
 
 /* 右上角大方块 */
-.qrcode .large-square-tr {
+.qrcode::before::after {
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
@@ -223,7 +225,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     align-items: center;
 }
 
-.qrcode .large-square-tr::before {
+.qrcode::before::after::before {
     content: '';
     width: 60%;
     height: 60%;
@@ -233,7 +235,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     left: 20%;
 }
 
-.qrcode .large-square-tr::after {
+.qrcode::before::after::after {
     content: '';
     width: 50%;
     height: 50%;
@@ -244,7 +246,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 }
 
 /* 左下角大方块 */
-.qrcode .large-square-bl {
+.qrcode::before::before {
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -256,7 +259,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     align-items: center;
 }
 
-.qrcode .large-square-bl::before {
+.qrcode::before::before::before {
     content: '';
     width: 60%;
     height: 60%;
@@ -266,7 +269,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
     left: 20%;
 }
 
-.qrcode .large-square-bl::after {
+.qrcode::before::before::after {
     content: '';
     width: 50%;
     height: 50%;
