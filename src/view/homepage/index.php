@@ -323,6 +323,48 @@
             signature: '<?php echo $signature; ?>', // 签名
             jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的 JS 接口
         });
+        
+        document.getElementById('share-friends-button').onclick = function() {
+            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
+            const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
+            const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
+
+            wx.ready(function () {
+                // 分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: title,
+                    desc: description,
+                    link: window.location.href, // 当前页面链接
+                    imgUrl: imageUrl, // 分享时的图标
+                    success: function() {
+                        alert('分享成功！');
+                    },
+                    cancel: function() {
+                        alert('分享取消！');
+                    }
+                });
+            });
+        };
+
+        document.getElementById('share-circle-button').onclick = function() {
+            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
+            const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
+
+            wx.ready(function () {
+                // 分享到朋友圈
+                wx.onMenuShareTimeline({
+                    title: title,
+                    link: window.location.href, // 当前页面链接
+                    imgUrl: imageUrl, // 分享时的图标
+                    success: function() {
+                        alert('分享成功！');
+                    },
+                    cancel: function() {
+                        alert('分享取消！');
+                    }
+                });
+            });
+        };
 
         if (code && state) {
             fetch(`/?s=App.User_User.Code2UserInfo&code=${code}&scene=1&state=${state}`)
@@ -591,49 +633,6 @@
                 });
             }
         }
-
-        document.getElementById('share-friends-button').onclick = function() {
-            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
-            const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
-            const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
-
-            wx.ready(function () {
-                // 分享给朋友
-                wx.onMenuShareAppMessage({
-                    title: title,
-                    desc: description,
-                    link: window.location.href, // 当前页面链接
-                    imgUrl: imageUrl, // 分享时的图标
-                    success: function() {
-                        alert('分享成功！');
-                    },
-                    cancel: function() {
-                        alert('分享取消！');
-                    }
-                });
-            });
-        };
-
-        document.getElementById('share-circle-button').onclick = function() {
-            const title = '<?php echo $userInfo["nickname"]; ?>的主页';
-            const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
-
-            wx.ready(function () {
-                // 分享到朋友圈
-                wx.onMenuShareTimeline({
-                    title: title,
-                    link: window.location.href, // 当前页面链接
-                    imgUrl: imageUrl, // 分享时的图标
-                    success: function() {
-                        alert('分享成功！');
-                    },
-                    cancel: function() {
-                        alert('分享取消！');
-                    }
-                });
-            });
-        };
-
 
     </script>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
