@@ -323,7 +323,7 @@
             timestamp: <?php echo $timestamp; ?>, // 生成签名的时间戳
             nonceStr: '<?php echo $nonceStr; ?>', // 生成签名的随机串
             signature: '<?php echo $signature; ?>', // 签名
-            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的 JS 接口
+            jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的 JS 接口
         });
 
         document.getElementById('share-friends-button').onclick = function() {
