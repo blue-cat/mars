@@ -190,15 +190,16 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         }
         .button-container {
             position: absolute;
-            bottom: 10px; /* 距离底部10px */
             left: 50%;
-            transform: translateX(-50%);
             z-index: 2; 
 
             display: flex; /* 使用 Flexbox 布局 */
             flex-direction: row; /* 水平排列子元素 */
             justify-content: center; /* 水平居中对齐 */
             align-items: center;
+
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .edit-button, .delete-button {
