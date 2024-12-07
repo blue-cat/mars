@@ -163,6 +163,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+
+            display: flex; /* 设置为 Flex 容器 */
+            flex-direction: column; /* 垂直排列子元素 */
+            justify-content: center; /* 垂直居中对齐 */
+            align-items: center;
         }
         .corner {
             position: absolute;
@@ -186,8 +191,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         }
         .button-container {
             display: flex;
-            justify-content: space-between; /* 将按钮分开 */
-            width: 100%; /* 确保容器宽度足够 */
+            justify-content: center; /* 将按钮分开 */
             position: relative;
             z-index: 2; 
         }
