@@ -169,7 +169,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         .corner.hidden {
             display: none; 
         }
-        .qrcode img {
+        .qrcode img, .qrcode div {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -258,7 +258,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
                 <?php else: ?>
-                    <div id="div-qrcode" class="image-placeholder"></div>
+                    <div id="div-qrcode"></div>
                 <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
@@ -396,16 +396,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                     const newImgElement = document.createElement('img');
                                     newImgElement.id = 'qr-code';
                                     newImgElement.src = newURL; // 设置新图源
-                                    // 处理图片加载成功的情况
-                                    newImgElement.onload = function() {
-                                        newImgElement.style.display = 'block'; // 确保图片显示
-                                    };
 
                                     // 添加 onerror 事件
-                                    newImgElement.onerror = function() {
-                                        qrCodeError(); // 调用错误处理
-                                        newImgElement.style.display = 'none'; // 如果加载失败，隐藏图片
-                                    };
+                                    newImgElement.setAttribute('onerror', 'qrCodeError()');
 
                                     placeholder.parentElement.replaceChild(newImgElement, placeholder); // 替换占位符
                                 }
