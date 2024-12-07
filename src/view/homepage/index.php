@@ -258,7 +258,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
                 <?php else: ?>
-                    <div id="div-qrcode" class="image-placeholder">未上传二维码</div>
+                    <div id="div-qrcode" class="image-placeholder"></div>
                 <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
@@ -397,6 +397,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                     newImgElement.id = 'qr-code';
                                     newImgElement.src = newURL; // 设置新图源
                                     newImgElement.setAttribute('onerror', 'qrCodeError()'); // 设置 onerror 属性
+
+                                    // 处理图片加载成功的情况
+                                    newImgElement.onload = function() {
+                                        newImgElement.style.display = 'block'; // 确保图片显示
+                                    };
                                     placeholder.parentNode.replaceChild(newImgElement, placeholder); // 替换占位符
                                 }
                             } else {
