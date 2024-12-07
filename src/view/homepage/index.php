@@ -95,7 +95,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-color: #f0f0f0; 
             overflow: hidden; 
         }
-        .image-container img, .image-container div {
+        .image-container img, .image-container  .image-placeholder{
             position: absolute;
             top: 50%;
             left: 50%;
@@ -224,7 +224,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <?php if (!empty($image)): ?>
                     <img src="<?php echo $image; ?>" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
                 <?php else: ?>
-                    <div id="div-<?php echo $index; ?>"></div>
+                    <div id="div-<?php echo $index; ?>" class="image-placeholder"></div>
                 <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('image', <?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
