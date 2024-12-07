@@ -1,7 +1,3 @@
-<?php
-list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
-?>
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -317,6 +313,15 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         const code = urlParams.get('code');
         const state = urlParams.get('state');
 
+        wx.config({
+            debug: false, // 开启调试
+            appId: '<?php echo $appid; ?>', // 企业号的唯一标识
+            timestamp: <?php echo $timestamp; ?>, // 生成签名的时间戳
+            nonceStr: '<?php echo $nonceStr; ?>', // 生成签名的随机串
+            signature: '<?php echo $signature; ?>', // 签名
+            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的 JS 接口
+        });
+        
         if (code && state) {
             fetch(`/?s=App.User_User.Code2UserInfo&code=${code}&scene=1&state=${state}`)
                 .then(response => response.json())

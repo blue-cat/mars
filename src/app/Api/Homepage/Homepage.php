@@ -9,6 +9,7 @@ use App\Domain\User\User as UserDomain;
 use App\Domain\User\UserSession as UserSessionDomain;
 use App\Domain\Media\Media as MediaDomain;
 use App\Domain\Misc\Filter;
+use App\Common\User\Weixin;
 
 class Homepage extends Api {
 
@@ -91,6 +92,14 @@ class Homepage extends Api {
                 $qrcodeImage = $this->domain . "/" . $qrCodeInfo['dir'];
             }
         }
+
+        // 返回签名等
+        list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
+        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $jsapiTicket = $this->getJsapiTicket();
+        $nonceStr = bin2hex(random_bytes(16));
+        $timestamp = time();
+        $signature = $this->generateSignature($jsapiTicket, $timestamp, $nonceStr, $url);
 
         include(API_ROOT . '/src/view/homepage/index.php');
         exit(0);
@@ -229,5 +238,28 @@ class Homepage extends Api {
         return "";
     }
 
+    /**
+     * 获取jsapi_ticket
+     */
+    public function getJsapiTicket() {
+        // 先从redis中取，如果有就直接返回，如果没有就重新生成，然后写入redis，再返回
+        $cache = \Phalapi\DI()->cache;
+        if (isset($cache)) {
+            $signature = $cache->get('h5_jsapi_ticket');
+            if ($signature) {
+                return $signature;
+            }
+        }
+
+        $weixin = new Weixin();
+        $signature = $weixin->getH5JsapiTicket();
+        $cache->set('h5_jsapi_ticket', $signature, 7200);
+        return $signature;
+    }
+
+    function generateSignature($ticket, $timestamp, $nonceStr, $url) {
+        $string = "jsapi_ticket={$ticket}&noncestr={$nonceStr}&timestamp={$timestamp}&url={$url}";
+        return sha1($string);
+    }
 }
 
