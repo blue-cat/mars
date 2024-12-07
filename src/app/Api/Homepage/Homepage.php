@@ -79,13 +79,15 @@ class Homepage extends Api {
                 $images[] = "";
             }
             foreach ($mediaList as $md) {
-                $images[$md['order']] = $this->domain. '/'. $md['dir'];
+                if ($md['status'] == $media::MEDIA_OK || $md['status'] == $media::MEDIA_PRE) {
+                    $images[$md['order']] = $this->domain. '/'. $md['dir'];
+                }
             }
 
             // 拉取用户的二维码
             $qrcodeImage = "";
             $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
-            if ($qrCodeInfo && $qrCodeInfo['status'] == $media::MEDIA_OK) {
+            if ($qrCodeInfo && ($qrCodeInfo['status'] == $media::MEDIA_OK || $qrCodeInfo['status'] == $media::MEDIA_PRE)) {
                 $qrcodeImage = $this->domain . "/" . $qrCodeInfo['dir'];
             }
         }
