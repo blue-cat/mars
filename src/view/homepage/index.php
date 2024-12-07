@@ -95,7 +95,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-color: #f0f0f0; 
             overflow: hidden; 
         }
-        .image-container img {
+        .image-container img, .image-container div {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -222,9 +222,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         <?php foreach ($images as $index => $image): ?>
             <div class="image-container" id="image-container-<?php echo $index; ?>">
                 <?php if (!empty($image)): ?>
-                    <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
+                    <img src="<?php echo $image; ?>" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
                 <?php else: ?>
-                    <div></div>
+                    <div id="div-<?php echo $index; ?>"></div>
                 <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('image', <?php echo $index; ?>)"><?php echo $image ? '修改' : '上传'; ?></div>
@@ -386,8 +386,24 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                 const imgElement = document.getElementById('qr-code');
                                 imgElement.src = newURL;
                             } else {
-                                const imgElement = document.getElementById(`img-${index}`);
-                                imgElement.src = newURL;
+                                const elementId = `img-${index}`;
+                                let imgElement = document.getElementById(elementId);
+
+                                if (!imgElement) {
+                                    // 获取包含 div 的父元素
+                                    const parentElement = document.getElementById(`div-${index}`); // 假设 div 的 id 是 div-索引
+                                    if (parentElement) {
+                                        // 创建新的 img 标签
+                                        imgElement = document.createElement('img');
+                                        imgElement.id = elementId;
+                                        imgElement.src = newURL; // 设置图片源
+                                        imgElement.setAttribute('onerror', `imageError(${index})`); // 设置 onerror 属性
+                                        // 替换 div 元素为 img
+                                        parentElement.parentElement.replaceChild(imgElement, parentElement);
+                                    }
+                                } else {
+                                    imgElement.src = newURL; // 如果已存在，更新 src
+                                }
                             }
                             uploadButton.textContent = type === 'avatar' ? '修改头像' : (type === 'qrcode' ? '修改' : '修改');
                         } else {
