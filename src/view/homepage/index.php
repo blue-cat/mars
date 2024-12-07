@@ -179,6 +179,17 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             min-width: 100%;
             transform: translate(-50%, -50%); 
             object-fit: cover; 
+
+            /* 添加二维码背景 */
+    background-image: 
+        linear-gradient(#000 20%, transparent 20%), 
+        linear-gradient(90deg, #000 20%, transparent 20%), 
+        linear-gradient(#000 20%, transparent 20%), 
+        linear-gradient(90deg, #000 20%, transparent 20%);
+    background-size: 25% 25%; /* 调整大小以控制二维码方块的尺寸 */
+    background-position: 0 0, 0 0, 
+                        20% 20%, 20% 20%; /* 设置方块的位置 */
+    background-repeat: no-repeat; /* 不重复背景 */
         }
         .footer {
             text-align: center; 
