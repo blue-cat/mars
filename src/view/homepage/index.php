@@ -160,122 +160,120 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             overflow: hidden; 
             margin: 0; 
             background-size: 20px 20px; 
-
-            background-image: radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent);
-            background-size: 10px 10px, 20px 20px;
         }
-        
-        .qrcode::before,
-.qrcode::after {
-    content: '';
-    position: absolute;
-    width: 75%;
-    height: 75%;
-    background-color: #000;
-    border-radius: 8px;
-}
-
+/* 随机小方块的效果 */
 .qrcode::before {
-    top: 12.5%;
-    left: 12.5%;
-}
-
-.qrcode::after {
     content: '';
     position: absolute;
-    width: 75%;
-    height: 75%;
-    background-color: #000;
-    border-radius: 8px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(black 15%, transparent 15%), 
+        linear-gradient(90deg, black 15%, transparent 15%);
+    background-size: 20px 20px;
+    opacity: 0.5; /* 设置透明度 */
 }
 
-.qrcode::after::before {
+/* 左上角大方块 */
+.qrcode .large-square-tl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%; /* 控制大方块的大小 */
+    height: 30%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 左上角的白色和黑色方块 */
+.qrcode .large-square-tl::before {
     content: '';
+    width: 60%; /* 控制白色方块的大小 */
+    height: 60%; /* 控制白色方块的大小 */
+    background: white;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+}
+
+.qrcode .large-square-tl::after {
+    content: '';
+    width: 50%; /* 控制黑色方块的大小 */
+    height: 50%; /* 控制黑色方块的大小 */
+    background: black;
     position: absolute;
     top: 25%;
     left: 25%;
+}
+
+/* 右上角大方块 */
+.qrcode .large-square-tr {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 30%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qrcode .large-square-tr::before {
+    content: '';
+    width: 60%;
+    height: 60%;
+    background: white;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+}
+
+.qrcode .large-square-tr::after {
+    content: '';
     width: 50%;
     height: 50%;
-    background-color: #fff;
-    border-radius: 4px;
-}
-
-.qrcode::after::after {
-    content: '';
-    position: absolute;
-    top: 37.5%;
-    left: 37.5%;
-    width: 25%;
-    height: 25%;
-    background-color: #000;
-    border-radius: 2px;
-}
-
-.qrcode::before::before {
-    content: '';
+    background: black;
     position: absolute;
     top: 25%;
     left: 25%;
+}
+
+/* 左下角大方块 */
+.qrcode .large-square-bl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    height: 30%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qrcode .large-square-bl::before {
+    content: '';
+    width: 60%;
+    height: 60%;
+    background: white;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+}
+
+.qrcode .large-square-bl::after {
+    content: '';
     width: 50%;
     height: 50%;
-    background-color: #fff;
-    border-radius: 4px;
-}
-
-.qrcode::before::after {
-    content: '';
+    background: black;
     position: absolute;
-    top: 37.5%;
-    left: 37.5%;
-    width: 25%;
-    height: 25%;
-    background-color: #000;
-    border-radius: 2px;
-}
-
-.qrcode::before:nth-child(1)::before {
     top: 25%;
     left: 25%;
-}
-
-.qrcode::before:nth-child(1)::after {
-    top: 37.5%;
-    left: 37.5%;
-}
-
-.qrcode::after:nth-child(2)::before {
-    top: 25%;
-    left: 25%;
-}
-
-.qrcode::after:nth-child(2)::after {
-    top: 37.5%;
-    left: 37.5%;
-}
-
-.qrcode::before:nth-child(3)::before {
-    top: 25%;
-    left: 25%;
-}
-
-.qrcode::before:nth-child(3)::after {
-    top: 37.5%;
-    left: 37.5%;
-}
-
-.qrcode::before:nth-child(1) {
-    top: 12.5%;
-    left: 12.5%;
-}
-
-.qrcode::before:nth-child(2) {
-    top: 12.5%;
-    right: 12.5%;
-}
-
-.qrcode::before:nth-child(3) {
-    bottom: 12.5%;
-    left: 12.5%;
 }
 
         .corner {
