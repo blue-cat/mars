@@ -162,106 +162,24 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-size: 20px 20px; 
         }
 
-  /* 角块 */
-.qrcode::before,
-.qrcode::after,
-.qrcode::marker {
+        .qrcode::before, .qrcode::after {
     content: '';
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 75%;
+    height: 75%;
     background-color: #000;
-}
-
-.qrcode::before {
-    top: 0;
-    left: 0;
-}
-
-.qrcode::after {
-    bottom: 0;
-    right: 0;
-}
-
-.qrcode::marker {
-    top: 0;
-    right: 0;
-}
-
-/* 内角白块 */
-.qrcode::before::before,
-.qrcode::before::after,
-.qrcode::after::before,
-.qrcode::after::after,
-.qrcode::marker::before,
-.qrcode::marker::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-}
-
-.qrcode::before::before {
-    top: 20px;
-    left: 20px;
-}
-
-.qrcode::before::after {
-    bottom: 20px;
-    right: 20px;
-}
-
-.qrcode::after::before {
-    top: 20px;
-    left: 20px;
-}
-
-.qrcode::after::after {
-    bottom: 20px;
-    right: 20px;
-}
-
-.qrcode::marker::before {
-    top: 20px;
-    left: 20px;
-}
-
-.qrcode::marker::after {
-    bottom: 20px;
-    right: 20px;
-}
-
-/* 中心块 */
-.qrcode::marker::marker {
-    content: '';
-    position: absolute;
+    border-radius: 8px;
+  }
+  .qrcode::before {
     top: 50%;
     left: 50%;
-    width: 40px;
-    height: 40px;
-    margin: -20px 0 0 -20px;
-    background-color: #000;
-}
-
-.qrcode::marker::marker::before,
-.qrcode::marker::marker::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-}
-
-.qrcode::marker::marker::before {
-    top: 0;
-    left: 0;
-}
-
-.qrcode::marker::marker::after {
-    bottom: 0;
-    right: 0;
-}
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .qrcode::after {
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%) rotate(-45deg);
+  }
         .corner {
             position: absolute;
             background-color: #ccc; 
