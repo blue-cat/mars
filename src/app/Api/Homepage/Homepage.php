@@ -98,7 +98,7 @@ class Homepage extends Api {
 
         // 返回签名等
         list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
-        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $jsapiTicket = $this->getJsapiTicket();
         $nonceStr = bin2hex(random_bytes(16));
         $timestamp = time();
