@@ -159,7 +159,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             padding-top: 133.33%; 
             overflow: hidden; 
             margin: 0; 
-            background-size: 20px 20px; 
+            background-image: url(https://h5store.nearby.dulcim.com/img/qrcode2.jpg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
         .corner {
             position: absolute;
