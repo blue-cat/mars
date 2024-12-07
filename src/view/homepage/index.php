@@ -239,7 +239,13 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                         <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
                     </div>
                 <?php else: ?>
-                    <div><?php echo nl2br(htmlspecialchars($details)); ?></div>
+                    <div style="display: flex; justify-content: center; align-items: center; height: 160px;">
+                        <?php if (empty($details)): ?>
+                            <span>该用户slogan还没写</span>
+                        <?php else: ?>
+                            <?php echo nl2br(htmlspecialchars($details)); ?>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

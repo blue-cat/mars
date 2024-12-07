@@ -43,6 +43,9 @@ class User
             $userInfo = [
                 'nickname' => $nickname ?: $return['nickname'],
                 'avatar' => $avatarFinal,
+                'sex' => $return['sex'],
+                'access_token' => $return['access_token'],
+                'refresh_token' => $return['refresh_token'],
                 'cdn_id' => \PhalApi\DI()->config->get('vendor.cur_cdn'),
             ];
             $userId = $this->register($return['openid'], $scene, $userInfo);
@@ -50,7 +53,7 @@ class User
         }
 
         //如果存在用户但是有新头像等，则修改
-        if ($userId && !$isNew && ($nickname || $avatar)) {
+        if ($userId && !$isNew) {
             if ($nickname) {
                 $update['nickname'] = $nickname;
             }
@@ -59,6 +62,8 @@ class User
                 $update['cdn_id'] = \PhalApi\DI()->config->get('vendor.cur_cdn');
             }
 
+            $update['access_token'] = $return['access_token'];
+            $update['refresh_token'] = $return['refresh_token'];
             $update['update_time'] = time();
 
             $this->update($update, $userId);
@@ -75,7 +80,7 @@ class User
             $this->qn = new Qiniu();
         }
 
-        return $this->qn->savePic27niu($avatar ?: $headimgurl);
+        return $this->qn->savePic27niu($avatar ?: $headimgurl, "mavatar");
     }
 
     public function getUserByOpenId($openId, $scene, $select)
