@@ -161,6 +161,107 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             margin: 0; 
             background-size: 20px 20px; 
         }
+
+        /* 角块 */
+.qrcode::before,
+.qrcode::after,
+.qrcode::marker {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+}
+
+.qrcode::before {
+    top: 0;
+    left: 0;
+}
+
+.qrcode::after {
+    bottom: 0;
+    right: 0;
+}
+
+.qrcode::marker {
+    top: 0;
+    right: 0;
+}
+
+/* 内角白块 */
+.qrcode::marker::before,
+.qrcode::marker::after,
+.qrcode::before::before,
+.qrcode::before::after,
+.qrcode::after::before,
+.qrcode::after::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+}
+
+.qrcode::marker::before {
+    top: 20px;
+    left: 20px;
+}
+
+.qrcode::marker::after {
+    bottom: 20px;
+    right: 20px;
+}
+
+.qrcode::before::before {
+    top: 20px;
+    left: 20px;
+}
+
+.qrcode::before::after {
+    bottom: 20px;
+    right: 20px;
+}
+
+.qrcode::after::before {
+    top: 20px;
+    left: 20px;
+}
+
+.qrcode::after::after {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* 中心块 */
+.qrcode::marker::marker {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    background-color: #000;
+}
+
+.qrcode::marker::marker::before,
+.qrcode::marker::marker::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+}
+
+.qrcode::marker::marker::before {
+    top: 0;
+    left: 0;
+}
+
+.qrcode::marker::marker::after {
+    bottom: 0;
+    right: 0;
+}
         .corner {
             position: absolute;
             background-color: #ccc; 
@@ -179,17 +280,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             min-width: 100%;
             transform: translate(-50%, -50%); 
             object-fit: cover; 
-
-            /* 添加二维码背景 */
-    background-image: 
-        linear-gradient(#000 20%, transparent 20%), 
-        linear-gradient(90deg, #000 20%, transparent 20%), 
-        linear-gradient(#000 20%, transparent 20%), 
-        linear-gradient(90deg, #000 20%, transparent 20%);
-    background-size: 25% 25%; /* 调整大小以控制二维码方块的尺寸 */
-    background-position: 0 0, 0 0, 
-                        20% 20%, 20% 20%; /* 设置方块的位置 */
-    background-repeat: no-repeat; /* 不重复背景 */
         }
         .footer {
             text-align: center; 
