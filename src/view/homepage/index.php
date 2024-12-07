@@ -300,12 +300,23 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         }
 
         document.getElementById('create-homepage-btn').onclick = function() {
-            const state = Math.random().toString(36).substring(7);
-            const redirectUri = encodeURIComponent(window.location.href);
-            const scope = 'snsapi_userinfo';
+            var selfId = '<?php echo $selfId; ?>';
 
-            const authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=<?php echo $appid; ?>&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-            window.location.href = authUrl;
+            if (selfId) {
+                // 如果$selfId不为空，将url中的id参数设置为$selfId，并跳转
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('id', selfId);
+                const currentUrl = window.location.origin + window.location.pathname + '?' + urlParams.toString();
+                window.location.href = currentUrl;
+            } else {
+                // 如果为空，进行微信授权跳转
+                const state = Math.random().toString(36).substring(7);
+                const redirectUri = encodeURIComponent(window.location.href);
+                const scope = 'snsapi_userinfo';
+
+                const authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=<?php echo $appid; ?>&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+                window.location.href = authUrl;
+            }
         };
 
         function compressImage(file, maxWidth, callback) {

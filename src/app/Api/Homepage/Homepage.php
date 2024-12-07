@@ -45,6 +45,12 @@ class Homepage extends Api {
         header("Content-type: text/html; charset=utf-8");
         // 根据uid获取用户信息
         $isMe = $selfUid > 0;
+
+        $selfId = '';
+        if ($selfUid > 0) {
+            $selfId = Util::uidToString($selfUid, true);
+        }
+
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $user_id = (int) Util::uidToString($id, false);
