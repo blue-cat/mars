@@ -52,7 +52,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         }
         #username-input {
             width: 130px; 
-            border: 1px solid #ccc; 
+            border: 1px solid #efefef; 
             border-radius: 5px; 
             padding: 5px; 
             padding-right: 40px; 
@@ -69,7 +69,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             color: #999; 
         }
         button {
-            border: 1px solid #ccc; 
+            border: 1px solid #efefef; 
             border-radius: 5px; 
             padding: 2px 6px; 
             cursor: pointer; 
@@ -112,7 +112,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             left: 50%; 
             transform: translate(-50%, -50%); 
             background-color: rgba(255, 255, 255, 0.7);
-            border: 1px solid #ccc;
+            border: 1px solid #efefef;
             border-radius: 5px;
             cursor: pointer;
             padding: 2px 5px;
@@ -136,7 +136,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             margin-bottom: 10px; 
         }
         #details-input {
-            border: 1px solid #ccc; 
+            border: 1px solid #efefef; 
             border-radius: 5px; 
             padding: 5px; 
             margin-right: 5px;
