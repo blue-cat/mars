@@ -218,7 +218,7 @@ class Homepage extends Api {
         }
 
         $media = new MediaDomain();
-        $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
+        $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $selfUid, 0);
         if ($qrCodeInfo) {
             $data = [
                 'status' => $media::MEDIA_DEL,
