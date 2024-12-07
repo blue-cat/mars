@@ -316,6 +316,7 @@
         const code = urlParams.get('code');
         const state = urlParams.get('state');
 
+        const url = '<?php echo $url; ?>';
         wx.config({
             debug: true, // 开启调试
             appId: '<?php echo $appid; ?>', // 企业号的唯一标识
