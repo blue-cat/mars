@@ -317,7 +317,7 @@
         const state = urlParams.get('state');
 
         wx.config({
-            debug: false, // 开启调试
+            debug: true, // 开启调试
             appId: '<?php echo $appid; ?>', // 企业号的唯一标识
             timestamp: <?php echo $timestamp; ?>, // 生成签名的时间戳
             nonceStr: '<?php echo $nonceStr; ?>', // 生成签名的随机串
