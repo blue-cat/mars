@@ -160,46 +160,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             overflow: hidden; 
             margin: 0; 
             background-size: 20px 20px; 
-
-            background-image: 
-        /* 左上大方块 */
-        linear-gradient(white 85%, transparent 85%), 
-        linear-gradient(90deg, white 85%, transparent 85%),
-        
-        /* 右上大方块 */
-        linear-gradient(white 85%, transparent 85%), 
-        linear-gradient(90deg, white 85%, transparent 85%),
-        
-        /* 左下大方块 */
-        linear-gradient(white 85%, transparent 85%), 
-        linear-gradient(90deg, white 85%, transparent 85%);
-   
-    background-size: 50px 50px, 50px 50px;
-    
-    background-position: 
-        5px 5px, 5px 5px, /* 左上 */
-        245px 5px, 245px 5px, /* 右上 */
-        5px 245px, 5px 245px; /* 左下 */
-
-    background-repeat: no-repeat;
-    border-radius: 10px; /* 使角落略圆，模拟真实二维码效果 */
         }
-
-        /* 内部小方块 */
-.qrcode::before {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    top: 25px; /* 根据左上方块调整 */
-    left: 25px;
-    border-radius: 2px;
-    box-shadow: 
-        0 0 0 2px black, /* 黑色边框 */
-        220px 0 0 2px black, /* 右上边框 */
-        0 220px 0 2px black; /* 左下边框 */
-}
         .corner {
             position: absolute;
             background-color: #ccc; 
