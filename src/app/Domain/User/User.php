@@ -246,6 +246,7 @@ class User
 
         $data['update_time'] = $data['update_time'] ?? time();
 
+        print_r($data);
         return $userModel->update($user_id, $data);
     }
 
