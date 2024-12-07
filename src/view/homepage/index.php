@@ -305,7 +305,8 @@
 
     <div class="footer">
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
-        <a href="#">火星殖民计划</a>
+        <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
+">火星殖民计划</a>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script>
