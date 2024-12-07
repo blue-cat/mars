@@ -431,6 +431,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                 if (imgElement) {
                                     imgElement.src = newURL; // 如果存在，更换 src
                                 } else {
+                                    // 刷新页面
+                                    window.location.reload();
+                                    return;
                                     // 替换占位符为新的 img 标签
                                     const placeholder = document.getElementById('div-qrcode');
                                     const newImgElement = document.createElement('img');
@@ -579,8 +582,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                     console.error('删除请求失败:', error);
                     alert('删除请求失败，请重试。');
                 });
-            } else {
-                alert('已取消删除操作。');
             }
         }
 
