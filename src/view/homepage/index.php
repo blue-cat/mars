@@ -163,11 +163,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-
-            display: flex; /* 设置为 Flex 容器 */
-            flex-direction: column; /* 垂直排列子元素 */
-            align-items: center;
-            justify-content: flex-start; /* 修改为顶部对齐 */
         }
         .corner {
             position: absolute;
