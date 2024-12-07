@@ -34,7 +34,6 @@ class User
                 break;
         }
 
-        print_r($return);exit;
         //查询用户是否存在,不存在就注册新的
         $isNew = false;
         if (!$userId = $this->loginInOpenId($return['openid'], $scene)) {

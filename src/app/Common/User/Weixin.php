@@ -34,6 +34,8 @@ class Weixin
         $userInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $data['access_token']
             . '&openid=' . $data['openid'];
         $userInfo = file_get_contents($userInfoUrl);
+
+        print_r($userInfo);exit;
         $userInfo['access_token'] = $data['access_token'];
         $userInfo['refresh_token'] = $data['refresh_token'];
         return json_decode($userInfo, true);
