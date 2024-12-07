@@ -332,6 +332,7 @@
             const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
 
             wx.ready(function () {
+                alert('点击右上角按钮，选择“分享给朋友”');
                 // 分享给朋友
                 wx.onMenuShareAppMessage({
                     title: title,
