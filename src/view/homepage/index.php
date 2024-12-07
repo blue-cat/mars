@@ -190,9 +190,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             z-index: 1;
         }
         .button-container {
-            display: flex;
-            justify-content: center; /* 将按钮分开 */
-            position: relative;
+            position: absolute;
+            bottom: 10px; /* 距离底部10px */
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 2; 
         }
 
