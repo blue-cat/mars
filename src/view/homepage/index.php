@@ -586,6 +586,6 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         }
 
     </script>
-
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 </body>
 </html>
