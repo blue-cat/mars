@@ -260,11 +260,9 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             <div class="qrcode" id="qrcode-container">
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
-                    <div class="button-container" style="display: flex; justify-content: space-between;">
-                        <button class="upload" onclick="deleteQrcode()">删除</button> <!-- 添加删除按钮 -->
-                        <?php if ($isMe): ?>
-                            <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
-                        <?php endif; ?>
+                    <div class="button-container" style="display: flex; justify-content: space-between; margin-top: 10px;">
+                        <button style="border: 1px solid #efefef; border-radius: 5px; padding: 2px 6px; cursor: pointer; background-color: white; color: black;" onclick="deleteQrcode()">删除</button>
+                        <button style="border: 1px solid #efefef; border-radius: 5px; padding: 2px 6px; cursor: pointer; background-color: white; color: black;" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></button>
                     </div>
                 <?php else: ?>
                     <div id="div-qrcode" class="image-placeholder"></div>
