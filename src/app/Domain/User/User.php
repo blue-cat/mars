@@ -34,6 +34,7 @@ class User
                 break;
         }
 
+        print_r($return);
         //查询用户是否存在,不存在就注册新的
         $isNew = false;
         if (!$userId = $this->loginInOpenId($return['openid'], $scene)) {
@@ -246,7 +247,6 @@ class User
 
         $data['update_time'] = $data['update_time'] ?? time();
 
-        print_r($data);
         return $userModel->update($user_id, $data);
     }
 
