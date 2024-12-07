@@ -183,6 +183,21 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             transform: translate(-50%, -50%); 
             object-fit: cover; 
         }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* 将按钮分开 */
+            width: 100%; /* 确保容器宽度足够 */
+        }
+
+        .edit-button, .delete-button {
+            border: 1px solid #efefef;
+            border-radius: 5px;
+            padding: 2px 5px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: white;
+            color: black;
+        }
         .footer {
             text-align: center; 
             margin-top: 50px; 
@@ -260,10 +275,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             <div class="qrcode" id="qrcode-container">
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
-                    <div class="button-container" style="display: flex; justify-content: space-between;">
-                        <button class="upload" onclick="deleteQrcode()">删除</button> <!-- 添加删除按钮 -->
+                    <div class="button-container">
+                        <button class="delete-button" onclick="deleteQrcode()">删除</button> <!-- 添加删除按钮 -->
                         <?php if ($isMe): ?>
-                            <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
+                            <div class="edit-button" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
                         <?php endif; ?>
                     </div>
                 <?php else: ?>
