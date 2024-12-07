@@ -160,26 +160,124 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             overflow: hidden; 
             margin: 0; 
             background-size: 20px 20px; 
-        }
 
-        .qrcode::before, .qrcode::after {
+            background-image: radial-gradient(circle, #ccc 5%, transparent 5%), radial-gradient(circle, transparent 5%, #ccc 5%, #ccc 10%, transparent 10%, transparent);
+            background-size: 10px 10px, 20px 20px;
+        }
+        
+        .qrcode::before,
+.qrcode::after {
     content: '';
     position: absolute;
     width: 75%;
     height: 75%;
     background-color: #000;
     border-radius: 8px;
-  }
-  .qrcode::before {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  .qrcode::after {
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%) rotate(-45deg);
-  }
+}
+
+.qrcode::before {
+    top: 12.5%;
+    left: 12.5%;
+}
+
+.qrcode::after {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    background-color: #000;
+    border-radius: 8px;
+}
+
+.qrcode::after::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.qrcode::after::after {
+    content: '';
+    position: absolute;
+    top: 37.5%;
+    left: 37.5%;
+    width: 25%;
+    height: 25%;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.qrcode::before::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.qrcode::before::after {
+    content: '';
+    position: absolute;
+    top: 37.5%;
+    left: 37.5%;
+    width: 25%;
+    height: 25%;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.qrcode::before:nth-child(1)::before {
+    top: 25%;
+    left: 25%;
+}
+
+.qrcode::before:nth-child(1)::after {
+    top: 37.5%;
+    left: 37.5%;
+}
+
+.qrcode::after:nth-child(2)::before {
+    top: 25%;
+    left: 25%;
+}
+
+.qrcode::after:nth-child(2)::after {
+    top: 37.5%;
+    left: 37.5%;
+}
+
+.qrcode::before:nth-child(3)::before {
+    top: 25%;
+    left: 25%;
+}
+
+.qrcode::before:nth-child(3)::after {
+    top: 37.5%;
+    left: 37.5%;
+}
+
+.qrcode::before:nth-child(1) {
+    top: 12.5%;
+    left: 12.5%;
+}
+
+.qrcode::before:nth-child(2) {
+    top: 12.5%;
+    right: 12.5%;
+}
+
+.qrcode::before:nth-child(3) {
+    bottom: 12.5%;
+    left: 12.5%;
+}
+
         .corner {
             position: absolute;
             background-color: #ccc; 
