@@ -95,7 +95,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-color: #f0f0f0; 
             overflow: hidden; 
         }
-        .image-container img {
+        .image-container img, .image-container div {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -198,7 +198,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
 
     <div class="profile">
         <div class="profile-image-container">
-            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <?php if (!empty($image)): ?>
+                <img src="<?php echo $image; ?>" alt="image" onerror="imageError(<?php echo $index; ?>)" id="img-<?php echo $index; ?>">
+            <?php else: ?>
+                <div></div>
+            <?php endif; ?>
             <?php if ($isMe): ?>
                 <div class="upload" onclick="uploadImage('avatar')">修改头像</div>
             <?php endif; ?>
