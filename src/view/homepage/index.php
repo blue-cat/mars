@@ -182,11 +182,14 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             min-width: 100%;
             transform: translate(-50%, -50%); 
             object-fit: cover; 
+            z-index: 1;
         }
         .button-container {
             display: flex;
             justify-content: space-between; /* 将按钮分开 */
             width: 100%; /* 确保容器宽度足够 */
+            position: relative;
+            z-index: 2; 
         }
 
         .edit-button, .delete-button {
