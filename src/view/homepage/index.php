@@ -32,7 +32,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             position: relative; 
             width: 130px; 
             height: 130px; 
-            background-color: #f0f0f0; 
+            background-color: #efefef; 
             border-radius: 50%; 
             overflow: hidden; 
             display: inline-block; 
@@ -92,7 +92,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             position: relative;
             width: 100%; 
             padding-top: 177.78%; 
-            background-color: #f0f0f0; 
+            background-color: #efefef; 
             overflow: hidden; 
         }
         .image-container img, .image-container  .image-placeholder{
