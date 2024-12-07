@@ -309,7 +309,7 @@
         <button id="share-friends-button">分享给朋友</button>
         <button id="share-circle-button">分享到朋友圈</button>
     </div>
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script>
         // 检查URL中是否有code和state参数
         const urlParams = new URLSearchParams(window.location.search);
