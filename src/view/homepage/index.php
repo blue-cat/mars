@@ -245,7 +245,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <?php else: ?>
                     <div style="display: flex; justify-content: center; align-items: center; height: 160px;">
                         <?php if (empty($details)): ?>
-                            <span>该用户slogan还没写</span>
+                            <span>该用户暂无slogan</span>
                         <?php else: ?>
                             <?php echo nl2br(htmlspecialchars($details)); ?>
                         <?php endif; ?>
@@ -255,7 +255,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         </div>
         <div class="right">
             <div class="qrcode" id="qrcode-container">
-                <img src="<?php echo $qrcodeImage; ?>" alt="QR Code" id="qr-code" onerror="qrCodeError()">
+                <?php if ($qrcodeImage): ?>
+                    <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
+                <?php else: ?>
+                    <div id="div-qrcode" class="image-placeholder">未上传二维码</div>
+                <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
                 <?php endif; ?>
@@ -384,7 +388,17 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                 imgElement.src = newURL;
                             } else if (type === 'qrcode') {
                                 const imgElement = document.getElementById('qr-code');
-                                imgElement.src = newURL;
+                                if (imgElement) {
+                                    imgElement.src = newURL; // 如果存在，更换 src
+                                } else {
+                                    // 替换占位符为新的 img 标签
+                                    const placeholder = document.getElementById('div-qrcode');
+                                    const newImgElement = document.createElement('img');
+                                    newImgElement.id = 'qr-code';
+                                    newImgElement.src = newURL; // 设置新图源
+                                    newImgElement.setAttribute('onerror', 'qrCodeError()'); // 设置 onerror 属性
+                                    placeholder.parentNode.replaceChild(newImgElement, placeholder); // 替换占位符
+                                }
                             } else {
                                 const elementId = `img-${index}`;
                                 let imgElement = document.getElementById(elementId);
