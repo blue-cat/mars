@@ -560,23 +560,28 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         });
 
         function deleteQrcode() {
-            // 发送删除请求
-            fetch('/?s=App.Homepage_Homepage.deleteQrcode', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ret === 200) {
-                    alert('删除成功！');
-                    location.reload(); // 刷新页面
-                } else {
-                    alert(data.msg); // 提示错误信息
-                }
-            })
-            .catch(error => {
-                console.error('删除请求失败:', error);
-                alert('删除请求失败，请重试。');
-            });
+            // 提示用户确认删除
+            if (confirm('您确定要删除二维码吗？')) {
+                // 发送删除请求
+                fetch('/?s=App.Homepage_Homepage.deleteQrcode', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ret === 200) {
+                        alert('删除成功！');
+                        location.reload(); // 刷新页面
+                    } else {
+                        alert(data.msg); // 提示错误信息
+                    }
+                })
+                .catch(error => {
+                    console.error('删除请求失败:', error);
+                    alert('删除请求失败，请重试。');
+                });
+            } else {
+                alert('已取消删除操作。');
+            }
         }
 
     </script>
