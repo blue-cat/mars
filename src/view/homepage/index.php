@@ -305,9 +305,7 @@
 
     <div class="footer">
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
-        <a href="#">火星殖民计划</a> 
-        <button id="share-friends-button">分享给朋友</button>
-        <button id="share-circle-button">分享到朋友圈</button>
+        <a href="#">火星殖民计划</a>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script>
@@ -326,11 +324,25 @@
             jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的 JS 接口
         });
 
-        document.getElementById('share-friends-button').onclick = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const title = '<?php echo $userInfo["nickname"]; ?>的Homepage';
             const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
             const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
 
+            wx.ready(function () {
+                // 分享到朋友圈
+                wx.updateTimelineShareData({
+                    title: title,
+                    link: window.location.href, // 当前页面链接
+                    imgUrl: imageUrl, // 分享时的图标
+                    success: function() {
+                        alert('分享成功！');
+                    },
+                    cancel: function() {
+                        alert('分享取消！');
+                    }
+                });
+            });
             wx.ready(function () {
                 // 分享给朋友
                 wx.updateAppMessageShareData({
@@ -347,27 +359,7 @@
                     
                 });
             });
-        };
-
-        document.getElementById('share-circle-button').onclick = function() {
-            const title = '<?php echo $userInfo["nickname"]; ?>的Homepage';
-            const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
-
-            wx.ready(function () {
-                // 分享到朋友圈
-                wx.updateTimelineShareData({
-                    title: title,
-                    link: window.location.href, // 当前页面链接
-                    imgUrl: imageUrl, // 分享时的图标
-                    success: function() {
-                        alert('分享成功！');
-                    },
-                    cancel: function() {
-                        alert('分享取消！');
-                    }
-                });
-            });
-        };
+        });
 
         if (code && state) {
             fetch(`/?s=App.User_User.Code2UserInfo&code=${code}&scene=1&state=${state}`)
