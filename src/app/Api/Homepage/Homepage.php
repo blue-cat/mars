@@ -83,7 +83,11 @@ class Homepage extends Api {
             }
 
             // 拉取用户的二维码
-            $qrcodeImage = $this->domain. '/'. $media->getMediaByObjIdAndOrder(2, $user_id, 0)['dir'];
+            $qrcodeImage = "";
+            $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
+            if ($qrCodeInfo) {
+                $qrcodeImage = $this->domain. $qrCodeInfo['dir'];
+            }
         }
 
         include(API_ROOT . '/src/view/homepage/index.php');
