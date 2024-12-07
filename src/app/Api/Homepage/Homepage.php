@@ -13,10 +13,13 @@ use App\Common\User\Weixin;
 
 class Homepage extends Api {
 
-    public $domain = 'https://h5store.nearby.dulcim.com';
+    public $domain;
 
     //obj_type 1 homepage列表 2 二维码 3 头像
 
+    public function __construct() {
+        $this->domain = \PhalApi\DI()->config->get('vendor.cdn_url');
+    }
     /**
      * 从用户cookie中拿到token，然后根据token获取用户信息
      */
@@ -81,7 +84,7 @@ class Homepage extends Api {
             }
             foreach ($mediaList as $md) {
                 if ($md['status'] == $media::MEDIA_OK || $md['status'] == $media::MEDIA_PRE) {
-                    $images[$md['order']] = $this->domain. '/'. $md['dir'];
+                    $images[$md['order']] = $this->domain[$md['cdn_id']]. '/'. $md['dir'];
                 }
             }
 
@@ -89,7 +92,7 @@ class Homepage extends Api {
             $qrcodeImage = "";
             $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
             if ($qrCodeInfo && ($qrCodeInfo['status'] == $media::MEDIA_OK || $qrCodeInfo['status'] == $media::MEDIA_PRE)) {
-                $qrcodeImage = $this->domain . "/" . $qrCodeInfo['dir'];
+                $qrcodeImage = $this->domain[$md['cdn_id']] . "/" . $qrCodeInfo['dir'];
             }
         }
 
@@ -189,7 +192,7 @@ class Homepage extends Api {
             // 调用userDomain中的modify方法
             $user = new UserDomain();
             $user->update(['avatar' => $ret['key']], $selfUid);
-            return $this->domain . "/" . $ret['key'];
+            return $this->domain[$md['cdn_id']] . "/" . $ret['key'];
         }
 
         // 往media表写
@@ -213,7 +216,7 @@ class Homepage extends Api {
         ];
         $media->save((int)$_POST['type'], $selfUid, $order, $data);
 
-        return $this->domain . "/" . $ret['key'];
+        return $this->domain[$md['cdn_id']] . "/" . $ret['key'];
     }
 
     /**

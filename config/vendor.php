@@ -22,7 +22,7 @@ return [
     ],
 
     'cdn_url' => [//图片视频等资源cdn地址
-        '1' => 'http://*.cdnol.nearby.dulcim.com',//七牛
+        '1' => 'https://h5store.nearby.dulcim.com',//七牛
     ],
 
     /**
