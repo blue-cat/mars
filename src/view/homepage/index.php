@@ -163,6 +163,10 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+
+            display: flex; /* 设置为 Flex 容器 */
+            flex-direction: column; /* 垂直排列子元素 */
+            align-items: center;
         }
         .corner {
             position: absolute;
@@ -190,6 +194,11 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             left: 50%;
             transform: translateX(-50%);
             z-index: 2; 
+
+            display: flex; /* 使用 Flexbox 布局 */
+            flex-direction: row; /* 水平排列子元素 */
+            justify-content: center; /* 水平居中对齐 */
+            align-items: center;
         }
 
         .edit-button, .delete-button {
@@ -200,6 +209,8 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
             font-size: 14px;
             background-color: white;
             color: black;
+
+            margin: 0 5px;
         }
         .footer {
             text-align: center; 
