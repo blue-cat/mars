@@ -169,7 +169,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
         .corner.hidden {
             display: none; 
         }
-        .qrcode img, .qrcode div {
+        .qrcode img, .qrcode .image-placeholder {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -258,7 +258,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                 <?php if ($qrcodeImage): ?>
                     <img src="<?php echo $qrcodeImage; ?>" id="qr-code" onerror="qrCodeError()">
                 <?php else: ?>
-                    <div id="div-qrcode"></div>
+                    <div id="div-qrcode" class="image-placeholder"></div>
                 <?php endif; ?>
                 <?php if ($isMe): ?>
                     <div class="upload" onclick="uploadImage('qrcode')"><?php echo $qrcodeImage ? '修改' : '上传'; ?></div>
