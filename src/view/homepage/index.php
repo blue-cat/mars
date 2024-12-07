@@ -407,7 +407,7 @@ list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.wei
                                         newImgElement.style.display = 'none'; // 如果加载失败，隐藏图片
                                     };
 
-                                    placeholder.parentNode.replaceChild(newImgElement, placeholder); // 替换占位符
+                                    placeholder.parentElement.replaceChild(newImgElement, placeholder); // 替换占位符
                                 }
                             } else {
                                 const elementId = `img-${index}`;
