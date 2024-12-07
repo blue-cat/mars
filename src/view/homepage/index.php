@@ -332,9 +332,8 @@
             const description = '<?php echo htmlspecialchars($details); ?>'; // 用户描述
 
             wx.ready(function () {
-                alert('点击右上角按钮，选择“分享给朋友”');
                 // 分享给朋友
-                wx.onMenuShareAppMessage({
+                wx.updateAppMessageShareData({
                     title: title,
                     desc: description,
                     link: window.location.href, // 当前页面链接
@@ -345,6 +344,7 @@
                     cancel: function() {
                         alert('分享取消！');
                     }
+                    
                 });
             });
         };
@@ -355,7 +355,7 @@
 
             wx.ready(function () {
                 // 分享到朋友圈
-                wx.onMenuShareTimeline({
+                wx.updateTimelineShareData({
                     title: title,
                     link: window.location.href, // 当前页面链接
                     imgUrl: imageUrl, // 分享时的图标
