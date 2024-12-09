@@ -575,6 +575,7 @@
 
         function checkUsernameLength() {
             const input = document.getElementById('username-input');
+            if (!input) return;
             const maxLength = 20;
             const currentLength = input.value.length; 
 
@@ -590,6 +591,7 @@
 
         function checkDetailsLength() {
             const input = document.getElementById('details-input');
+            if (!input) return;  // 若 input 元素不存在，返回
             const maxLength = 300;
             const currentLength = input.value.length;
 
