@@ -41,6 +41,73 @@ class Homepage extends Api {
         return $isSuccess? $user_id : 0;
     }
 
+    public function test() {
+        // 判断用户是否登录
+        $selfUid = $this->getUserIdByToken();
+
+        // 改为页面展示
+        header("Content-type: text/html; charset=utf-8");
+        // 根据uid获取用户信息
+        $isMe = $selfUid > 0;
+
+        $selfId = '';
+        if ($selfUid > 0) {
+            $selfId = Util::uidToString($selfUid, true);
+        }
+
+        $images = [];
+        for ($i = 0; $i < 6; $i++) {
+            $images[] = "";
+        }
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $user_id = (int) Util::uidToString($id, false);
+            if (!$user_id) {
+                // 给个简单样式，文字在整个屏幕上下左右居中显示，并使用灰色文字，使用16号字体.使用flex布局.
+                echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户不存在</div></div>";
+                exit(0);
+            }
+
+            $userInfo = UserDomain::getUserInfoById($user_id);
+            if (!$userInfo || $userInfo['status']!= 1) {
+                echo "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#f5f5f5;'><div style='font-size:26px;color:#999;font-weight:bold;'>用户异常</div></div>";
+                exit(0);
+            }
+
+            $isMe = $user_id == $selfUid;
+
+            $details = $userInfo['slogan'];
+
+            // 拉取用户的图片
+            $media = new MediaDomain();
+            $mediaList = $media->getMediaByObjId(1, $user_id);
+            // 一定会返回6张图片
+            foreach ($mediaList as $md) {
+                if ($md['status'] == $media::MEDIA_OK || $md['status'] == $media::MEDIA_PRE) {
+                    $images[$md['order']] = $this->domain[$md['cdn_id']]. '/'. $md['dir'];
+                }
+            }
+
+            // 拉取用户的二维码
+            $qrcodeImage = "";
+            $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
+            if ($qrCodeInfo && ($qrCodeInfo['status'] == $media::MEDIA_OK || $qrCodeInfo['status'] == $media::MEDIA_PRE)) {
+                $qrcodeImage = $this->domain[$qrCodeInfo['cdn_id']] . "/" . $qrCodeInfo['dir'];
+            }
+        }
+
+        // 返回签名等
+        list($appid, $h5AppSecret) = array_values(\PhalApi\DI()->config->get('vendor.weixin.h5'));
+        $url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $jsapiTicket = $this->getJsapiTicket();
+        $nonceStr = bin2hex(random_bytes(16));
+        $timestamp = time();
+        $signature = $this->generateSignature($jsapiTicket, $timestamp, $nonceStr, $url);
+
+        include(API_ROOT . '/src/view/homepage/index.php');
+        exit(0);
+    }
+
     public function index() {
         // 判断用户是否登录
         $selfUid = $this->getUserIdByToken();
