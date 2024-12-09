@@ -328,7 +328,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const title = '<?php echo $userInfo["nickname"]; ?>的Homepage';
             const imageUrl = '<?php echo $userInfo["avatar"]; ?>'; // 用户头像
-            const description = '<?php echo str_replace(["\n", "\r", "\t"], ' ', htmlspecialchars($details)) ?? "暂无slogan"; ?>';// 用户描述
+            const description = '<?php echo $details ? str_replace(["\n", "\r", "\t"], ' ', htmlspecialchars($details)) : "暂无slogan"; ?>';// 用户描述
 
             wx.ready(function () {
                 // 分享到朋友圈
