@@ -13,10 +13,9 @@ class Filter
     public static function check($text)
     {
 
-        $url = self::$url. $text;
+        $url = self::$url. urlencode($text);
+        echo $url;exit;
         $result = file_get_contents($url);
-        var_dump($result);exit;
-
         return $result == "Safe" ? true : false;
     }
 }
