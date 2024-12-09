@@ -653,19 +653,24 @@
             tempDiv.style.position = 'relative';
             tempDiv.style.width = '100%';
             tempDiv.style.height = '100%';
+            tempDiv.style.display = 'flex'; // 使用 flex 布局
+            tempDiv.style.flexDirection = 'column'; // 纵向排列
 
-            // 将当前页面的内容克隆到 tempDiv 中
-            const clonedBody = document.body.cloneNode(true);
-            tempDiv.appendChild(clonedBody);
+            // 将当前页面中所需的内容添加到 tempDiv 中
+            const contentToCapture = document.querySelector('.content'); // 假设这是您要捕获的主要内容
+            if (contentToCapture) {
+                tempDiv.appendChild(contentToCapture.cloneNode(true)); // 克隆主要内容
+            }
 
             // 向 tempDiv 添加二维码图像
             const imgElement = document.createElement('img');
             imgElement.src = qrCodeCanvas.toDataURL();
-            imgElement.style.position = 'absolute';
-            imgElement.style.bottom = '10px'; // 离底部10像素
-            imgElement.style.left = '50%'; // 左侧50%
-            imgElement.style.transform = 'translateX(-50%)'; // 居中对齐
-            
+            imgElement.style.marginTop = 'auto'; // 使二维码在底部
+            imgElement.style.marginBottom = '10px'; // 离底部10像素
+            imgElement.style.display = 'block';
+            imgElement.style.width = '100px'; // 设置二维码的宽高
+            imgElement.style.height = '100px';
+
             tempDiv.appendChild(imgElement); // 添加二维码到临时 div
 
             // 使用 html2canvas 生成截图
@@ -682,6 +687,7 @@
         }, 100); // 确保二维码生成完成
     };
 };
+
 
 
     </script>
