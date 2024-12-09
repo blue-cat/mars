@@ -648,20 +648,21 @@
 
         // 等待二维码渲染完成
         setTimeout(function() {
-            // 创建一个二维码的 img 元素
-            const qrCodeImg = document.createElement('img');
+            // 创建二维码的 img 元素
+            const qrCodeImg = new Image();
             qrCodeImg.src = qrCodeCanvas.toDataURL();
             qrCodeImg.style.position = 'fixed'; // 固定定位
             qrCodeImg.style.bottom = '10px'; // 离底部10像素
-            qrCodeImg.style.left = '50%'; // 居中设置
+            qrCodeImg.style.left = '50%'; // 左侧50%
             qrCodeImg.style.transform = 'translateX(-50%)'; // 居中对齐
-            qrCodeImg.style.zIndex = '9999'; // 确保二维码在前面显示
+            qrCodeImg.style.zIndex = '9999'; // 确保二维码在最上层显示
             
             // 添加二维码到页面
             document.body.appendChild(qrCodeImg);
 
             // 使用 html2canvas 生成截图
             html2canvas(document.body, { useCORS: true }).then(function(canvas) {
+                // 将生成的 canvas 转换为图片数据
                 const imgData = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
@@ -678,6 +679,7 @@
         }, 100); // 确保二维码生成完成
     };
 };
+
 
 
     </script>
