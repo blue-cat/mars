@@ -92,7 +92,7 @@ class Homepage extends Api {
             $qrcodeImage = "";
             $qrCodeInfo = $media->getMediaByObjIdAndOrder(2, $user_id, 0);
             if ($qrCodeInfo && ($qrCodeInfo['status'] == $media::MEDIA_OK || $qrCodeInfo['status'] == $media::MEDIA_PRE)) {
-                $qrcodeImage = $this->domain[$md['cdn_id']] . "/" . $qrCodeInfo['dir'];
+                $qrcodeImage = $this->domain[$qrCodeInfo['cdn_id']] . "/" . $qrCodeInfo['dir'];
             }
         }
 
