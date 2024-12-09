@@ -403,7 +403,8 @@
             var selfId = '<?php echo $selfId; ?>';
 
             // 检查$selfId，如果为0，则触发点击事件。或者url中没有id的参数
-            if (selfId == "" && urlParams.get('id') == null && !state) {
+            if ((selfId == "" && urlParams.get('id') == null && !state) 
+                || ($selfId && urlParams.get('id') == null)){
                 document.getElementById('create-homepage-btn').click();
             }
         });
