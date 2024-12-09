@@ -227,7 +227,7 @@
 
     <div class="profile">
         <div class="profile-image-container">
-            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <img crossOrigin="anonymous" src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
             <?php if ($isMe): ?>
                 <div class="upload" onclick="uploadImage('avatar')">修改头像</div>
             <?php endif; ?>
@@ -631,7 +631,7 @@
             }
         }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    window.onload = function() {
         document.getElementById('share-image-btn').onclick = function() {
             html2canvas(document.body).then(function(canvas) {
                 var imgData = canvas.toDataURL('image/png');
@@ -644,7 +644,7 @@
                 alert('生成图片失败，请重试。');
             });
         };
-    });
+    };
 
     </script>
 </body>
