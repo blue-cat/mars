@@ -312,6 +312,7 @@
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // 检查URL中是否有code和state参数
         const urlParams = new URLSearchParams(window.location.search);
@@ -634,6 +635,24 @@
 
     window.onload = function() {
         document.getElementById('share-image-btn').onclick = function() {
+            // 生成二维码的 div
+            const qrCodeDiv = document.createElement('div');
+            qrCodeDiv.style.position = "absolute";
+            qrCodeDiv.style.bottom = "10px"; // 距离底部10px
+            qrCodeDiv.style.left = "50%"; // 距离左侧50%
+            qrCodeDiv.style.transform = "translateX(-50%)"; // 居中
+            qrCodeDiv.style.zIndex = 10; // 确保在其他元素之上
+            document.body.appendChild(qrCodeDiv); // 将二维码 div 添加到页面中
+
+            // 获取当前网址
+            const url = window.location.href;
+
+            // 使用 QRCode.js 生成二维码
+            const qrcode = new QRCode(qrCodeDiv, {
+                text: url,
+                width: 100,
+                height: 100,
+            });
             html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                 var imgData = canvas.toDataURL('image/png');
                 var link = document.createElement('a');
