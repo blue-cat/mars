@@ -657,8 +657,8 @@
             // 创建二维码
             const qrCode = new QRCode(qrCodeContainer, {
                 text: url,
-                width: 80,
-                height: 80,
+                width: 70,
+                height: 70,
             });
 
             document.getElementById('share-image-btn').onclick = function() {
