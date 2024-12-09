@@ -216,7 +216,7 @@ class Homepage extends Api {
         ];
         $media->save((int)$_POST['type'], $selfUid, $order, $data);
 
-        return $this->domain[$md['cdn_id']] . "/" . $ret['key'];
+        return $this->domain[1] . "/" . $ret['key'];
     }
 
     /**
