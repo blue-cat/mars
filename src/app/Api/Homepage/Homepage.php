@@ -55,6 +55,9 @@ class Homepage extends Api {
             $selfId = Util::uidToString($selfUid, true);
         }
 
+        for ($i = 0; $i < 6; $i++) {
+            $images[] = "";
+        }
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $user_id = (int) Util::uidToString($id, false);
@@ -79,9 +82,6 @@ class Homepage extends Api {
             $mediaList = $media->getMediaByObjId(1, $user_id);
             $images = [];
             // 一定会返回6张图片
-            for ($i = 0; $i < 6; $i++) {
-                $images[] = "";
-            }
             foreach ($mediaList as $md) {
                 if ($md['status'] == $media::MEDIA_OK || $md['status'] == $media::MEDIA_PRE) {
                     $images[$md['order']] = $this->domain[$md['cdn_id']]. '/'. $md['dir'];

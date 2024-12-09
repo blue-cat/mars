@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $userInfo['nickname'];?>的Homepage</title>
+    <title><?php echo $userInfo['nickname']?? '佚名';?>的Homepage</title>
     <style>
         @font-face {
             font-family: 'LM Roman Bold';  
@@ -236,7 +236,7 @@
             <?php if ($isMe): ?>
                 <div class="username-edit">
                     <div class="input-container">
-                        <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
+                        <input type="text" id="username-input" value="<?php echo $userInfo['nickname'] ?? 'Nobody'; ?>" maxlength="20" oninput="checkUsernameLength()" />
                         <span id="username-length" class="username-length"></span>
                     </div>
                     <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
