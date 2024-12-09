@@ -272,7 +272,7 @@
                         <button onclick="updateUserInfo(2, document.getElementById('details-input').value)">保存</button>
                     </div>
                 <?php else: ?>
-                    <div style="display: flex; justify-content: center; align-items: center; height: 160px;">
+                    <div style="display: flex; justify-content: left;margin-left:5px; align-items: center; height: 160px;">
                         <?php if (empty($details)): ?>
                             <span>该用户暂无slogan</span>
                         <?php else: ?>
