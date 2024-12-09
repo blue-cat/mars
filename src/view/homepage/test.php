@@ -631,6 +631,22 @@
             }
         }
 
+        document.getElementById('share-image-btn').onclick = function() {
+            html2canvas(document.body).then(function(canvas) {
+                // 将canvas转为data URL格式
+                var imgData = canvas.toDataURL('image/png');
+                
+                // 创建一个下载链接
+                var link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'homepage.png'; // 设置下载文件名
+                link.click(); // 触发点击下载
+            }).catch(function(error) {
+                console.error('生成图片失败:', error);
+                alert('生成图片失败，请重试。');
+            });
+        };
+
     </script>
 </body>
 </html>
