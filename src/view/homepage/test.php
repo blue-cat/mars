@@ -212,7 +212,7 @@
         .footer {
             text-align: center; 
             margin-top: 50px; 
-            font-size: 14px; 
+            font-size: 12px; 
         }
         .footer a {
             text-decoration: none; 
@@ -306,9 +306,9 @@
     <div class="footer">
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
-">火星殖民计划</a>
+">火星殖民计划</a> |
+        <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
         <br />
-        <a href="javascript:void(0);" id="share-image-btn">分享为图片</a> |
         <span>识别二维码生成我的Homepage</span><span id="url-qrcode"></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
