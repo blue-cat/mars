@@ -644,12 +644,11 @@
             text: url,
             width: 100,
             height: 100,
-            correctLevel: QRCode.callback.ErrorCorrectLevel.H,
         });
 
-        // 等待二维码渲染完成后执行下一步
+        // 等待 QRCode 完成绘制
         setTimeout(function() {
-            // 创建一个 div 来包含截图内容
+            // 创建一个用于截图的临时 div
             const tempDiv = document.createElement('div');
             tempDiv.style.position = 'relative';
             tempDiv.style.width = '100%';
@@ -659,11 +658,11 @@
             const clonedBody = document.body.cloneNode(true);
             tempDiv.appendChild(clonedBody);
 
-            // 向 tempDiv 中添加二维码图像
+            // 向 tempDiv 添加二维码图像
             const imgElement = document.createElement('img');
             imgElement.src = qrCodeCanvas.toDataURL();
             imgElement.style.position = 'absolute';
-            imgElement.style.bottom = '10px'; // 距离底部10像素
+            imgElement.style.bottom = '10px'; // 离底部10像素
             imgElement.style.left = '50%'; // 左侧50%
             imgElement.style.transform = 'translateX(-50%)'; // 居中对齐
             
@@ -680,10 +679,9 @@
                 // 移除临时 div
                 document.body.removeChild(tempDiv);
             });
-        }, 100); // 适当的延迟以确保二维码生成完成
+        }, 100); // 确保二维码生成完成
     };
 };
-
 
 
     </script>
