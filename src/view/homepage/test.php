@@ -655,7 +655,7 @@
             qrCodeImg.style.bottom = '10px'; // 离底部10像素
             qrCodeImg.style.left = '50%'; // 居中设置
             qrCodeImg.style.transform = 'translateX(-50%)'; // 居中对齐
-            qrCodeImg.style.zIndex = '9999'; // 确保二维码在最上层显示
+            qrCodeImg.style.zIndex = '9999'; // 确保二维码在前面显示
             
             // 添加二维码到页面
             document.body.appendChild(qrCodeImg);
@@ -668,11 +668,11 @@
                 link.download = 'homepage.png';
                 link.click();
 
-                // 下载后移除二维码
+                // 下载完成后移除二维码
                 document.body.removeChild(qrCodeImg);
             }).catch(function(error) {
                 console.error('生成图片失败:', error);
-                // 下载后移除二维码
+                // 确保二维码被移除
                 document.body.removeChild(qrCodeImg);
             });
         }, 100); // 确保二维码生成完成
