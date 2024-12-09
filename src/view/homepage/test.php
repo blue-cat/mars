@@ -633,38 +633,56 @@
             }
         }
 
-    window.onload = function() {
-        document.getElementById('share-image-btn').onclick = function() {
-            // 生成二维码的 div
-            const qrCodeDiv = document.createElement('div');
-            qrCodeDiv.style.position = "absolute";
-            qrCodeDiv.style.bottom = "10px"; // 距离底部10px
-            qrCodeDiv.style.left = "50%"; // 距离左侧50%
-            qrCodeDiv.style.transform = "translateX(-50%)"; // 居中
-            qrCodeDiv.style.zIndex = 10; // 确保在其他元素之上
-            document.body.appendChild(qrCodeDiv); // 将二维码 div 添加到页面中
+        window.onload = function() {
+            document.getElementById('share-image-btn').onclick = function() {
+                // 获取当前网址
+                const url = window.location.href;
 
-            // 获取当前网址
-            const url = window.location.href;
+                // 创建临时二维码的 canvas
+                const qrCodeCanvas = document.createElement('canvas');
+                const qrCode = new QRCode(qrCodeCanvas, {
+                    text: url,
+                    width: 100,
+                    height: 100,
+                });
 
-            // 使用 QRCode.js 生成二维码
-            const qrcode = new QRCode(qrCodeDiv, {
-                text: url,
-                width: 100,
-                height: 100,
-            });
-            html2canvas(document.body, { useCORS: true }).then(function(canvas) {
-                var imgData = canvas.toDataURL('image/png');
-                var link = document.createElement('a');
-                link.href = imgData;
-                link.download = 'homepage.png';
-                link.click();
-            }).catch(function(error) {
-                console.error('生成图片失败:', error);
-                alert('生成图片失败，请重试。');
-            });
+                // 当二维码生成完成后，获取二维码的图像数据
+                qrCodeCanvas.toBlob(function(blob) {
+                    const imgElement = document.createElement('img'); // 生成二维码图像元素
+                    const url = URL.createObjectURL(blob);
+                    imgElement.src = url;
+
+                    // 创建一个新的 div 来容纳所有的元素
+                    const container = document.createElement('div');
+                    container.style.position = 'relative'; // 设置相对定位
+
+                    // 将当前页面内容和二维码图片添加到新的 div 中
+                    document.body.appendChild(container);
+                    container.appendChild(document.body.cloneNode(true)); // 克隆当前页面的内容
+                    container.appendChild(imgElement); // 添加二维码
+
+                    // 使二维码在 div 的底部居中
+                    imgElement.style.position = 'absolute';
+                    imgElement.style.bottom = '0';
+                    imgElement.style.left = '50%';
+                    imgElement.style.transform = 'translateX(-50%)';
+
+                    // 使用 html2canvas 生成截图
+                    html2canvas(container, { useCORS: true }).then(function(canvas) {
+                        const imgData = canvas.toDataURL('image/png');
+                        const link = document.createElement('a');
+                        link.href = imgData;
+                        link.download = 'homepage.png';
+                        link.click();
+
+                        // 清理操作
+                        URL.revokeObjectURL(url); // 释放对象URL
+                        document.body.removeChild(container); // 移除临时容器
+                    });
+                }, 'image/png');
+            };
         };
-    };
+
 
     </script>
 </body>
