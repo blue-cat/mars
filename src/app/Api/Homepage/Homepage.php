@@ -132,7 +132,6 @@ class Homepage extends Api {
         }
 
         //检测敏感词
-        var_dump($data);exit;
         if (!Filter::check($data)) {
             throw new \Exception('包含违规内容！', 422);
         }
