@@ -221,6 +221,9 @@
         .footer a:hover {
             text-decoration: underline; 
         }
+        .footer span {
+            display: inline; /* 确保在一行内显示 */
+        }
     </style>
 </head>
 <body>
@@ -309,7 +312,7 @@
 ">火星殖民计划</a> |
         <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
         <br />
-        <span>识别二维码生成我的Homepage</span><span id="url-qrcode"></span>
+        <span>识别二维码生成我的Homepage<span id="url-qrcode"></span></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
