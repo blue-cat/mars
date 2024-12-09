@@ -663,7 +663,7 @@
 
             document.getElementById('share-image-btn').onclick = function() {
                 // 使用 html2canvas 生成截图
-                html2canvas(document.body, { useCORS: true }).then(function(canvas) {
+                html2canvas(document.body, { useCORS: true, scale: 2 }).then(function(canvas) {
                     // 将生成的 canvas 转换为图片数据
                     const imgData = canvas.toDataURL('image/png');
 
