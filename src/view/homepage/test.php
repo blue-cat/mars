@@ -634,54 +634,56 @@
         }
 
         window.onload = function() {
-            document.getElementById('share-image-btn').onclick = function() {
-                // 获取当前网址
-                const url = window.location.href;
+    document.getElementById('share-image-btn').onclick = function() {
+        // 获取当前网址
+        const url = window.location.href;
 
-                // 创建临时二维码的 canvas
-                const qrCodeCanvas = document.createElement('canvas');
-                const qrCode = new QRCode(qrCodeCanvas, {
-                    text: url,
-                    width: 100,
-                    height: 100,
-                });
+        // 创建二维码的 canvas
+        const qrCodeCanvas = document.createElement('canvas');
+        const qrCode = new QRCode(qrCodeCanvas, {
+            text: url,
+            width: 100,
+            height: 100,
+            correctLevel: QRCode.callback.ErrorCorrectLevel.H,
+        });
 
-                // 当二维码生成完成后，获取二维码的图像数据
-                qrCodeCanvas.toBlob(function(blob) {
-                    const imgElement = document.createElement('img'); // 生成二维码图像元素
-                    const url = URL.createObjectURL(blob);
-                    imgElement.src = url;
+        // 等待二维码渲染完成后执行下一步
+        setTimeout(function() {
+            // 创建一个 div 来包含截图内容
+            const tempDiv = document.createElement('div');
+            tempDiv.style.position = 'relative';
+            tempDiv.style.width = '100%';
+            tempDiv.style.height = '100%';
 
-                    // 创建一个新的 div 来容纳所有的元素
-                    const container = document.createElement('div');
-                    container.style.position = 'relative'; // 设置相对定位
+            // 将当前页面的内容克隆到 tempDiv 中
+            const clonedBody = document.body.cloneNode(true);
+            tempDiv.appendChild(clonedBody);
 
-                    // 将当前页面内容和二维码图片添加到新的 div 中
-                    document.body.appendChild(container);
-                    container.appendChild(document.body.cloneNode(true)); // 克隆当前页面的内容
-                    container.appendChild(imgElement); // 添加二维码
+            // 向 tempDiv 中添加二维码图像
+            const imgElement = document.createElement('img');
+            imgElement.src = qrCodeCanvas.toDataURL();
+            imgElement.style.position = 'absolute';
+            imgElement.style.bottom = '10px'; // 距离底部10像素
+            imgElement.style.left = '50%'; // 左侧50%
+            imgElement.style.transform = 'translateX(-50%)'; // 居中对齐
+            
+            tempDiv.appendChild(imgElement); // 添加二维码到临时 div
 
-                    // 使二维码在 div 的底部居中
-                    imgElement.style.position = 'absolute';
-                    imgElement.style.bottom = '0';
-                    imgElement.style.left = '50%';
-                    imgElement.style.transform = 'translateX(-50%)';
+            // 使用 html2canvas 生成截图
+            html2canvas(tempDiv, { useCORS: true }).then(function(canvas) {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'homepage.png';
+                link.click();
 
-                    // 使用 html2canvas 生成截图
-                    html2canvas(container, { useCORS: true }).then(function(canvas) {
-                        const imgData = canvas.toDataURL('image/png');
-                        const link = document.createElement('a');
-                        link.href = imgData;
-                        link.download = 'homepage.png';
-                        link.click();
+                // 移除临时 div
+                document.body.removeChild(tempDiv);
+            });
+        }, 100); // 适当的延迟以确保二维码生成完成
+    };
+};
 
-                        // 清理操作
-                        URL.revokeObjectURL(url); // 释放对象URL
-                        document.body.removeChild(container); // 移除临时容器
-                    });
-                }, 'image/png');
-            };
-        };
 
 
     </script>
