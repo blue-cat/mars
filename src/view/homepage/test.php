@@ -635,54 +635,46 @@
 
         window.onload = function() {
             document.getElementById('share-image-btn').onclick = function() {
-                console.log('点击了分享按钮');
                 // 获取当前网址
                 const url = window.location.href;
-                console.log('当前网址:', url);
 
-                // 创建二维码的 canvas
-                const qrCodeCanvas = document.createElement('canvas');
-                const qrCode = new QRCode(qrCodeCanvas, {
+                // 创建二维码的 div 容器
+                const qrCodeContainer = document.createElement('div');
+                qrCodeContainer.id = 'qr-code-container';
+                qrCodeContainer.style.position = 'fixed';
+                qrCodeContainer.style.bottom = '10px';
+                qrCodeContainer.style.left = '50%';
+                qrCodeContainer.style.transform = 'translateX(-50%)';
+                qrCodeContainer.style.zIndex = '9999';
+
+                // 创建二维码
+                const qrCode = new QRCode(qrCodeContainer, {
                     text: url,
                     width: 100,
                     height: 100,
                 });
-                console.log('二维码生成:', qrCode);
 
-                // 等待二维码渲染完成
-                setTimeout(function() {
-                    // 创建二维码的 img 元素
-                    const qrCodeImg = new Image();
-                    qrCodeImg.src = qrCodeCanvas.toDataURL();
-                    console.log('二维码图像数据:', qrCodeImg.src);
-                    qrCodeImg.style.position = 'fixed'; // 固定定位
-                    qrCodeImg.style.bottom = '10px'; // 离底部10像素
-                    qrCodeImg.style.left = '50%'; // 左侧50%
-                    qrCodeImg.style.transform = 'translateX(-50%)'; // 居中对齐
-                    qrCodeImg.style.zIndex = '9999'; // 确保二维码在最上层显示
+                // 添加二维码容器到页面
+                document.body.appendChild(qrCodeContainer);
 
-                    // 添加二维码到页面
-                    document.body.appendChild(qrCodeImg);
-                    console.log('二维码添加到页面:', document.body.contains(qrCodeImg));
+                // 使用 html2canvas 生成截图
+                html2canvas(document.body, { useCORS: true }).then(function(canvas) {
+                    // 将生成的 canvas 转换为图片数据
+                    const imgData = canvas.toDataURL('image/png');
 
-                    // 使用 html2canvas 生成截图
-                    html2canvas(document.body, { useCORS: true }).then(function(canvas) {
-                        // 将生成的 canvas 转换为图片数据
-                        const imgData = canvas.toDataURL('image/png');
-                        console.log('截图数据:', imgData);
-                        const link = document.createElement('a');
-                        link.href = imgData;
-                        link.download = 'homepage.png';
-                        link.click();
+                    // 创建下载链接
+                    const link = document.createElement('a');
+                    link.href = imgData;
+                    link.download = 'homepage.png';
+                    link.click();
 
-                        // 下载完成后移除二维码
-                        document.body.removeChild(qrCodeImg);
-                    }).catch(function(error) {
-                        console.error('生成图片失败:', error);
-                        // 确保二维码被移除
-                        document.body.removeChild(qrCodeImg);
-                    });
-                }, 100); // 确保二维码生成完成
+                    // 下载完成后移除二维码容器
+                    document.body.removeChild(qrCodeContainer);
+                }).catch(function(error) {
+                    console.error('生成图片失败:', error);
+                    // 确保二维码容器被移除
+                    document.body.removeChild(qrCodeContainer);
+                });
             };
         };
 
