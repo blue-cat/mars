@@ -635,8 +635,10 @@
 
         window.onload = function() {
             document.getElementById('share-image-btn').onclick = function() {
+                console.log('点击了分享按钮');
                 // 获取当前网址
                 const url = window.location.href;
+                console.log('当前网址:', url);
 
                 // 创建二维码的 canvas
                 const qrCodeCanvas = document.createElement('canvas');
@@ -645,12 +647,14 @@
                     width: 100,
                     height: 100,
                 });
+                console.log('二维码生成:', qrCode);
 
                 // 等待二维码渲染完成
                 setTimeout(function() {
                     // 创建二维码的 img 元素
                     const qrCodeImg = new Image();
                     qrCodeImg.src = qrCodeCanvas.toDataURL();
+                    console.log('二维码图像数据:', qrCodeImg.src);
                     qrCodeImg.style.position = 'fixed'; // 固定定位
                     qrCodeImg.style.bottom = '10px'; // 离底部10像素
                     qrCodeImg.style.left = '50%'; // 左侧50%
@@ -659,11 +663,13 @@
 
                     // 添加二维码到页面
                     document.body.appendChild(qrCodeImg);
+                    console.log('二维码添加到页面:', document.body.contains(qrCodeImg));
 
                     // 使用 html2canvas 生成截图
                     html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                         // 将生成的 canvas 转换为图片数据
                         const imgData = canvas.toDataURL('image/png');
+                        console.log('截图数据:', imgData);
                         const link = document.createElement('a');
                         link.href = imgData;
                         link.download = 'homepage.png';
