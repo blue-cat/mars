@@ -646,48 +646,39 @@
             height: 100,
         });
 
-        // 等待 QRCode 完成绘制
+        // 等待二维码渲染字形完成
         setTimeout(function() {
-            // 创建一个用于截图的临时 div
-            const tempDiv = document.createElement('div');
-            tempDiv.style.position = 'relative';
-            tempDiv.style.width = '100%';
-            tempDiv.style.height = '100%';
-            tempDiv.style.display = 'flex'; // 使用 flex 布局
-            tempDiv.style.flexDirection = 'column'; // 纵向排列
+            // 生成二维码的图像数据
+            const qrCodeImgSrc = qrCodeCanvas.toDataURL();
 
-            // 将当前页面中所需的内容添加到 tempDiv 中
-            const contentToCapture = document.querySelector('.content'); // 假设这是您要捕获的主要内容
-            if (contentToCapture) {
-                tempDiv.appendChild(contentToCapture.cloneNode(true)); // 克隆主要内容
-            }
-
-            // 向 tempDiv 添加二维码图像
+            // 创建一个 img 元素来存放二维码
             const imgElement = document.createElement('img');
-            imgElement.src = qrCodeCanvas.toDataURL();
-            imgElement.style.marginTop = 'auto'; // 使二维码在底部
-            imgElement.style.marginBottom = '10px'; // 离底部10像素
-            imgElement.style.display = 'block';
-            imgElement.style.width = '100px'; // 设置二维码的宽高
-            imgElement.style.height = '100px';
-
-            tempDiv.appendChild(imgElement); // 添加二维码到临时 div
+            imgElement.src = qrCodeImgSrc;
+            imgElement.style.position = 'absolute';
+            imgElement.style.bottom = '10px'; // 离底部10像素
+            imgElement.style.left = '50%'; // 左侧50%
+            imgElement.style.transform = 'translateX(-50%)'; // 居中对齐
+            imgElement.style.zIndex = '9999'; // 确保在前面显示
+            
+            // 将二维码图像添加到 body
+            document.body.appendChild(imgElement);
 
             // 使用 html2canvas 生成截图
-            html2canvas(tempDiv, { useCORS: true }).then(function(canvas) {
+            html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                 const imgData = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
                 link.download = 'homepage.png';
                 link.click();
 
-                // 移除临时 div
-                document.body.removeChild(tempDiv);
+                // 移除二维码元素
+                document.body.removeChild(imgElement);
+            }).catch(function(error) {
+                console.error('生成图片失败:', error);
             });
         }, 100); // 确保二维码生成完成
     };
 };
-
 
 
     </script>
