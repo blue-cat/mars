@@ -633,7 +633,7 @@
 
     window.onload = function() {
         document.getElementById('share-image-btn').onclick = function() {
-            html2canvas(document.body).then(function(canvas) {
+            html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                 var imgData = canvas.toDataURL('image/png');
                 var link = document.createElement('a');
                 link.href = imgData;
