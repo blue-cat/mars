@@ -222,6 +222,7 @@
             text-decoration: underline; 
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -310,7 +311,6 @@
         <a href="#" id="share-image-btn">分享为图片</a>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
         // 检查URL中是否有code和state参数
         const urlParams = new URLSearchParams(window.location.search);
