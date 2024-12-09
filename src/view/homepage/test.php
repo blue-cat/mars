@@ -227,7 +227,7 @@
 
     <div class="profile">
         <div class="profile-image-container">
-            <img crossOrigin="anonymous" src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
+            <img src="<?php echo $userInfo['avatar']; ?>" alt="Profile Image" onerror="this.style.display='none';" style="width: 100%; height: auto; min-height: 100%; min-width: 100%; object-fit: cover;">
             <?php if ($isMe): ?>
                 <div class="upload" onclick="uploadImage('avatar')">修改头像</div>
             <?php endif; ?>
