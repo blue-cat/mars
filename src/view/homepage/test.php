@@ -322,7 +322,7 @@
         <span>识别二维码生成我的Homepage<span id="url-qrcode"></span></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
-    <script src="/static/html2canvas.js"></script>
+    <script src="https://h5store.nearby.dulcim.com/static/html2canvas.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // 检查URL中是否有code和state参数
