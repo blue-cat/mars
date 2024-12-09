@@ -305,10 +305,11 @@
 
     <div class="footer">
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
-        <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
-        <br />
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
 ">火星殖民计划</a>
+        <br />
+        <a href="javascript:void(0);" id="share-image-btn">分享为图片</a> |
+        <span>识别二维码生成我的Homepage</span><span id="url-qrcode"></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -634,29 +635,23 @@
         }
 
         window.onload = function() {
+            // 获取当前网址
+            const url = window.location.href;
+
+            // 创建二维码容器
+            const qrCodeContainer = document.getElementById('url-qrcode');
+
+            // 清空原有内容
+            qrCodeContainer.innerHTML = '';
+
+            // 创建二维码
+            const qrCode = new QRCode(qrCodeContainer, {
+                text: url,
+                width: 30,
+                height: 30,
+            });
+
             document.getElementById('share-image-btn').onclick = function() {
-                // 获取当前网址
-                const url = window.location.href;
-
-                // 创建二维码的 div 容器
-                const qrCodeContainer = document.createElement('div');
-                qrCodeContainer.id = 'qr-code-container';
-                qrCodeContainer.style.position = 'fixed';
-                qrCodeContainer.style.bottom = '10px';
-                qrCodeContainer.style.left = '50%';
-                qrCodeContainer.style.transform = 'translateX(-50%)';
-                qrCodeContainer.style.zIndex = '9999';
-
-                // 创建二维码
-                const qrCode = new QRCode(qrCodeContainer, {
-                    text: url,
-                    width: 100,
-                    height: 100,
-                });
-
-                // 添加二维码容器到页面
-                document.body.appendChild(qrCodeContainer);
-
                 // 使用 html2canvas 生成截图
                 html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                     // 将生成的 canvas 转换为图片数据
@@ -667,19 +662,11 @@
                     link.href = imgData;
                     link.download = 'homepage.png';
                     link.click();
-
-                    // 下载完成后移除二维码容器
-                    document.body.removeChild(qrCodeContainer);
                 }).catch(function(error) {
                     console.error('生成图片失败:', error);
-                    // 确保二维码容器被移除
-                    document.body.removeChild(qrCodeContainer);
                 });
             };
         };
-
-
-
     </script>
 </body>
 </html>
