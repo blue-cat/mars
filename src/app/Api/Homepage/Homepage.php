@@ -192,7 +192,7 @@ class Homepage extends Api {
             // 调用userDomain中的modify方法
             $user = new UserDomain();
             $user->update(['avatar' => $ret['key']], $selfUid);
-            return $this->domain[$md['cdn_id']] . "/" . $ret['key'];
+            return $this->domain[1] . "/" . $ret['key'];
         }
 
         // 往media表写
