@@ -638,7 +638,7 @@
         // 获取当前网址
         const url = window.location.href;
 
-        // 创建一个 canvas 并生成二维码
+        // 创建二维码的 canvas
         const qrCodeCanvas = document.createElement('canvas');
         const qrCode = new QRCode(qrCodeCanvas, {
             text: url,
@@ -648,35 +648,36 @@
 
         // 等待二维码渲染完成
         setTimeout(function() {
-            // 使用 html2canvas 获取页面的内容
+            // 创建一个二维码的 img 元素
+            const qrCodeImg = document.createElement('img');
+            qrCodeImg.src = qrCodeCanvas.toDataURL();
+            qrCodeImg.style.position = 'fixed'; // 固定定位
+            qrCodeImg.style.bottom = '10px'; // 离底部10像素
+            qrCodeImg.style.left = '50%'; // 居中设置
+            qrCodeImg.style.transform = 'translateX(-50%)'; // 居中对齐
+            qrCodeImg.style.zIndex = '9999'; // 确保二维码在最上层显示
+            
+            // 添加二维码到页面
+            document.body.appendChild(qrCodeImg);
+
+            // 使用 html2canvas 生成截图
             html2canvas(document.body, { useCORS: true }).then(function(canvas) {
-                // 创建一个新的 canvas
-                const finalCanvas = document.createElement('canvas');
-                finalCanvas.width = canvas.width; // 设置最终画布的宽度
-                finalCanvas.height = canvas.height + 110; // 加二维码和一些边距
-
-                const ctx = finalCanvas.getContext('2d');
-
-                // 将原页面的内容绘制到 finalCanvas
-                ctx.drawImage(canvas, 0, 0);
-
-                // 绘制二维码到 finalCanvas
-                ctx.drawImage(qrCodeCanvas, (finalCanvas.width - 100) / 2, canvas.height + 10); // 使二维码居中并与页面内容间隔
-                
-                // 下载最终图像
-                const imgData = finalCanvas.toDataURL('image/png');
+                const imgData = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
                 link.download = 'homepage.png';
                 link.click();
+
+                // 下载后移除二维码
+                document.body.removeChild(qrCodeImg);
             }).catch(function(error) {
                 console.error('生成图片失败:', error);
+                // 下载后移除二维码
+                document.body.removeChild(qrCodeImg);
             });
         }, 100); // 确保二维码生成完成
     };
 };
-
-
 
 
     </script>
