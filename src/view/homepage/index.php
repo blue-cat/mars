@@ -236,13 +236,13 @@
             <?php if ($isMe): ?>
                 <div class="username-edit">
                     <div class="input-container">
-                        <input type="text" id="username-input" value="<?php echo $userInfo['nickname'] ?? 'Nobody'; ?>" maxlength="20" oninput="checkUsernameLength()" />
+                        <input type="text" id="username-input" value="<?php echo $userInfo['nickname']; ?>" maxlength="20" oninput="checkUsernameLength()" />
                         <span id="username-length" class="username-length"></span>
                     </div>
                     <button onclick="updateUserInfo(1, document.getElementById('username-input').value)">保存</button>
                 </div>
             <?php else: ?>
-                <span class="username-display">@<?php echo $userInfo['nickname']; ?></span>
+                <span class="username-display">@<?php echo $userInfo['nickname'] ?? 'Nobody'; ?></span>
             <?php endif; ?>
         </div>
     </div>
