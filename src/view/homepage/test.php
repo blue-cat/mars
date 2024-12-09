@@ -222,7 +222,13 @@
             text-decoration: underline; 
         }
         .footer span {
-            display: inline; /* 确保在一行内显示 */
+            display: inline-block; /* 确保在一行内显示 */
+            vertical-align: middle; /* 可选，确保对齐 */
+        }
+
+        #url-qrcode img {
+            display: inline; /* 确保二维码图片被设置为inline显示 */
+            vertical-align: middle; /* 可选，对齐 */
         }
     </style>
 </head>
