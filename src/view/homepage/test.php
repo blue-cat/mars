@@ -646,39 +646,37 @@
             height: 100,
         });
 
-        // 等待二维码渲染字形完成
+        // 等待二维码渲染完成
         setTimeout(function() {
-            // 生成二维码的图像数据
-            const qrCodeImgSrc = qrCodeCanvas.toDataURL();
-
-            // 创建一个 img 元素来存放二维码
-            const imgElement = document.createElement('img');
-            imgElement.src = qrCodeImgSrc;
-            imgElement.style.position = 'absolute';
-            imgElement.style.bottom = '10px'; // 离底部10像素
-            imgElement.style.left = '50%'; // 左侧50%
-            imgElement.style.transform = 'translateX(-50%)'; // 居中对齐
-            imgElement.style.zIndex = '9999'; // 确保在前面显示
-            
-            // 将二维码图像添加到 body
-            document.body.appendChild(imgElement);
-
-            // 使用 html2canvas 生成截图
+            // 使用 html2canvas 获取页面内容
             html2canvas(document.body, { useCORS: true }).then(function(canvas) {
-                const imgData = canvas.toDataURL('image/png');
+                // 创建一个新的 canvas
+                const finalCanvas = document.createElement('canvas');
+                const ctx = finalCanvas.getContext('2d');
+
+                // 设置 finalCanvas 尺寸为原页面 canvas 的尺寸
+                finalCanvas.width = canvas.width;
+                finalCanvas.height = canvas.height + 110; // 加上二维码的高度和间距
+
+                // 将原页面的内容绘制到 finalCanvas
+                ctx.drawImage(canvas, 0, 0);
+
+                // 绘制二维码到 finalCanvas
+                ctx.drawImage(qrCodeCanvas, (finalCanvas.width - 100) / 2, canvas.height + 10); // 使二维码居中并与页面内容间隔
+
+                // 下载最终的图像
+                const imgData = finalCanvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
                 link.download = 'homepage.png';
                 link.click();
-
-                // 移除二维码元素
-                document.body.removeChild(imgElement);
             }).catch(function(error) {
                 console.error('生成图片失败:', error);
             });
         }, 100); // 确保二维码生成完成
     };
 };
+
 
 
     </script>
