@@ -638,7 +638,7 @@
         // 获取当前网址
         const url = window.location.href;
 
-        // 创建二维码的 canvas
+        // 创建一个 canvas 并生成二维码
         const qrCodeCanvas = document.createElement('canvas');
         const qrCode = new QRCode(qrCodeCanvas, {
             text: url,
@@ -648,23 +648,22 @@
 
         // 等待二维码渲染完成
         setTimeout(function() {
-            // 使用 html2canvas 获取页面内容
+            // 使用 html2canvas 获取页面的内容
             html2canvas(document.body, { useCORS: true }).then(function(canvas) {
                 // 创建一个新的 canvas
                 const finalCanvas = document.createElement('canvas');
-                const ctx = finalCanvas.getContext('2d');
+                finalCanvas.width = canvas.width; // 设置最终画布的宽度
+                finalCanvas.height = canvas.height + 110; // 加二维码和一些边距
 
-                // 设置 finalCanvas 尺寸为原页面 canvas 的尺寸
-                finalCanvas.width = canvas.width;
-                finalCanvas.height = canvas.height + 110; // 加上二维码的高度和间距
+                const ctx = finalCanvas.getContext('2d');
 
                 // 将原页面的内容绘制到 finalCanvas
                 ctx.drawImage(canvas, 0, 0);
 
                 // 绘制二维码到 finalCanvas
                 ctx.drawImage(qrCodeCanvas, (finalCanvas.width - 100) / 2, canvas.height + 10); // 使二维码居中并与页面内容间隔
-
-                // 下载最终的图像
+                
+                // 下载最终图像
                 const imgData = finalCanvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
@@ -676,6 +675,7 @@
         }, 100); // 确保二维码生成完成
     };
 };
+
 
 
 
