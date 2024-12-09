@@ -104,7 +104,7 @@ class Homepage extends Api {
         $timestamp = time();
         $signature = $this->generateSignature($jsapiTicket, $timestamp, $nonceStr, $url);
 
-        include(API_ROOT . '/src/view/homepage/index.php');
+        include(API_ROOT . '/src/view/homepage/test.php');
         exit(0);
     }
 
