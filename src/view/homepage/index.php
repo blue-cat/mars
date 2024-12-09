@@ -383,7 +383,7 @@
             var selfId = '<?php echo $selfId; ?>';
 
             // 检查$selfId，如果为0，则触发点击事件
-            if (selfId == 0) {
+            if (selfId == "") {
                 document.getElementById('create-homepage-btn').click();
             }
 
