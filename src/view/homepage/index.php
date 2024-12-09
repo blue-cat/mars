@@ -379,14 +379,6 @@
                 });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var selfId = '<?php echo $selfId; ?>';
-
-            // 检查$selfId，如果为0，则触发点击事件
-            if (selfId == "") {
-                document.getElementById('create-homepage-btn').click();
-            }
-
             document.getElementById('create-homepage-btn').onclick = function() {
                 var selfId = '<?php echo $selfId; ?>';
 
@@ -406,6 +398,14 @@
                     window.location.href = authUrl;
                 }
             };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var selfId = '<?php echo $selfId; ?>';
+
+            // 检查$selfId，如果为0，则触发点击事件
+            if (selfId == "") {
+                document.getElementById('create-homepage-btn').click();
+            }
         });
 
         function compressImage(file, maxWidth, callback) {
