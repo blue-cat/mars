@@ -706,6 +706,8 @@
 
         // 定义生成分享图片的函数
         function generateShareImage(callback) {
+            document.documentElement.scrollTop = 0; // 对于大多数浏览器，包括 Chrome 和 Firefox
+            document.body.scrollTop = 0;
             // 让class为footer的元素隐藏，homepage-preview展示
             document.querySelector('.footer').style.display = 'none';
             document.querySelector('.homepage-preview').style.display = 'block';
