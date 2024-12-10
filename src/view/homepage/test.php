@@ -226,10 +226,13 @@
             vertical-align: middle; /* 可选，确保对齐 */
         }
 
+        #url-qrcode {
+            margin: 5px;
+        }
+
         #url-qrcode img {
             display: inline; /* 确保二维码图片被设置为inline显示 */
             vertical-align: middle; /* 可选，对齐 */
-            margin: 8px;
         }
     </style>
 </head>
