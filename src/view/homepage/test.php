@@ -689,7 +689,6 @@
         };
 
         // 定义生成分享图片的函数
-        // 定义生成分享图片的函数
         function generateShareImage(callback) {
             html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
@@ -706,6 +705,14 @@
                 overlay.style.justifyContent = 'center';
                 overlay.style.alignItems = 'center';
                 overlay.style.zIndex = '9999';
+                overlay.style.flexDirection = 'column'; // 使用列布局
+
+                // 创建提示文本
+                const text = document.createElement('div');
+                text.innerText = '长按保存图片';
+                text.style.color = 'white'; // 设置文本颜色
+                text.style.fontSize = '18px'; // 设置字体大小
+                text.style.marginBottom = '20px'; // 设置文本与图片之间的间距
 
                 // 创建图像元素
                 const img = document.createElement('img');
@@ -715,7 +722,8 @@
                 img.style.border = '5px solid white'; // 增加边框视觉效果
                 img.style.borderRadius = '10px'; // 增加圆角效果
 
-                // 将图片添加到蒙层中
+                // 将文本和图片添加到蒙层中
+                overlay.appendChild(text);
                 overlay.appendChild(img);
                 document.body.appendChild(overlay); // 将蒙层添加到页面中
 
@@ -732,6 +740,7 @@
                         callback(); // 再跳转
                     }
                 });
+
             }).catch(error => {
                 console.error('生成图片失败:', error);
             });
