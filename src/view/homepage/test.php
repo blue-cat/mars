@@ -712,15 +712,15 @@
                 text.innerText = '长按保存图片';
                 text.style.color = 'white'; // 设置文本颜色
                 text.style.fontSize = '12px'; // 设置字体大小
-                text.style.marginBottom = '10px'; // 设置文本与图片之间的间距
+                text.style.marginBottom = '7px'; // 设置文本与图片之间的间距
 
                 // 创建图像元素
                 const img = document.createElement('img');
                 img.src = imgData;
                 img.style.maxWidth = '90%'; // 控制图片的最大宽度
                 img.style.maxHeight = '90%'; // 控制图片的最大高度
-                img.style.border = '5px solid white'; // 增加边框视觉效果
-                img.style.borderRadius = '10px'; // 增加圆角效果
+                // img.style.border = '5px solid white'; // 增加边框视觉效果
+                // img.style.borderRadius = '10px'; // 增加圆角效果
 
                 // 将文本和图片添加到蒙层中
                 overlay.appendChild(text);
