@@ -234,6 +234,10 @@
             display: inline; /* 确保二维码图片被设置为inline显示 */
             vertical-align: middle; /* 可选，对齐 */
         }
+
+        .homepage-preview {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -323,11 +327,10 @@
         <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
     </div>
     <!-- 新建一个容器用于显示生成Homepage的提示和二维码 -->
-    <div class="homepage-preview" style="text-align: center;">
-        <?php if (isset($_GET['preview'])): ?>
-            <p>生成我的Homepage</p>
-            <p id="url-qrcode"></p>
-        <?php endif; ?>
+    <div class="homepage-preview" 
+    <?php if (isset($_GET['preview'])): ?>style="display: block;"<?php else: ?>style="display: none;"<?php endif; ?>>
+        <p>生成我的Homepage</p>
+        <p id="url-qrcode"></p>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://h5store.nearby.dulcim.com/static/html2canvas.min.js"></script>
