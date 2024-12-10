@@ -465,7 +465,7 @@
                     return;
                 }
 
-                compressImage(file, 500, function (compressedBlob) {
+                compressImage(file, 400, function (compressedBlob) {
                     const formData = new FormData();
                     formData.append('file', compressedBlob, file.name);
                     formData.append('index', index);
