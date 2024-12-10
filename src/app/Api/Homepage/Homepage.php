@@ -74,7 +74,7 @@ class Homepage extends Api {
                 exit(0);
             }
 
-            $isMe = $user_id == $selfUid;
+            $isMe = $user_id == $selfUid && !isset($_GET['preview']);
 
             $details = $userInfo['slogan'];
 
@@ -141,7 +141,7 @@ class Homepage extends Api {
                 exit(0);
             }
 
-            $isMe = $user_id == $selfUid && !isset($_GET['preview']);
+            $isMe = $user_id == $selfUid;
 
             $details = $userInfo['slogan'];
 
