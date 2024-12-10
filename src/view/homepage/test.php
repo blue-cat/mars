@@ -644,6 +644,23 @@
             }
         }
 
+        document.getElementById('share-image-btn').onclick = function() {
+            const isMe = <?php echo json_encode($isMe); ?>; // 获取 isMe 的值
+
+            if (isMe) {
+                // 获取当前 URL
+                const url = new URL(window.location.href);
+                // 添加 preview 参数
+                url.searchParams.set('preview', 'true');
+                
+                // 跳转到新的 URL
+                window.location.href = url.toString(); // 跳转到带有 preview 参数的 URL
+            } else {
+                // 如果不是自己，则直接生成分享图片
+                generateShareImage();
+            }
+        };
+
         window.onload = function() {
             // 获取当前网址
             const url = window.location.href;
@@ -661,22 +678,31 @@
                 height: 65,
             });
 
-            document.getElementById('share-image-btn').onclick = function() {
-                // 使用 html2canvas 生成截图
-                html2canvas(document.body, { useCORS: true, scale: 2 }).then(function(canvas) {
-                    // 将生成的 canvas 转换为图片数据
-                    const imgData = canvas.toDataURL('image/png');
+            const url = new URL(window.location.href);
+    
+            // 检查是否包含 preview 参数
+            if (url.searchParams.has('preview')) {
+                // 生成分享图片
+                generateShareImage();
 
-                    // 创建下载链接
-                    const link = document.createElement('a');
-                    link.href = imgData;
-                    link.download = 'homepage.png';
-                    link.click();
-                }).catch(function(error) {
-                    console.error('生成图片失败:', error);
-                });
-            };
+                // 移除 preview 参数，并更新 URL
+                url.searchParams.delete('preview'); // 删除 preview 参数
+                window.history.replaceState({}, '', url.toString()); // 更新 URL
+            }
         };
+
+        // 定义生成分享图片的函数
+        function generateShareImage() {
+            html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'homepage.png';
+                link.click();
+            }).catch(error => {
+                console.error('生成图片失败:', error);
+            });
+        }
     </script>
 </body>
 </html>
