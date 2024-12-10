@@ -228,11 +228,16 @@
 
         #url-qrcode {
             margin: 5px;
+            display: inline-flex;
         }
 
         #url-qrcode img {
             display: inline; /* 确保二维码图片被设置为inline显示 */
             vertical-align: middle; /* 可选，对齐 */
+        }
+
+        .homepage-preview {
+            text-align: center;
         }
     </style>
 </head>
@@ -316,13 +321,17 @@
         </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" <?php if (isset($_GET['preview'])): ?>style="display: none;"<?php endif; ?>>
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
-">火星殖民计划</a> |
+">如何殖民火星</a> |
         <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
-        <br />
-        <span>识别二维码生成我的Homepage<span id="url-qrcode"></span></span>
+    </div>
+    <!-- 新建一个容器用于显示生成Homepage的提示和二维码 -->
+    <div class="homepage-preview" 
+    <?php if (isset($_GET['preview'])): ?>style="display: block;"<?php else: ?>style="display: none;"<?php endif; ?>>
+        <p>生成我的Homepage</p>
+        <p id="url-qrcode"></p>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://h5store.nearby.dulcim.com/static/html2canvas.min.js"></script>
@@ -666,6 +675,21 @@
 
         window.onload = function() {
 
+            const url = new URL(window.location.href);
+    
+            // 检查是否包含 preview 参数
+            if (url.searchParams.has('preview')) {
+                generateQrcode();
+                // 生成分享图片
+                generateShareImage(() => {
+                    url.searchParams.delete('preview'); // 删除 preview 参数
+                    window.location.href = url.toString();
+                });
+            }
+        };
+
+        //生成url二维码
+        function generateQrcode() {
             // 创建二维码容器
             const qrCodeContainer = document.getElementById('url-qrcode');
 
@@ -675,24 +699,23 @@
             // 创建二维码
             const qrCode = new QRCode(qrCodeContainer, {
                 text: window.location.href,
-                width: 65,
-                height: 65,
+                width: 120,
+                height: 120,
             });
-
-            const url = new URL(window.location.href);
-    
-            // 检查是否包含 preview 参数
-            if (url.searchParams.has('preview')) {
-                // 生成分享图片
-                generateShareImage(() => {
-                    url.searchParams.delete('preview'); // 删除 preview 参数
-                    window.location.href = url.toString();
-                });
-            }
-        };
+        }
 
         // 定义生成分享图片的函数
         function generateShareImage(callback) {
+            document.documentElement.scrollTop = 0; // 对于大多数浏览器，包括 Chrome 和 Firefox
+            document.body.scrollTop = 0;
+            // 让class为footer的元素隐藏，homepage-preview展示
+            document.querySelector('.footer').style.display = 'none';
+            document.querySelector('.homepage-preview').style.display = 'block';
+            const url = new URL(window.location.href);
+            if (!url.searchParams.has('preview')) {
+                generateQrcode();
+            }
+            
             html2canvas(document.body, { useCORS: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
 
@@ -738,6 +761,8 @@
 
                 // 点击蒙层关闭蒙层并执行回调
                 overlay.addEventListener('click', function() {
+                    document.querySelector('.footer').style.display = 'block';
+                    document.querySelector('.homepage-preview').style.display = 'none';
                     document.body.removeChild(overlay); // 点击关闭蒙层
                     if (callback && typeof callback === 'function') {
                         callback(); // 再跳转
