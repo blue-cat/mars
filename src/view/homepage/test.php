@@ -711,8 +711,8 @@
                 const text = document.createElement('div');
                 text.innerText = '长按保存图片';
                 text.style.color = 'white'; // 设置文本颜色
-                text.style.fontSize = '18px'; // 设置字体大小
-                text.style.marginBottom = '20px'; // 设置文本与图片之间的间距
+                text.style.fontSize = '12px'; // 设置字体大小
+                text.style.marginBottom = '10px'; // 设置文本与图片之间的间距
 
                 // 创建图像元素
                 const img = document.createElement('img');
