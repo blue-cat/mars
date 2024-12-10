@@ -228,6 +228,7 @@
 
         #url-qrcode {
             margin: 5px;
+            display: inline-flex;
         }
 
         #url-qrcode img {
