@@ -662,8 +662,6 @@
         };
 
         window.onload = function() {
-            // 获取当前网址
-            const url = window.location.href;
 
             // 创建二维码容器
             const qrCodeContainer = document.getElementById('url-qrcode');
@@ -673,7 +671,7 @@
 
             // 创建二维码
             const qrCode = new QRCode(qrCodeContainer, {
-                text: url,
+                text: window.location.href,
                 width: 65,
                 height: 65,
             });
