@@ -317,12 +317,13 @@
     </div>
 
     <div class="footer">
+        <?php if (!isset($_GET['preview'])): ?>
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
-">火星殖民计划</a> |
+">如何殖民火星</a> |
         <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
         <br />
-        <?php if (isset($_GET['preview'])): ?>
+        <?php else: ?>
         <span>生成我的Homepage</span>
         <br />
         <span id="url-qrcode"></span>
