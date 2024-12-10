@@ -229,7 +229,7 @@
         #url-qrcode img {
             display: inline; /* 确保二维码图片被设置为inline显示 */
             vertical-align: middle; /* 可选，对齐 */
-            margin: 5px;
+            margin: 8px;
         }
     </style>
 </head>
