@@ -226,13 +226,6 @@
             vertical-align: middle; /* 可选，确保对齐 */
         }
 
-        #url-qrcode {
-            width: 65px;  /* 设定二维码生成区域的宽度 */
-            height: 65px; /* 设定二维码生成区域的高度 */
-            display: inline-block; /* 确保该元素在一行内显示 */
-            vertical-align: middle; /* 可选，确保对齐 */
-        }
-
         #url-qrcode img {
             display: inline; /* 确保二维码图片被设置为inline显示 */
             vertical-align: middle; /* 可选，对齐 */
