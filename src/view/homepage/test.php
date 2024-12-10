@@ -670,23 +670,22 @@
 
         window.onload = function() {
 
-            // 创建二维码容器
-            const qrCodeContainer = document.getElementById('url-qrcode');
-
-            // 清空原有内容
-            qrCodeContainer.innerHTML = '';
-
-            // 创建二维码
-            const qrCode = new QRCode(qrCodeContainer, {
-                text: window.location.href,
-                width: 120,
-                height: 120,
-            });
-
             const url = new URL(window.location.href);
     
             // 检查是否包含 preview 参数
             if (url.searchParams.has('preview')) {
+                // 创建二维码容器
+                const qrCodeContainer = document.getElementById('url-qrcode');
+
+                // 清空原有内容
+                qrCodeContainer.innerHTML = '';
+
+                // 创建二维码
+                const qrCode = new QRCode(qrCodeContainer, {
+                    text: window.location.href,
+                    width: 120,
+                    height: 120,
+                });
                 // 生成分享图片
                 generateShareImage(() => {
                     url.searchParams.delete('preview'); // 删除 preview 参数
