@@ -696,9 +696,14 @@
             // 清空原有内容
             qrCodeContainer.innerHTML = '';
 
+            // 获取url，并移除url中的preview参数
+            const url = new URL(window.location.href);
+            url.searchParams.delete('preview');
+            const qrcodeUrl = url.toString();
+
             // 创建二维码
             const qrCode = new QRCode(qrCodeContainer, {
-                text: window.location.href,
+                text: qrcodeUrl,
                 width: 120,
                 height: 120,
             });
