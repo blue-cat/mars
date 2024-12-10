@@ -316,7 +316,7 @@
         </div>
     </div>
 
-    <div class="footer" <?php if (isset($_GET['preview'])): ?>style="display: hidden;"<?php endif; ?>>
+    <div class="footer" <?php if (isset($_GET['preview'])): ?>style="display: none;"<?php endif; ?>>
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
 ">如何殖民火星</a> |
