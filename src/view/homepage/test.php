@@ -677,8 +677,8 @@
             // 创建二维码
             const qrCode = new QRCode(qrCodeContainer, {
                 text: window.location.href,
-                width: 65,
-                height: 65,
+                width: 120,
+                height: 120,
             });
 
             const url = new URL(window.location.href);
