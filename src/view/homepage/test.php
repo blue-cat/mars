@@ -689,25 +689,56 @@
         };
 
         // 定义生成分享图片的函数
+        // 定义生成分享图片的函数
         function generateShareImage(callback) {
             html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                const link = document.createElement('a');
-                link.href = imgData;
-                link.target = '_blank'; // 新窗口打开
-                link.download = 'homepage.png';
-                document.body.appendChild(link);  // 将链接添加到 DOM (可能有些浏览器要求)
-                link.click();  // 触发点击
-                document.body.removeChild(link);
+
+                // 创建蒙层
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.zIndex = '9999';
+
+                // 创建图像元素
+                const img = document.createElement('img');
+                img.src = imgData;
+                img.style.maxWidth = '90%'; // 控制图片的最大宽度
+                img.style.maxHeight = '90%'; // 控制图片的最大高度
+                img.style.border = '5px solid white'; // 增加边框视觉效果
+                img.style.borderRadius = '10px'; // 增加圆角效果
+
+                // 将图片添加到蒙层中
+                overlay.appendChild(img);
+                document.body.appendChild(overlay); // 将蒙层添加到页面中
+
+                // 提供长按下载的提示
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault(); // 防止右键菜单显示
+                    alert('长按图片可以下载到手机');
+                });
 
                 // 调用传入的回调函数
                 if (callback && typeof callback === 'function') {
-                    callback(); // 只在截图成功后再执行
+                    callback();
                 }
+
+                // 点击蒙层关闭蒙层和图片
+                overlay.addEventListener('click', function() {
+                    document.body.removeChild(overlay); // 点击关闭蒙层
+                });
             }).catch(error => {
                 console.error('生成图片失败:', error);
             });
         }
+
     </script>
 </body>
 </html>
