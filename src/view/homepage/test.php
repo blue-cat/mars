@@ -325,9 +325,8 @@
     <!-- 新建一个容器用于显示生成Homepage的提示和二维码 -->
     <div class="homepage-preview" style="text-align: center;">
         <?php if (isset($_GET['preview'])): ?>
-            <span>生成我的Homepage</span>
-            <br />
-            <span id="url-qrcode"></span>
+            <p>生成我的Homepage</p>
+            <p id="url-qrcode"></p>
         <?php endif; ?>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
