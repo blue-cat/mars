@@ -693,7 +693,7 @@
 
         // 定义生成分享图片的函数
         function generateShareImage(callback) {
-            html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
+            html2canvas(document.body, { useCORS: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
 
                 // 创建蒙层
