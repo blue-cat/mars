@@ -685,7 +685,7 @@
 
                 // 移除 preview 参数，并更新 URL
                 url.searchParams.delete('preview'); // 删除 preview 参数
-                window.history.replaceState({}, '', url.toString()); // 更新 URL
+                window.location.href = url.toString(); // 跳转到新的 URL
             }
         };
 
