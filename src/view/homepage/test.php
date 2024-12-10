@@ -678,18 +678,7 @@
     
             // 检查是否包含 preview 参数
             if (url.searchParams.has('preview')) {
-                // 创建二维码容器
-                const qrCodeContainer = document.getElementById('url-qrcode');
-
-                // 清空原有内容
-                qrCodeContainer.innerHTML = '';
-
-                // 创建二维码
-                const qrCode = new QRCode(qrCodeContainer, {
-                    text: window.location.href,
-                    width: 120,
-                    height: 120,
-                });
+                generateQrcode();
                 // 生成分享图片
                 generateShareImage(() => {
                     url.searchParams.delete('preview'); // 删除 preview 参数
@@ -698,11 +687,31 @@
             }
         };
 
+        //生成url二维码
+        function generateQrcode() {
+            // 创建二维码容器
+            const qrCodeContainer = document.getElementById('url-qrcode');
+
+            // 清空原有内容
+            qrCodeContainer.innerHTML = '';
+
+            // 创建二维码
+            const qrCode = new QRCode(qrCodeContainer, {
+                text: window.location.href,
+                width: 120,
+                height: 120,
+            });
+        }
+
         // 定义生成分享图片的函数
         function generateShareImage(callback) {
             // 让class为footer的元素隐藏，homepage-preview展示
             document.querySelector('.footer').style.display = 'none';
             document.querySelector('.homepage-preview').style.display = 'block';
+            const url = new URL(window.location.href);
+            if (!url.searchParams.has('preview')) {
+                generateQrcode();
+            }
             
             html2canvas(document.body, { useCORS: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
