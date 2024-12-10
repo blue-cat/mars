@@ -681,22 +681,26 @@
             // 检查是否包含 preview 参数
             if (url.searchParams.has('preview')) {
                 // 生成分享图片
-                generateShareImage();
-
-                // 移除 preview 参数，并更新 URL
-                url.searchParams.delete('preview'); // 删除 preview 参数
-                window.location.href = url.toString(); // 跳转到新的 URL
+                generateShareImage(() => {
+                    url.searchParams.delete('preview'); // 删除 preview 参数
+                    window.location.href = url.toString();
+                });
             }
         };
 
         // 定义生成分享图片的函数
-        function generateShareImage() {
+        function generateShareImage(callback) {
             html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
                 link.download = 'homepage.png';
                 link.click();
+
+                // 调用传入的回调函数
+                if (callback && typeof callback === 'function') {
+                    callback(); // 只在截图成功后再执行
+                }
             }).catch(error => {
                 console.error('生成图片失败:', error);
             });
