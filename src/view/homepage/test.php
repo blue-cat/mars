@@ -443,7 +443,7 @@
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     canvas.toBlob(function (blob) {
                         callback(blob); 
-                    }, 'image/jpeg', 0.9); 
+                    }, 'image/jpeg', 1); 
                 };
             };
             reader.readAsDataURL(file);
@@ -465,7 +465,7 @@
                     return;
                 }
 
-                compressImage(file, 250, function (compressedBlob) {
+                compressImage(file, 300, function (compressedBlob) {
                     const formData = new FormData();
                     formData.append('file', compressedBlob, file.name);
                     formData.append('index', index);
