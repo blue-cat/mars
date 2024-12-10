@@ -700,6 +700,10 @@
 
         // 定义生成分享图片的函数
         function generateShareImage(callback) {
+            // 让class为footer的元素隐藏，homepage-preview展示
+            document.querySelector('.footer').style.display = 'none';
+            document.querySelector('.homepage-preview').style.display = 'block';
+            
             html2canvas(document.body, { useCORS: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
 
@@ -745,6 +749,8 @@
 
                 // 点击蒙层关闭蒙层并执行回调
                 overlay.addEventListener('click', function() {
+                    document.querySelector('.footer').style.display = 'block';
+                    document.querySelector('.homepage-preview').style.display = 'none';
                     document.body.removeChild(overlay); // 点击关闭蒙层
                     if (callback && typeof callback === 'function') {
                         callback(); // 再跳转
