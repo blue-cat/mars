@@ -322,7 +322,9 @@
 ">火星殖民计划</a> |
         <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
         <br />
-        <span>识别二维码生成我的Homepage<span id="url-qrcode"></span></span>
+        <span>生成我的Homepage</span>
+        <br />
+        <span id="url-qrcode"></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://h5store.nearby.dulcim.com/static/html2canvas.min.js"></script>
