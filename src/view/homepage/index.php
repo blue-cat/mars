@@ -212,7 +212,7 @@
         .footer {
             text-align: center; 
             margin-top: 50px; 
-            font-size: 14px; 
+            font-size: 12px; 
         }
         .footer a {
             text-decoration: none; 
@@ -220,6 +220,19 @@
         }
         .footer a:hover {
             text-decoration: underline; 
+        }
+        .footer span {
+            display: inline-block; /* 确保在一行内显示 */
+            vertical-align: middle; /* 可选，确保对齐 */
+        }
+
+        #url-qrcode {
+            margin: 5px;
+        }
+
+        #url-qrcode img {
+            display: inline; /* 确保二维码图片被设置为inline显示 */
+            vertical-align: middle; /* 可选，对齐 */
         }
     </style>
 </head>
@@ -306,9 +319,14 @@
     <div class="footer">
         <a href="#" id="create-homepage-btn">登录我的Homepage</a> | 
         <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkxMDYzMTM0NA==&scene=110#wechat_redirect
-">火星殖民计划</a>
+">火星殖民计划</a> |
+        <a href="javascript:void(0);" id="share-image-btn">分享为图片</a>
+        <br />
+        <span>识别二维码生成我的Homepage<span id="url-qrcode"></span></span>
     </div>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://h5store.nearby.dulcim.com/static/html2canvas.min.js"></script>
+    <script src="https://h5store.nearby.dulcim.com/static/qrcode.min.js"></script>
     <script>
         // 检查URL中是否有code和state参数
         const urlParams = new URLSearchParams(window.location.search);
@@ -425,7 +443,7 @@
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     canvas.toBlob(function (blob) {
                         callback(blob); 
-                    }, 'image/jpeg', 0.9); 
+                    }, 'image/jpeg', 1); 
                 };
             };
             reader.readAsDataURL(file);
@@ -447,7 +465,7 @@
                     return;
                 }
 
-                compressImage(file, 250, function (compressedBlob) {
+                compressImage(file, 400, function (compressedBlob) {
                     const formData = new FormData();
                     formData.append('file', compressedBlob, file.name);
                     formData.append('index', index);
@@ -627,6 +645,108 @@
                     alert('删除请求失败，请重试。');
                 });
             }
+        }
+
+        document.getElementById('share-image-btn').onclick = function() {
+            const isMe = <?php echo json_encode($isMe); ?>; // 获取 isMe 的值
+
+            if (isMe) {
+                // 获取当前 URL
+                const url = new URL(window.location.href);
+                // 添加 preview 参数
+                url.searchParams.set('preview', 'true');
+                
+                // 跳转到新的 URL
+                window.location.href = url.toString(); // 跳转到带有 preview 参数的 URL
+            } else {
+                // 如果不是自己，则直接生成分享图片
+                generateShareImage();
+            }
+        };
+
+        window.onload = function() {
+
+            // 创建二维码容器
+            const qrCodeContainer = document.getElementById('url-qrcode');
+
+            // 清空原有内容
+            qrCodeContainer.innerHTML = '';
+
+            // 创建二维码
+            const qrCode = new QRCode(qrCodeContainer, {
+                text: window.location.href,
+                width: 65,
+                height: 65,
+            });
+
+            const url = new URL(window.location.href);
+    
+            // 检查是否包含 preview 参数
+            if (url.searchParams.has('preview')) {
+                // 生成分享图片
+                generateShareImage(() => {
+                    url.searchParams.delete('preview'); // 删除 preview 参数
+                    window.location.href = url.toString();
+                });
+            }
+        };
+
+        // 定义生成分享图片的函数
+        function generateShareImage(callback) {
+            html2canvas(document.body, { useCORS: true }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+
+                // 创建蒙层
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.zIndex = '9999';
+                overlay.style.flexDirection = 'column'; // 使用列布局
+
+                // 创建提示文本
+                const text = document.createElement('div');
+                text.innerText = '长按保存图片';
+                text.style.color = 'white'; // 设置文本颜色
+                text.style.fontSize = '12px'; // 设置字体大小
+                text.style.marginBottom = '7px'; // 设置文本与图片之间的间距
+
+                // 创建图像元素
+                const img = document.createElement('img');
+                img.src = imgData;
+                img.style.maxWidth = '90%'; // 控制图片的最大宽度
+                img.style.maxHeight = '90%'; // 控制图片的最大高度
+                // img.style.border = '5px solid white'; // 增加边框视觉效果
+                // img.style.borderRadius = '10px'; // 增加圆角效果
+
+                // 将文本和图片添加到蒙层中
+                overlay.appendChild(text);
+                overlay.appendChild(img);
+                document.body.appendChild(overlay); // 将蒙层添加到页面中
+
+                // 提供长按下载的提示
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault(); // 防止右键菜单显示
+                    alert('长按图片可以下载到手机');
+                });
+
+                // 点击蒙层关闭蒙层并执行回调
+                overlay.addEventListener('click', function() {
+                    document.body.removeChild(overlay); // 点击关闭蒙层
+                    if (callback && typeof callback === 'function') {
+                        callback(); // 再跳转
+                    }
+                });
+
+            }).catch(error => {
+                console.error('生成图片失败:', error);
+            });
         }
 
     </script>
