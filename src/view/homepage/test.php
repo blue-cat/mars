@@ -725,14 +725,12 @@
                     alert('长按图片可以下载到手机');
                 });
 
-                // 调用传入的回调函数
-                if (callback && typeof callback === 'function') {
-                    callback();
-                }
-
-                // 点击蒙层关闭蒙层和图片
+                // 点击蒙层关闭蒙层并执行回调
                 overlay.addEventListener('click', function() {
                     document.body.removeChild(overlay); // 点击关闭蒙层
+                    if (callback && typeof callback === 'function') {
+                        callback(); // 再跳转
+                    }
                 });
             }).catch(error => {
                 console.error('生成图片失败:', error);
