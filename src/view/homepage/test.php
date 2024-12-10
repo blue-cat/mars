@@ -694,8 +694,11 @@
                 const imgData = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = imgData;
+                link.target = '_blank'; // 新窗口打开
                 link.download = 'homepage.png';
-                link.click();
+                document.body.appendChild(link);  // 将链接添加到 DOM (可能有些浏览器要求)
+                link.click();  // 触发点击
+                document.body.removeChild(link);
 
                 // 调用传入的回调函数
                 if (callback && typeof callback === 'function') {
